@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
@@ -337,21 +338,16 @@ export default function Portfolio() {
                 position: 'relative'
               }}>
                 {/* Replace 'headshot.jpg' with your actual image filename */}
-                <img 
+                <Image 
                   src="/me.jpeg" 
                   alt="Thomas"
+                  fill
                   style={{
-                    width: '120%',
-                    height: '120%',
                     objectFit: 'cover',
                     objectPosition: 'center 20%',
                     transform: 'scale(1.2)'
                   }}
-                  onError={(e) => {
-                    // Fallback to initial if image not found
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 300; color: #ffffff;">T</div>';
-                  }}
+                  priority
                 />
               </div>
             </div>
@@ -647,7 +643,7 @@ export default function Portfolio() {
           fontWeight: '600',
           marginBottom: '24px'
         }}>
-          Let's Build Something Amazing
+          Let&apos;s Build Something Amazing
         </h2>
         <p style={{
           fontSize: '18px',
@@ -656,8 +652,8 @@ export default function Portfolio() {
           maxWidth: '600px',
           margin: '0 auto 48px'
         }}>
-          I'm always excited to collaborate on innovative healthcare technology projects.
-          Let's discuss how we can improve patient care together.
+          I&apos;m always excited to collaborate on innovative healthcare technology projects.
+          Let&apos;s discuss how we can improve patient care together.
         </p>
         
         <div style={{
