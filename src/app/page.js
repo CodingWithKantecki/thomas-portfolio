@@ -7,6 +7,7 @@ export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
   const [textGlow, setTextGlow] = useState(0);
   const [letterGlows, setLetterGlows] = useState({});
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -15,7 +16,53 @@ export default function Portfolio() {
       setHeartbeat(prev => (prev + 1) % 100);
     }, 20);
 
-    return () => clearInterval(heartbeatInterval);
+    // Mouse position tracker with proximity effects
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+      
+      // Update skill items based on proximity
+      const skillItems = document.querySelectorAll('.skill-item');
+      skillItems.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const distance = Math.sqrt(
+          Math.pow(e.clientX - centerX, 2) + 
+          Math.pow(e.clientY - centerY, 2)
+        );
+        
+        const threshold = 100;
+        if (distance < threshold) {
+          const strength = 1 - (distance / threshold);
+          const scale = 1 + (strength * 0.3);
+          
+          item.style.transform = `scale(${scale})`;
+          item.style.opacity = 0.7 + (strength * 0.3);
+          item.style.fontWeight = '500';
+          item.style.background = 'linear-gradient(90deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%)';
+          item.style.WebkitBackgroundClip = 'text';
+          item.style.backgroundClip = 'text';
+          item.style.WebkitTextFillColor = 'transparent';
+        } else {
+          item.style.transform = 'scale(1)';
+          item.style.opacity = '0.7';
+          item.style.fontWeight = '400';
+          item.style.background = 'none';
+          item.style.WebkitBackgroundClip = 'unset';
+          item.style.backgroundClip = 'unset';
+          item.style.WebkitTextFillColor = 'unset';
+          item.style.color = '#ffffff';
+        }
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      clearInterval(heartbeatInterval);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   useEffect(() => {
@@ -167,6 +214,84 @@ export default function Portfolio() {
   }, []);
 
   const navItems = ['Experience', 'Projects', 'Skills', 'Contact'];
+
+  // Component for reactive skill items
+  const SkillItem = ({ skill, index, mousePos }) => {
+    const skillRef = useRef(null);
+    const [isNear, setIsNear] = useState(false);
+    const [scale, setScale] = useState(1);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+
+    useEffect(() => {
+      if (!mounted) return;
+      
+      const updateTransform = () => {
+        if (!skillRef.current) return;
+
+        const rect = skillRef.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Calculate distance from mouse to skill center
+        const distance = Math.sqrt(
+          Math.pow(mousePos.x - centerX, 2) + 
+          Math.pow(mousePos.y - centerY, 2)
+        );
+
+        // Proximity threshold (pixels)
+        const threshold = 100;
+        
+        if (distance < threshold) {
+          const strength = 1 - (distance / threshold);
+          setScale(1 + (strength * 0.3));
+          setIsNear(true);
+        } else {
+          setScale(1);
+          setIsNear(false);
+        }
+      };
+
+      // Add a small delay to ensure element is rendered
+      const timer = setTimeout(updateTransform, 50);
+      
+      return () => clearTimeout(timer);
+    }, [mousePos, mounted]);
+
+    const style = {
+      fontSize: '18px',
+      fontWeight: isNear ? '500' : '400',
+      cursor: 'pointer',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      position: 'relative',
+      display: 'inline-block',
+      opacity: isNear ? 1 : 0.7,
+      transform: `scale(${scale})`,
+      animation: `fadeInUp 0.6s ease-out ${index * 0.03}s both`
+    };
+
+    // Apply gradient or white color
+    if (isNear) {
+      style.background = 'linear-gradient(90deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%)';
+      style.WebkitBackgroundClip = 'text';
+      style.backgroundClip = 'text';
+      style.WebkitTextFillColor = 'transparent';
+    } else {
+      style.color = '#ffffff';
+    }
+
+    return (
+      <span
+        ref={skillRef}
+        style={style}
+      >
+        {skill}
+      </span>
+    );
+  };
 
   return (
     <>
@@ -577,54 +702,65 @@ export default function Portfolio() {
             marginBottom: '60px',
             textAlign: 'center'
           }}>
-            Technical Arsenal
+            Skills
           </h2>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '24px'
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '12px 24px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            maxWidth: '900px',
+            margin: '0 auto'
           }}>
             {[
-              { category: 'AI & LLMs', skills: ['Claude API', 'GPT-4', 'LM Studio', 'Llama 2/3'], color: '#8B5CF6' },
-              { category: 'Healthcare IT', skills: ['HL7 FHIR', 'ICD-10', 'Epic Systems', 'HIPAA'], color: '#3B82F6' },
-              { category: 'Development', skills: ['Python', 'React', 'Next.js', 'FastAPI'], color: '#8B5CF6' },
-              { category: 'Infrastructure', skills: ['Docker', 'AWS', 'PostgreSQL', 'Git'], color: '#3B82F6' }
-            ].map((group, index) => (
-              <div key={group.category} style={{
-                animation: `fadeInUp 0.8s ease-out ${index * 0.1}s both`
-              }}>
-                <h3 style={{
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  marginBottom: '16px',
-                  color: group.color
-                }}>
-                  {group.category}
-                </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {group.skills.map(skill => (
-                    <div key={skill} style={{
-                      padding: '12px 16px',
-                      background: 'rgba(30, 41, 59, 0.8)',
-                      borderRadius: '8px',
-                      border: `1px solid ${group.color}20`,
-                      fontSize: '14px',
-                      transition: 'all 0.3s'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = group.color;
-                      e.currentTarget.style.background = `${group.color}10`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = `${group.color}20`;
-                      e.currentTarget.style.background = 'rgba(30, 41, 59, 0.8)';
-                    }}>
-                      {skill}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              'Python',
+              'Pygame',
+              'Tailwind CSS',
+              'HTML',
+              'CSS',
+              'NextJS',
+              'React',
+              'Git',
+              'GitHub',
+              'Claude',
+              'HIPAA',
+              'EHR Systems',
+              'EPIC',
+              'Vercel',
+              'Linux',
+              'Raspberry Pi',
+              'SQL',
+              'ICD-10',
+              'CPT',
+              'HCPCS',
+              'Revenue Cycle',
+              'Docker',
+              'HL7',
+              'FHIR',
+              'Figma',
+              'Claude API',
+              'OpenAI',
+              'Local AI Models'
+            ].map((skill, index) => (
+              <span
+                key={skill}
+                className="skill-item"
+                data-index={index}
+                style={{
+                  fontSize: '18px',
+                  fontWeight: '400',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  display: 'inline-block',
+                  color: '#ffffff',
+                  opacity: 0.7,
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.03}s both`
+                }}
+              >
+                {skill}
+              </span>
             ))}
           </div>
         </div>
