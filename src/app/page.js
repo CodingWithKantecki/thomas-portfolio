@@ -725,6 +725,7 @@ export default function Portfolio() {
               'Git',
               'GitHub',
               'Claude',
+              'Machine Learning',
               'HIPAA',
               'EHR Systems',
               'EPIC',
