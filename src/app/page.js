@@ -534,7 +534,7 @@ export default function Portfolio() {
             color: '#94a3b8',
             marginBottom: '8px'
           }}>
-            Health Informatics Student, AI Developer, and Health Technology Architect
+            Health Informatics Student, AI Developer, and Full Stack Developer
           </p>
           
           <p style={{
