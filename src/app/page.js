@@ -22,7 +22,13 @@ export default function Portfolio() {
       
       // Update skill items based on proximity
       const skillItems = document.querySelectorAll('.skill-item');
-      skillItems.forEach((item) => {
+      
+      if (skillItems.length === 0) {
+        console.log('No skill items found!');
+        return;
+      }
+      
+      skillItems.forEach((item, index) => {
         const rect = item.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
@@ -33,26 +39,50 @@ export default function Portfolio() {
         );
         
         const threshold = 100;
-        if (distance < threshold) {
-          const strength = 1 - (distance / threshold);
-          const scale = 1 + (strength * 0.3);
+        const gradientSweep = item.querySelector('.gradient-sweep');
+        
+        // Magnifying glass effect with larger radius
+        const magnifyRadius = 200;
+        
+        if (distance < magnifyRadius) {
+          // Calculate magnification based on distance
+          const strength = 1 - (distance / magnifyRadius);
+          // Use exponential curve for more dramatic effect at center
+          const magnification = Math.pow(strength, 2);
+          const scale = 1 + (magnification * 0.3); // Max 1.3x at center
           
-          item.style.transform = `scale(${scale})`;
-          item.style.opacity = 0.7 + (strength * 0.3);
-          item.style.fontWeight = '500';
-          item.style.background = 'linear-gradient(90deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%)';
-          item.style.WebkitBackgroundClip = 'text';
-          item.style.backgroundClip = 'text';
-          item.style.WebkitTextFillColor = 'transparent';
+          // Debug log for first item
+          if (index === 0) {
+            console.log(`Distance: ${distance}, Scale: ${scale}`);
+          }
+          
+          item.style.setProperty('transform', `scale(${scale})`, 'important');
+          item.style.setProperty('opacity', String(0.7 + (magnification * 0.3)), 'important');
+          item.style.setProperty('z-index', String(Math.floor(magnification * 10)), 'important');
+          item.style.setProperty('transition', 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease-out', 'important');
+          
+          // Gradient effect for items within gradient radius
+          if (distance < 100 && gradientSweep) {
+            item.classList.add('hovering');
+            // Gradient position based on distance for smoother effect
+            const gradientProgress = 1 - (distance / 100);
+            const position = -150 + (250 * gradientProgress);
+            gradientSweep.style.backgroundPosition = `${position}% 0`;
+          } else {
+            item.classList.remove('hovering');
+            if (gradientSweep) {
+              gradientSweep.style.backgroundPosition = '-150% 0';
+            }
+          }
         } else {
-          item.style.transform = 'scale(1)';
-          item.style.opacity = '0.7';
-          item.style.fontWeight = '400';
-          item.style.background = 'none';
-          item.style.WebkitBackgroundClip = 'unset';
-          item.style.backgroundClip = 'unset';
-          item.style.WebkitTextFillColor = 'unset';
-          item.style.color = '#ffffff';
+          item.style.setProperty('transform', 'scale(1)', 'important');
+          item.style.setProperty('opacity', '0.7', 'important');
+          item.style.setProperty('z-index', '0', 'important');
+          item.classList.remove('hovering');
+          
+          if (gradientSweep) {
+            gradientSweep.style.backgroundPosition = '-150% 0';
+          }
         }
       });
     };
@@ -340,6 +370,42 @@ export default function Portfolio() {
 
         .heartbeat-glow {
           animation: pulse 1s ease-in-out infinite;
+        }
+
+        .skill-item {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .skill-item {
+          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease-out, z-index 0s;
+          position: relative;
+          z-index: 0;
+          transform-origin: center;
+          will-change: transform;
+        }
+
+        .skill-item .gradient-sweep {
+          background: linear-gradient(90deg, 
+            transparent 0%, 
+            #8B5CF6 25%, 
+            #06B6D4 50%, 
+            #10B981 75%, 
+            transparent 100%
+          );
+          background-size: 300% 100%;
+          background-position: -150% 0;
+          transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+          opacity: 0;
+        }
+        
+        .skill-item.hovering .gradient-sweep {
+          opacity: 1;
+        }
+        
+        .skill-item:hover .gradient-sweep {
+          background-position: 100% 0 !important;
+          opacity: 1 !important;
         }
       `}</style>
 
@@ -712,7 +778,11 @@ export default function Portfolio() {
             justifyContent: 'center',
             alignItems: 'center',
             maxWidth: '900px',
-            margin: '0 auto'
+            margin: '0 auto',
+            padding: '40px',
+            position: 'relative',
+            transformStyle: 'preserve-3d',
+            perspective: '1000px'
           }}>
             {[
               'Python',
@@ -754,14 +824,38 @@ export default function Portfolio() {
                   fontSize: '18px',
                   fontWeight: '400',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  position: 'relative',
                   display: 'inline-block',
                   color: '#ffffff',
                   opacity: 0.7,
                   animation: `fadeInUp 0.6s ease-out ${index * 0.03}s both`
                 }}
               >
-                {skill}
+                <span style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  display: 'inline-block'
+                }}>
+                  {skill}
+                </span>
+                <span 
+                  className="gradient-sweep"
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    pointerEvents: 'none',
+                    zIndex: 3
+                  }}
+                  data-text={skill}
+                >
+                  {skill}
+                </span>
               </span>
             ))}
           </div>
