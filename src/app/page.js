@@ -116,10 +116,9 @@ export default function Portfolio() {
           setTimeout(() => {
             setShowSubtitle(true);
           }, 500);
-          // Blink cursor for a bit then hide it
-          setTimeout(() => {
-            setShowCursor(false);
-          }, 2000);
+          // Hide cursor immediately after typing completes
+          setShowCursor(false);
+          clearInterval(cursorInterval);
         }
       }, 100); // Type speed: 100ms per character
     }, 500); // Small delay before starting typing
@@ -213,7 +212,7 @@ export default function Portfolio() {
         ctx.stroke();
       }
       
-      const centerY = canvas.height / 2;
+      const centerY = canvas.height / 2 + 30; // Moved down by 30 pixels total
       
       // Draw the ECG line
       ctx.strokeStyle = '#8B5CF6';
@@ -234,7 +233,8 @@ export default function Portfolio() {
           let y = centerY;
           
           // Check for heartbeat positions (every 500 pixels)
-          const beatPosition = x % 500;
+          // Shift pattern back by 25 pixels (half grid square) for perfect alignment
+          const beatPosition = (x + 25) % 500;
           
           // Start spikes at position 100 instead of 0
           if (beatPosition > 100 && beatPosition < 180) {
@@ -265,15 +265,26 @@ export default function Portfolio() {
       // Draw glowing dot at current position (only when drawing forward)
       if (!isRetracting && startX < endX) {
         let currentY = centerY;
-        const beatPos = xPos % 500;
-        if (beatPos > 100 && beatPos < 180) {
-          const progress = (beatPos - 100) / 80;
+        
+        // Use exact same calculation as line drawing
+        const beatPosition = (xPos + 25) % 500;
+        
+        if (beatPosition > 100 && beatPosition < 180) {
+          const progress = (beatPosition - 100) / 80;
+          
+          // Exact same heartbeat pattern as the line
           if (progress < 0.3) {
+            // Quick up
             currentY = centerY - (progress / 0.3) * 250;
           } else if (progress < 0.5) {
+            // Quick down past baseline
             currentY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
           } else if (progress < 0.6) {
+            // Small return
             currentY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
+          } else {
+            // Flat
+            currentY = centerY;
           }
         }
         
@@ -302,7 +313,7 @@ export default function Portfolio() {
         if (Math.random() < 0.3) { // 30% chance each frame
           // Get the Y position at the current trail start
           let particleY = centerY;
-          const beatPos = trailStart % 500;
+          const beatPos = (trailStart + 25) % 500;
           if (beatPos > 100 && beatPos < 180) {
             const progress = (beatPos - 100) / 80;
             if (progress < 0.3) {
@@ -774,12 +785,14 @@ export default function Portfolio() {
             minHeight: '58px' // Prevent layout shift
           }}>
             {typedText}
-            <span style={{
-              opacity: showCursor && typedText.length > 0 ? 1 : 0,
-              transition: 'opacity 0.1s',
-              color: '#8B5CF6',
-              fontWeight: '300'
-            }}>|</span>
+            {typedText.length < fullText.length && (
+              <span style={{
+                opacity: showCursor ? 1 : 0,
+                transition: 'opacity 0.1s',
+                color: '#8B5CF6',
+                fontWeight: '300'
+              }}>|</span>
+            )}
           </h1>
           
           <p style={{
@@ -804,18 +817,6 @@ export default function Portfolio() {
             Health Informatics Student • ML/AI Engineer • Full Stack Developer
           </p>
           
-          <p style={{
-            fontSize: '16px',
-            color: '#64748b',
-            marginBottom: '40px',
-            maxWidth: '600px',
-            margin: '0 auto 40px',
-            opacity: showSubtitle ? 1 : 0,
-            transition: 'opacity 1s ease-out 0.6s'
-          }}>
-            Passionate about leveraging technology to improve patient outcomes
-            and advance healthcare innovation.
-          </p>
 
           <div style={{
             display: 'flex',
