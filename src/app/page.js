@@ -10,7 +10,9 @@ export default function Portfolio() {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(false);
+  const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const canvasRef = useRef(null);
+  const skillCanvasRef = useRef(null);
   
   const fullText = "Thomas Kantecki";
 
@@ -24,11 +26,23 @@ export default function Portfolio() {
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       
+      // Check if mouse is in skills section
+      const skillsSection = document.getElementById('skills');
+      if (skillsSection) {
+        const rect = skillsSection.getBoundingClientRect();
+        const inSkillsSection = e.clientY >= rect.top && e.clientY <= rect.bottom;
+        
+        // Clear particles if not in skills section
+        if (!inSkillsSection) {
+          setSkillBinaryParticles([]);
+          return;
+        }
+      }
+      
       // Update skill items based on proximity
       const skillItems = document.querySelectorAll('.skill-item');
       
       if (skillItems.length === 0) {
-        console.log('No skill items found!');
         return;
       }
       
@@ -55,11 +69,6 @@ export default function Portfolio() {
           const magnification = Math.pow(strength, 2);
           const scale = 1 + (magnification * 0.3); // Max 1.3x at center
           
-          // Debug log for first item
-          if (index === 0) {
-            console.log(`Distance: ${distance}, Scale: ${scale}`);
-          }
-          
           item.style.setProperty('transform', `scale(${scale})`, 'important');
           item.style.setProperty('opacity', String(0.7 + (magnification * 0.3)), 'important');
           item.style.setProperty('z-index', String(Math.floor(magnification * 10)), 'important');
@@ -72,6 +81,34 @@ export default function Portfolio() {
             const gradientProgress = 1 - (distance / 100);
             const position = -150 + (250 * gradientProgress);
             gradientSweep.style.backgroundPosition = `${position}% 0`;
+          }
+          
+          // Create binary particles when very close
+          if (distance < 60) { // Reduced trigger distance
+            if (Math.random() < 0.08) { // Further reduced to 8% chance
+              // Create particle at a random position along the text
+              const textWidth = rect.width;
+              const particleX = rect.left + Math.random() * textWidth;
+              
+              setSkillBinaryParticles(prev => {
+                // Limit maximum particles to prevent lag
+                if (prev.length >= 15) return prev; // Reduced from 30 to 15
+                
+                const newParticle = {
+                  id: Date.now() + Math.random(),
+                  x: particleX,
+                  y: rect.bottom,
+                  value: Math.random() > 0.5 ? '1' : '0',
+                  velocity: 1 + Math.random() * 2,
+                  opacity: 1,
+                  rotation: Math.random() * Math.PI * 2,
+                  rotationSpeed: (Math.random() - 0.5) * 0.1,
+                  size: 12 + Math.random() * 6, // Smaller particles
+                  color: '#8B5CF6'
+                };
+                return [...prev, newParticle];
+              });
+            }
           } else {
             item.classList.remove('hovering');
             if (gradientSweep) {
@@ -99,6 +136,16 @@ export default function Portfolio() {
       const windowHeight = window.innerHeight;
       const progress = Math.min(scrollY / windowHeight, 1);
       setScrollProgress(progress);
+      
+      // Clear particles when scrolling away from skills section
+      const skillsSection = document.getElementById('skills');
+      if (skillsSection) {
+        const rect = skillsSection.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!inView) {
+          setSkillBinaryParticles([]);
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -362,6 +409,97 @@ export default function Portfolio() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Update particles physics separately
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSkillBinaryParticles(prev => {
+        // Get Skills section boundary
+        const skillsSection = document.getElementById('skills');
+        let maxY = window.innerHeight;
+        
+        if (skillsSection) {
+          const rect = skillsSection.getBoundingClientRect();
+          maxY = rect.bottom - 20; // Stop 20px before section ends
+        }
+        
+        return prev.filter(particle => {
+          particle.y += particle.velocity;
+          particle.velocity += 0.05;
+          particle.opacity -= 0.015; // Faster fade out (was 0.008)
+          particle.rotation += particle.rotationSpeed;
+          
+          // Remove particles that go below Skills section or fade out
+          return particle.opacity > 0 && particle.y < maxY;
+        });
+      });
+    }, 33); // ~30fps (reduced from 60fps)
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Skill binary particles animation
+  useEffect(() => {
+    const canvas = skillCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    let animationId;
+    
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Get Skills section boundary for clipping
+      const skillsSection = document.getElementById('skills');
+      if (skillsSection) {
+        const rect = skillsSection.getBoundingClientRect();
+        
+        // Set clipping region to Skills section
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, rect.top, canvas.width, rect.height);
+        ctx.clip();
+      }
+      
+      // Draw all particles
+      skillBinaryParticles.forEach((particle) => {
+        // Draw the binary digit
+        ctx.save();
+        ctx.globalAlpha = particle.opacity;
+        ctx.translate(particle.x, particle.y);
+        ctx.rotate(particle.rotation);
+        ctx.font = `bold ${particle.size}px monospace`;
+        ctx.fillStyle = particle.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        // Removed shadow for better performance
+        ctx.fillText(particle.value, 0, 0);
+        ctx.restore();
+      });
+      
+      if (skillsSection) {
+        ctx.restore(); // Restore clipping
+      }
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, [skillBinaryParticles]);
 
   const navItems = ['Experience', 'Projects', 'Skills', 'Contact'];
 
@@ -632,6 +770,20 @@ export default function Portfolio() {
           filter: `blur(${scrollProgress * 15}px)`,
           opacity: 1 - (scrollProgress * 0.7),
           transition: 'filter 0.3s ease-out, opacity 0.3s ease-out'
+        }}
+      />
+      
+      {/* Skill Binary Particles Canvas */}
+      <canvas 
+        ref={skillCanvasRef}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 5,
+          pointerEvents: 'none'
         }}
       />
 
