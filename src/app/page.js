@@ -5,10 +5,14 @@ import Image from 'next/image';
 
 export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
-  const [textGlow, setTextGlow] = useState(0);
-  const [letterGlows, setLetterGlows] = useState({});
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [typedText, setTypedText] = useState('');
+  const [showCursor, setShowCursor] = useState(true);
+  const [showSubtitle, setShowSubtitle] = useState(false);
   const canvasRef = useRef(null);
+  
+  const fullText = "Thomas Kantecki";
 
   useEffect(() => {
     // Heartbeat animation
@@ -89,9 +93,48 @@ export default function Portfolio() {
 
     window.addEventListener('mousemove', handleMouseMove);
 
+    // Scroll listener for background effects
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const progress = Math.min(scrollY / windowHeight, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Typewriter effect
+    setTimeout(() => {
+      let currentIndex = 0;
+      const typewriterInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setTypedText(fullText.substring(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(typewriterInterval);
+          // Show subtitle after name is typed
+          setTimeout(() => {
+            setShowSubtitle(true);
+          }, 500);
+          // Blink cursor for a bit then hide it
+          setTimeout(() => {
+            setShowCursor(false);
+          }, 2000);
+        }
+      }, 100); // Type speed: 100ms per character
+    }, 500); // Small delay before starting typing
+
+    // Cursor blink effect
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
+
     return () => {
       clearInterval(heartbeatInterval);
+      clearInterval(typewriterInterval);
+      clearInterval(cursorInterval);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -104,8 +147,48 @@ export default function Portfolio() {
     canvas.height = window.innerHeight;
 
     let xPos = 0;
+    let trailStart = 0; // Start position of the visible line
     const speed = 8; // pixels per frame
     let lastBeat = 0;
+    let isRetracting = false; // Track if we're in retraction phase
+    let binaryParticles = []; // Array to store falling binary digits
+    
+    // Binary particle class
+    class BinaryParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.value = Math.random() > 0.5 ? '1' : '0';
+        this.velocity = 2 + Math.random() * 3; // Fall speed
+        this.opacity = 1;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.1;
+        this.size = 12 + Math.random() * 8;
+      }
+      
+      update() {
+        this.y += this.velocity;
+        this.velocity += 0.1; // Gravity
+        this.opacity -= 0.01;
+        this.rotation += this.rotationSpeed;
+        return this.opacity > 0 && this.y < canvas.height;
+      }
+      
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.font = `${this.size}px monospace`;
+        ctx.fillStyle = '#8B5CF6';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = '#8B5CF6';
+        ctx.fillText(this.value, 0, 0);
+        ctx.restore();
+      }
+    }
     
     const animate = (currentTime) => {
       // Clear canvas
@@ -132,103 +215,129 @@ export default function Portfolio() {
       
       const centerY = canvas.height / 2;
       
-      // Draw the ECG line from left to right
+      // Draw the ECG line
       ctx.strokeStyle = '#8B5CF6';
       ctx.lineWidth = 3;
       ctx.shadowBlur = 20;
       ctx.shadowColor = '#8B5CF6';
       ctx.beginPath();
-      ctx.moveTo(0, centerY);
       
-      // Draw the line up to current position
-      for (let x = 0; x <= xPos; x++) {
-        let y = centerY;
+      // Only draw the visible portion of the line
+      const startX = Math.max(0, trailStart);
+      const endX = xPos;
+      
+      if (startX < endX) {
+        ctx.moveTo(startX, centerY);
         
-        // Check for heartbeat positions (every 500 pixels)
-        const beatPosition = x % 500;
-        
-        if (beatPosition > 0 && beatPosition < 80) {
-          const progress = beatPosition / 80;
+        // Draw the line from start to current position
+        for (let x = startX; x <= endX; x++) {
+          let y = centerY;
           
-          // Simple heartbeat pattern
+          // Check for heartbeat positions (every 500 pixels)
+          const beatPosition = x % 500;
+          
+          // Start spikes at position 100 instead of 0
+          if (beatPosition > 100 && beatPosition < 180) {
+            const progress = (beatPosition - 100) / 80;
+            
+            // Simple heartbeat pattern
+            if (progress < 0.3) {
+              // Quick up
+              y = centerY - (progress / 0.3) * 250;
+            } else if (progress < 0.5) {
+              // Quick down past baseline
+              y = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
+            } else if (progress < 0.6) {
+              // Small return
+              y = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
+            } else {
+              // Flat
+              y = centerY;
+            }
+          }
+          
+          ctx.lineTo(x, y);
+        }
+        
+        ctx.stroke();
+      }
+      
+      // Draw glowing dot at current position (only when drawing forward)
+      if (!isRetracting && startX < endX) {
+        let currentY = centerY;
+        const beatPos = xPos % 500;
+        if (beatPos > 100 && beatPos < 180) {
+          const progress = (beatPos - 100) / 80;
           if (progress < 0.3) {
-            // Quick up
-            y = centerY - (progress / 0.3) * 250;
+            currentY = centerY - (progress / 0.3) * 250;
           } else if (progress < 0.5) {
-            // Quick down past baseline
-            y = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
+            currentY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
           } else if (progress < 0.6) {
-            // Small return
-            y = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
-          } else {
-            // Flat
-            y = centerY;
+            currentY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
           }
         }
         
-        ctx.lineTo(x, y);
+        ctx.fillStyle = '#8B5CF6';
+        ctx.shadowBlur = 30;
+        ctx.beginPath();
+        ctx.arc(xPos, currentY, 5, 0, Math.PI * 2);
+        ctx.fill();
       }
       
-      ctx.stroke();
-      
-      // Draw glowing dot at current position
-      let currentY = centerY;
-      const beatPos = xPos % 500;
-      if (beatPos > 0 && beatPos < 80) {
-        const progress = beatPos / 80;
-        if (progress < 0.3) {
-          currentY = centerY - (progress / 0.3) * 250;
-        } else if (progress < 0.5) {
-          currentY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
-        } else if (progress < 0.6) {
-          currentY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
-        }
-      }
-      
-      ctx.fillStyle = '#8B5CF6';
-      ctx.shadowBlur = 30;
-      ctx.beginPath();
-      ctx.arc(xPos, currentY, 5, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Update position
-      xPos += speed;
-      if (xPos > canvas.width) {
-        xPos = 0;
-      }
-      
-      // Calculate glow for text
-      const mainText = "Hey there, I'm Thomas!";
-      const newLetterGlows = {};
-      
-      // Match text positioning to actual render (centered, ~48px font)
-      // Assuming average character width of ~25px for 48px font
-      const avgCharWidth = 25;
-      const textWidth = mainText.length * avgCharWidth;
-      const textStartX = (canvas.width - textWidth) / 2;
-      
-      // Track if ECG line is near text area
-      const textCenterX = canvas.width / 2;
-      const textAreaStart = textStartX - 100;
-      const textAreaEnd = textStartX + textWidth + 100;
-      
-      for (let i = 0; i < mainText.length; i++) {
-        // Calculate each letter's center position
-        const letterX = textStartX + (i * avgCharWidth) + (avgCharWidth / 2);
-        const distance = Math.abs(xPos - letterX);
+      // Update position based on current phase
+      if (!isRetracting) {
+        // Moving forward
+        xPos += speed;
         
-        // Glow calculation with larger radius
-        const glowRadius = 180;
-        if (distance < glowRadius) {
-          // Use cosine for smoother falloff
-          const normalized = distance / glowRadius;
-          newLetterGlows[i] = Math.cos(normalized * Math.PI / 2);
-        } else {
-          newLetterGlows[i] = 0;
+        // When we reach the end, start retracting
+        if (xPos > canvas.width) {
+          isRetracting = true;
+        }
+      } else {
+        // Retracting - move the trail start forward
+        const oldTrailStart = trailStart;
+        trailStart += speed * 2; // Retract faster for visual effect
+        
+        // Create binary particles at the retracting edge
+        if (Math.random() < 0.3) { // 30% chance each frame
+          // Get the Y position at the current trail start
+          let particleY = centerY;
+          const beatPos = trailStart % 500;
+          if (beatPos > 100 && beatPos < 180) {
+            const progress = (beatPos - 100) / 80;
+            if (progress < 0.3) {
+              particleY = centerY - (progress / 0.3) * 250;
+            } else if (progress < 0.5) {
+              particleY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
+            } else if (progress < 0.6) {
+              particleY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
+            }
+          }
+          
+          // Add some randomness to particle spawn position
+          binaryParticles.push(new BinaryParticle(
+            trailStart + (Math.random() - 0.5) * 20,
+            particleY + (Math.random() - 0.5) * 10
+          ));
+        }
+        
+        // When fully retracted, reset for next cycle
+        if (trailStart >= xPos) {
+          xPos = 0;
+          trailStart = 0;
+          isRetracting = false;
         }
       }
       
-      setLetterGlows(newLetterGlows);
+      // Update and draw binary particles
+      binaryParticles = binaryParticles.filter(particle => {
+        const alive = particle.update();
+        if (alive) {
+          particle.draw(ctx);
+        }
+        return alive;
+      });
+      
       requestAnimationFrame(animate);
     };
 
@@ -368,6 +477,23 @@ export default function Portfolio() {
           50% { transform: translateY(-10px); }
         }
 
+        @keyframes gradientShift {
+          0% { 
+            background-position: 0% 50%;
+          }
+          50% { 
+            background-position: 100% 50%;
+          }
+          100% { 
+            background-position: 0% 50%;
+          }
+        }
+
+        .vibey-gradient {
+          background-size: 400% 400%;
+          animation: gradientShift 15s ease infinite;
+        }
+
         .heartbeat-glow {
           animation: pulse 1s ease-in-out infinite;
         }
@@ -409,6 +535,78 @@ export default function Portfolio() {
         }
       `}</style>
 
+      {/* Color-shifting background that appears on scroll */}
+      <div 
+        className="vibey-gradient"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: `
+            linear-gradient(
+              -45deg, 
+              rgba(139, 92, 246, ${scrollProgress * 0.1}),
+              rgba(6, 182, 212, ${scrollProgress * 0.1}),
+              rgba(249, 115, 22, ${scrollProgress * 0.1}),
+              rgba(236, 72, 153, ${scrollProgress * 0.1})
+            )
+          `,
+          opacity: scrollProgress,
+          transition: 'opacity 0.6s ease-out',
+          pointerEvents: 'none',
+          zIndex: 0
+        }}
+      />
+      
+      {/* Soft gradient orbs for depth */}
+      <div 
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          opacity: scrollProgress * 0.6,
+          transition: 'opacity 0.6s ease-out',
+          pointerEvents: 'none',
+          zIndex: 0
+        }}
+      >
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          left: '10%',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+          filter: 'blur(40px)',
+          animation: 'float 8s ease-in-out infinite'
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '20%',
+          right: '10%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+          animation: 'float 10s ease-in-out infinite reverse'
+        }} />
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '500px',
+          height: '500px',
+          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+          animation: 'float 12s ease-in-out infinite'
+        }} />
+      </div>
+
       {/* ECG Background Canvas */}
       <canvas 
         ref={canvasRef}
@@ -419,7 +617,10 @@ export default function Portfolio() {
           width: '100%',
           height: '100%',
           zIndex: 1,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          filter: `blur(${scrollProgress * 15}px)`,
+          opacity: 1 - (scrollProgress * 0.7),
+          transition: 'filter 0.3s ease-out, opacity 0.3s ease-out'
         }}
       />
 
@@ -568,39 +769,39 @@ export default function Portfolio() {
             fontSize: '48px',
             fontWeight: '600',
             marginBottom: '16px',
-            lineHeight: '1.2'
+            lineHeight: '1.2',
+            color: '#ffffff',
+            minHeight: '58px' // Prevent layout shift
           }}>
-            {"Hey there, I'm Thomas!".split('').map((letter, index) => {
-              const glow = letterGlows[index] || 0;
-              
-              // Smooth color interpolation from white to purple
-              const r = Math.round(255 - (116 * glow)); // 255 -> 139
-              const g = Math.round(255 - (163 * glow)); // 255 -> 92
-              const b = Math.round(255 - (9 * glow));   // 255 -> 246
-              
-              return (
-                <span
-                  key={index}
-                  style={{
-                    color: `rgb(${r}, ${g}, ${b})`,
-                    textShadow: glow > 0 ? `0 0 ${40 * glow}px rgba(139, 92, 246, 1), 0 0 ${80 * glow}px rgba(139, 92, 246, 0.8), 0 0 ${120 * glow}px rgba(139, 92, 246, 0.5)` : 'none',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    display: 'inline-block',
-                    transform: `scale(${1 + glow * 0.05})`
-                  }}
-                >
-                  {letter === ' ' ? '\u00A0' : letter}
-                </span>
-              );
-            })}
+            {typedText}
+            <span style={{
+              opacity: showCursor && typedText.length > 0 ? 1 : 0,
+              transition: 'opacity 0.1s',
+              color: '#8B5CF6',
+              fontWeight: '300'
+            }}>|</span>
           </h1>
           
           <p style={{
-            fontSize: '20px',
-            color: '#94a3b8',
-            marginBottom: '8px'
+            fontSize: '24px',
+            color: '#8B5CF6',
+            marginBottom: '16px',
+            opacity: showSubtitle ? 1 : 0,
+            transform: showSubtitle ? 'translateY(0)' : 'translateY(20px)',
+            transition: 'all 0.8s ease-out',
+            fontWeight: '300'
           }}>
-            Health Informatics Student, ML/AI Engineer, and Full Stack Developer
+            Bridging Healthcare & Technology
+          </p>
+          
+          <p style={{
+            fontSize: '18px',
+            color: '#94a3b8',
+            marginBottom: '8px',
+            opacity: showSubtitle ? 1 : 0,
+            transition: 'opacity 1s ease-out 0.3s'
+          }}>
+            Health Informatics Student • ML/AI Engineer • Full Stack Developer
           </p>
           
           <p style={{
@@ -608,10 +809,12 @@ export default function Portfolio() {
             color: '#64748b',
             marginBottom: '40px',
             maxWidth: '600px',
-            margin: '0 auto 40px'
+            margin: '0 auto 40px',
+            opacity: showSubtitle ? 1 : 0,
+            transition: 'opacity 1s ease-out 0.6s'
           }}>
-            Passionate about the pursuit of knowledge and helping others
-            break into the tech industry.
+            Passionate about leveraging technology to improve patient outcomes
+            and advance healthcare innovation.
           </p>
 
           <div style={{
