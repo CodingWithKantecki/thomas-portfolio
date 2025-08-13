@@ -805,7 +805,7 @@ export default function Portfolio() {
           fontWeight: '600',
           color: '#8B5CF6'
         }}>
-          thomas.dev
+          kantecki.dev
         </div>
         
         <div style={{
@@ -836,7 +836,7 @@ export default function Portfolio() {
             display: 'flex',
             gap: '20px'
           }}>
-            <a href="https://github.com" style={{ color: '#ffffff', opacity: 0.8 }}>
+            <a href="https://github.com/CodingWithKantecki" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', opacity: 0.8 }}>
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
               </svg>
@@ -972,40 +972,14 @@ export default function Portfolio() {
 
           <div style={{
             display: 'flex',
-            gap: '16px',
             justifyContent: 'center',
             marginBottom: '60px'
           }}>
-            <button style={{
-              padding: '12px 32px',
-              background: 'transparent',
-              border: '1px solid rgba(139, 92, 246, 0.5)',
-              borderRadius: '8px',
-              color: '#ffffff',
-              fontSize: '16px',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.borderColor = '#8B5CF6';
-              e.target.style.background = 'rgba(139, 92, 246, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-              e.target.style.background = 'transparent';
-            }}>
-              Care to learn more?
-              <span style={{
-                position: 'absolute',
-                bottom: '-2px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                fontSize: '20px',
-                animation: 'float 2s ease-in-out infinite'
-              }}>↓</span>
-            </button>
+            <span style={{
+              fontSize: '24px',
+              color: '#8B5CF6',
+              animation: 'float 2s ease-in-out infinite'
+            }}>↓</span>
           </div>
         </div>
       </section>
@@ -1024,89 +998,356 @@ export default function Portfolio() {
           marginBottom: '60px',
           textAlign: 'center'
         }}>
-          Experience & Projects
+          Experience & Education
         </h2>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '32px'
+          gridTemplateColumns: '1fr',
+          gap: '48px',
+          maxWidth: '900px',
+          margin: '0 auto'
         }}>
-          {[
-            {
-              title: 'Sentinel PHI Scanner',
-              description: 'HIPAA-compliant AI tool for detecting Protected Health Information',
-              tech: ['Python', 'BERT', 'Docker'],
-              metrics: '99.2% accuracy'
-            },
-            {
-              title: 'ER Triage Simulator',
-              description: 'ML-powered training platform for emergency department staff',
-              tech: ['React', 'TensorFlow.js', 'FHIR'],
-              metrics: '500+ users trained'
-            },
-            {
-              title: 'Clinical Notes Analyzer',
-              description: 'NLP pipeline for extracting structured data from medical records',
-              tech: ['spaCy', 'PostgreSQL', 'FastAPI'],
-              metrics: '10K+ notes processed'
-            },
-            {
-              title: 'Epic EHR Plugin',
-              description: 'Voice-to-SOAP notes automation for physician workflows',
-              tech: ['Epic APIs', 'Claude API', 'Python'],
-              metrics: '75% time saved'
-            }
-          ].map((project, index) => (
-            <div key={project.title} style={{
-              background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: '16px',
-              padding: '32px',
-              border: '1px solid rgba(139, 92, 246, 0.2)',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s',
-              cursor: 'pointer',
-              animation: `fadeInUp 0.8s ease-out ${index * 0.1}s both`
+          {/* Work Experience */}
+          <div>
+            <h3 style={{
+              fontSize: '24px',
+              fontWeight: '600',
+              marginBottom: '32px',
+              color: '#8B5CF6',
+              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
+              paddingBottom: '12px'
+            }}>
+              Professional Experience
+            </h3>
+            
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.5)',
+              borderRadius: '12px',
+              padding: '24px',
+              border: '1px solid rgba(139, 92, 246, 0.1)',
+              marginBottom: '24px',
+              transition: 'all 0.3s'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-              e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
-              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
             }}>
-              <h3 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '8px' }}>
-                {project.title}
-              </h3>
-              <p style={{ color: '#94a3b8', fontSize: '14px', marginBottom: '16px' }}>
-                {project.description}
-              </p>
-              <div style={{ 
-                fontSize: '12px', 
-                color: '#8B5CF6', 
-                marginBottom: '16px',
-                fontWeight: '600'
-              }}>
-                {project.metrics}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                <div>
+                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
+                    Sales Associate
+                  </h4>
+                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
+                    Lacoste • Orlando, FL
+                  </p>
+                </div>
+                <span style={{
+                  fontSize: '14px',
+                  color: '#94a3b8',
+                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                  padding: '4px 12px',
+                  borderRadius: '4px'
+                }}>
+                  Mar 2023 - Jul 2023
+                </span>
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {project.tech.map(tech => (
-                  <span key={tech} style={{
-                    fontSize: '12px',
+              <ul style={{ 
+                color: '#cbd5e1', 
+                fontSize: '14px', 
+                lineHeight: '1.8',
+                paddingLeft: '20px',
+                marginTop: '12px'
+              }}>
+                <li>Provided exceptional customer service in luxury retail environment</li>
+                <li>Achieved sales targets through product knowledge and client relationships</li>
+                <li>Maintained visual merchandising standards and inventory management</li>
+                <li>Collaborated with team to enhance store performance and customer experience</li>
+              </ul>
+            </div>
+            
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.5)',
+              borderRadius: '12px',
+              padding: '24px',
+              border: '1px solid rgba(139, 92, 246, 0.1)',
+              marginBottom: '24px',
+              transition: 'all 0.3s'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                <div>
+                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
+                    Administrative Assistant
+                  </h4>
+                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
+                    Sharelife Vacation • Orlando, FL
+                  </p>
+                </div>
+                <span style={{
+                  fontSize: '14px',
+                  color: '#94a3b8',
+                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                  padding: '4px 12px',
+                  borderRadius: '4px'
+                }}>
+                  Apr 2021 - Aug 2022
+                </span>
+              </div>
+              <ul style={{ 
+                color: '#cbd5e1', 
+                fontSize: '14px', 
+                lineHeight: '1.8',
+                paddingLeft: '20px',
+                marginTop: '12px'
+              }}>
+                <li>Processed and checked in approximately 100 guests daily</li>
+                <li>Drafted contracts and handled payments using Authorize.net system</li>
+                <li>Welcomed virtual guests, collected sensitive information, and ran credit checks using Experian</li>
+                <li>Maintained office supplies, handled payroll, and distributed weekly sales reports</li>
+                <li>Managed office administrative duties and supported overall business operations</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Education */}
+          <div>
+            <h3 style={{
+              fontSize: '24px',
+              fontWeight: '600',
+              marginBottom: '32px',
+              color: '#8B5CF6',
+              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
+              paddingBottom: '12px'
+            }}>
+              Education
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid rgba(139, 92, 246, 0.1)',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                      Bachelor's Degree in Health Informatics and Information Management
+                    </h4>
+                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                      University of Central Florida (UCF) • Orlando, FL
+                    </p>
+                  </div>
+                  <span style={{
+                    fontSize: '14px',
+                    color: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     padding: '4px 12px',
-                    background: 'rgba(139, 92, 246, 0.1)',
                     borderRadius: '4px',
-                    border: '1px solid rgba(139, 92, 246, 0.2)'
+                    fontWeight: '600'
                   }}>
-                    {tech}
+                    Aug 2023 - Present
                   </span>
-                ))}
+                </div>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid rgba(139, 92, 246, 0.1)',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                      Associate's Degree in General Studies
+                    </h4>
+                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                      Valencia College • Orlando, FL
+                    </p>
+                  </div>
+                  <span style={{
+                    fontSize: '14px',
+                    color: '#94a3b8',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    padding: '4px 12px',
+                    borderRadius: '4px'
+                  }}>
+                    Aug 2021 - Aug 2023
+                  </span>
+                </div>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid rgba(139, 92, 246, 0.1)',
+                transition: 'all 0.3s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
+                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                      High School Diploma
+                    </h4>
+                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                      Windermere High School • Windermere, FL
+                    </p>
+                  </div>
+                  <span style={{
+                    fontSize: '14px',
+                    color: '#94a3b8',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    padding: '4px 12px',
+                    borderRadius: '4px'
+                  }}>
+                    Aug 2017 - May 2021
+                  </span>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" style={{
+        padding: '120px 48px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        position: 'relative',
+        zIndex: 10
+      }}>
+        <h2 style={{
+          fontSize: '36px',
+          fontWeight: '600',
+          marginBottom: '60px',
+          textAlign: 'center'
+        }}>
+          Featured Project
+        </h2>
+
+        <div style={{
+          background: 'rgba(30, 41, 59, 0.8)',
+          borderRadius: '16px',
+          padding: '48px',
+          border: '1px solid rgba(139, 92, 246, 0.2)',
+          backdropFilter: 'blur(10px)',
+          transition: 'all 0.3s',
+          animation: `fadeInUp 0.8s ease-out both`,
+          maxWidth: '900px',
+          margin: '0 auto'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-4px)';
+          e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
+          e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
+          e.currentTarget.style.boxShadow = 'none';
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
+            <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
+              Checkmate Protocol™
+            </h3>
+            <span style={{
+              fontSize: '14px',
+              padding: '4px 12px',
+              background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
+              borderRadius: '4px',
+              color: '#ffffff',
+              fontWeight: '600'
+            }}>
+              FEATURED
+            </span>
+          </div>
+          
+          <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
+            A military-themed strategic chess game featuring advanced AI opponents, 
+            powerup systems, and an immersive story campaign mode.
+          </p>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
+            <div>
+              <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                Key Features
+              </h4>
+              <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <li>9-zone story campaign with unique AI personalities</li>
+                <li>14 military-themed powerups (airstrikes, shields, etc.)</li>
+                <li>Arasan chess engine (800-2800 ELO difficulty)</li>
+                <li>Cinematic cutscenes and dialogue system</li>
+                <li>Multiple game modes: Story, Sandbox, Classic</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                Technical Highlights
+              </h4>
+              <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <li>Custom game engine built with Pygame</li>
+                <li>Advanced AI with adjustable difficulty</li>
+                <li>Particle effects and animations</li>
+                <li>Save/load system with progress tracking</li>
+                <li>Original soundtracks and SFX</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {['Python', 'Pygame', 'AI/ML', 'Game Design', 'Chess Engine', 'State Management', 'Audio Engineering'].map(tech => (
+              <span key={tech} style={{
+                fontSize: '12px',
+                padding: '6px 14px',
+                background: 'rgba(139, 92, 246, 0.1)',
+                borderRadius: '4px',
+                border: '1px solid rgba(139, 92, 246, 0.2)'
+              }}>
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1153,6 +1394,8 @@ export default function Portfolio() {
               'Claude',
               'Machine Learning',
               'Deep Learning',
+              'Prompt Engineering',
+              'LLM Architecture',
               'HIPAA',
               'EHR Systems',
               'EPIC',
