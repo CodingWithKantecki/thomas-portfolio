@@ -847,8 +847,8 @@ export default function Portfolio() {
               </svg>
             </a>
             <a href="https://linktr.ee/CodingWithKantecki" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff', opacity: 0.8 }}>
-              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7.953 15.066c-.08.163-.08.324-.08.486.08.517.528.897 1.052.89h1.294v4.776c0 .486.404.89.89.89h.89c.485 0 .889-.404.889-.89v-4.776h1.294c.524.007.972-.373 1.052-.89 0-.162 0-.323-.08-.486l-4.596-9.19a.89.89 0 0 0-1.605 0l-4.596 9.19zm8.032-2.89c0 .405.324.729.729.729.404 0 .729-.324.729-.729v-3.24h1.537c.405 0 .729-.324.729-.729 0-.404-.324-.728-.729-.728h-1.537V4.24c0-.405-.325-.729-.729-.729-.405 0-.729.324-.729.729v3.24h-1.537c-.405 0-.729.324-.729.728 0 .405.324.729.729.729h1.537v3.24z"/>
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
               </svg>
             </a>
             <a href="/blog" style={{ color: '#ffffff', opacity: 0.8 }}>
