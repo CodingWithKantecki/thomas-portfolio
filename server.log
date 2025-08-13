@@ -1,0 +1,173 @@
+
+> thomas-portfolio@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use by process 1293, using available port 3001 instead.
+   ▲ Next.js 15.4.3
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.68.52:3001
+
+ ✓ Starting...
+ ✓ Ready in 1119ms
+ ○ Compiling / ...
+ ✓ Compiled / in 848ms (595 modules)
+ GET / 200 in 1035ms
+ ✓ Compiled /favicon.ico in 84ms (363 modules)
+ GET /favicon.ico 200 in 151ms
+ GET / 200 in 172ms
+ GET /favicon.ico 200 in 11ms
+ ⨯ ./src/app/page.js
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/kentucky/Desktop/thomas-portfolio/src/app/page.js[0m:113:1]
+ [2m110[0m |             }
+ [2m111[0m |           } else {
+ [2m112[0m |             delete item.dataset.logged;
+ [2m113[0m |           } else {
+     : [35;1m            ^^^^[0m
+ [2m114[0m |             item.classList.remove('hovering');
+ [2m115[0m |             if (gradientSweep) {
+ [2m116[0m |               gradientSweep.style.backgroundPosition = '-150% 0';
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/page.js
+ ⨯ ./src/app/page.js
+Error:   [31mx[0m Expression expected
+     ,-[[36;1;4m/Users/kentucky/Desktop/thomas-portfolio/src/app/page.js[0m:113:1]
+ [2m110[0m |             }
+ [2m111[0m |           } else {
+ [2m112[0m |             delete item.dataset.logged;
+ [2m113[0m |           } else {
+     : [35;1m            ^^^^[0m
+ [2m114[0m |             item.classList.remove('hovering');
+ [2m115[0m |             if (gradientSweep) {
+ [2m116[0m |               gradientSweep.style.backgroundPosition = '-150% 0';
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/page.js
+ GET / 500 in 608ms
+ GET / 500 in 4ms
+ GET / 500 in 4ms
+ GET / 500 in 5ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_not-found in 404ms (931 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 37ms
+ GET /_next/static/webpack/c55e4663aa919009.webpack.hot-update.json 404 in 543ms
+ GET / 200 in 28ms
+ GET /favicon.ico 200 in 18ms
+ GET / 200 in 60ms
+ GET /favicon.ico 200 in 4ms
+ GET / 200 in 61ms
+ GET / 200 in 38ms
+ GET /favicon.ico 200 in 4ms
+ GET / 200 in 55ms
+ GET /favicon.ico 200 in 5ms
+ ✓ Compiled in 277ms (945 modules)
+ GET / 200 in 40ms
+ GET / 200 in 97ms
+ GET /favicon.ico 200 in 13ms
+ GET / 200 in 92ms
+ GET /favicon.ico 200 in 4ms
+ ✓ Compiled in 385ms (837 modules)
+ GET / 200 in 79ms
+ GET / 200 in 121ms
+ ✓ Compiled /favicon.ico in 80ms (457 modules)
+ GET /favicon.ico 200 in 145ms
+ ✓ Compiled in 178ms (854 modules)
+ GET / 200 in 55ms
+ GET / 200 in 94ms
+ GET /favicon.ico 200 in 9ms
+ GET / 200 in 71ms
+ GET /favicon.ico 200 in 7ms
+ GET / 200 in 65ms
+ ✓ Compiled in 278ms (854 modules)
+ GET / 200 in 51ms
+ ✓ Compiled in 143ms (837 modules)
+ GET / 200 in 75ms
+ ✓ Compiled in 137ms (837 modules)
+ GET / 200 in 26ms
+ ✓ Compiled in 122ms (837 modules)
+ GET / 200 in 57ms
+ GET / 200 in 105ms
+ ✓ Compiled /favicon.ico in 61ms (457 modules)
+ GET /favicon.ico 200 in 128ms
+ GET / 200 in 131ms
+ GET /favicon.ico 200 in 4ms
+ GET / 200 in 68ms
+ GET /favicon.ico 200 in 3ms
+ GET / 200 in 52ms
+ GET /favicon.ico 200 in 8ms
+ ✓ Compiled in 324ms (854 modules)
+ GET / 200 in 88ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET / 200 in 48ms
+ GET /favicon.ico 200 in 18ms
+ GET / 200 in 57ms
+ GET /favicon.ico 200 in 4ms
+ ✓ Compiled in 296ms (837 modules)
+ GET / 200 in 86ms
+ GET / 200 in 123ms
+ ✓ Compiled /favicon.ico in 80ms (457 modules)
+ GET /favicon.ico 200 in 138ms
+ ✓ Compiled in 227ms (854 modules)
+ GET / 200 in 48ms
+ GET / 200 in 120ms
+ GET /favicon.ico 200 in 7ms
+ ✓ Compiled in 157ms (854 modules)
+ GET / 200 in 25ms
+ ✓ Compiled in 240ms (854 modules)
+ GET / 200 in 55ms
+ ✓ Compiled in 126ms (837 modules)
+ GET / 200 in 52ms
+ ✓ Compiled in 156ms (837 modules)
+ GET / 200 in 23ms
+ ✓ Compiled in 148ms (837 modules)
+ GET / 200 in 25ms
+ ✓ Compiled in 146ms (837 modules)
+ GET / 200 in 39ms
+ GET / 200 in 108ms
+ ✓ Compiled /favicon.ico in 152ms (457 modules)
+ GET /favicon.ico 200 in 209ms
+ GET / 200 in 143ms
+ GET /favicon.ico 200 in 4ms
+ GET / 200 in 48ms
+ ✓ Compiled in 242ms (837 modules)
+ GET / 200 in 105ms
+ ✓ Compiled in 307ms (837 modules)
+ GET / 200 in 44ms
+ ✓ Compiled in 198ms (837 modules)
+ GET / 200 in 45ms
+ ✓ Compiled in 160ms (837 modules)
+ GET / 200 in 23ms
+ GET / 200 in 127ms
+ ✓ Compiled /favicon.ico in 114ms (457 modules)
+ GET /favicon.ico 200 in 184ms
+ ✓ Compiled in 280ms (837 modules)
+ GET / 200 in 79ms
+ GET / 200 in 106ms
+ ✓ Compiled /favicon.ico in 69ms (457 modules)
+ GET /favicon.ico 200 in 109ms
+ ✓ Compiled in 151ms (854 modules)
+ GET / 200 in 65ms
+ GET / 200 in 109ms
+ GET /favicon.ico 200 in 6ms
+ GET / 200 in 60ms
+ GET /favicon.ico 200 in 5ms
+ ✓ Compiled in 430ms (854 modules)
+ GET / 200 in 47ms
+ GET / 200 in 104ms
+ GET /favicon.ico 200 in 16ms
+ ✓ Compiled in 215ms (854 modules)
+ GET / 200 in 34ms
+ GET / 200 in 92ms
+ GET /favicon.ico 200 in 7ms
+ GET / 200 in 89ms
+ GET /favicon.ico 200 in 4ms
