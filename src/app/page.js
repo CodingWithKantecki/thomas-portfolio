@@ -1497,7 +1497,7 @@ export default function Portfolio() {
           gap: '24px',
           justifyContent: 'center'
         }}>
-          <a href="mailto:thomas@example.com" style={{
+          <a href="mailto:thomaskantecki2003@gmail.com" style={{
             padding: '14px 32px',
             background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
             borderRadius: '8px',
