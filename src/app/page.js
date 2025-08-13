@@ -1153,7 +1153,7 @@ export default function Portfolio() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                      Bachelor's Degree in Health Informatics and Information Management
+                      Bachelor&apos;s Degree in Health Informatics and Information Management
                     </h4>
                     <p style={{ color: '#94a3b8', fontSize: '14px' }}>
                       University of Central Florida (UCF) • Orlando, FL
@@ -1190,7 +1190,7 @@ export default function Portfolio() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                      Associate's Degree in General Studies
+                      Associate&apos;s Degree in General Studies
                     </h4>
                     <p style={{ color: '#94a3b8', fontSize: '14px' }}>
                       Valencia College • Orlando, FL
