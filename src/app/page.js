@@ -971,7 +971,7 @@ export default function Portfolio() {
             opacity: showSubtitle ? 1 : 0,
             transition: 'opacity 1s ease-out 0.3s'
           }}>
-            Health Informatics Student • ML/AI Engineer • Full Stack Developer
+            Health Informatics • AI Engineer • Full-Stack Developer
           </p>
           
 

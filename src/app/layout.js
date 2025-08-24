@@ -5,11 +5,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Thomas Kantecki - Health Informatics & AI Developer",
-  description: "Portfolio of Thomas Kantecki - Health Informatics student at UCF, specializing in AI solutions for healthcare and military applications",
+  description: "Portfolio of Thomas Kantecki - Health Informatics • AI Engineer • Full-Stack Developer specializing in AI solutions for healthcare applications",
   keywords: "health informatics, AI developer, healthcare technology, UCF, HIIM, medical software, HIPAA compliance, Thomas Kantecki",
   openGraph: {
     title: "Thomas Kantecki - Health Informatics & AI Developer",
-    description: "Building innovative AI solutions for healthcare and military applications",
+    description: "Building innovative AI solutions for healthcare applications",
     type: "website",
     url: "https://kantecki.dev",
   },
