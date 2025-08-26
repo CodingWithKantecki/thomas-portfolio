@@ -1267,91 +1267,221 @@ export default function Portfolio() {
           marginBottom: '60px',
           textAlign: 'center'
         }}>
-          Featured Project
+          Featured Projects
         </h2>
 
         <div style={{
-          background: 'rgba(30, 41, 59, 0.8)',
-          borderRadius: '16px',
-          padding: '48px',
-          border: '1px solid rgba(139, 92, 246, 0.2)',
-          backdropFilter: 'blur(10px)',
-          transition: 'all 0.3s',
-          animation: `fadeInUp 0.8s ease-out both`,
-          maxWidth: '900px',
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          gap: '48px',
+          maxWidth: '1000px',
           margin: '0 auto'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-4px)';
-          e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-          e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
-          e.currentTarget.style.boxShadow = 'none';
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
-            <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
-              Checkmate Protocol™
-            </h3>
-            <span style={{
-              fontSize: '14px',
-              padding: '4px 12px',
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
-              borderRadius: '4px',
-              color: '#ffffff',
-              fontWeight: '600'
-            }}>
-              FEATURED
-            </span>
-          </div>
-          
-          <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
-            A military-themed strategic chess game featuring advanced AI opponents, 
-            powerup systems, and an immersive story campaign mode.
-          </p>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
-                Key Features
-              </h4>
-              <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
-                <li>9-zone story campaign with unique AI personalities</li>
-                <li>14 military-themed powerups (airstrikes, shields, etc.)</li>
-                <li>Arasan chess engine (800-2800 ELO difficulty)</li>
-                <li>Cinematic cutscenes and dialogue system</li>
-                <li>Multiple game modes: Story, Sandbox, Classic</li>
-              </ul>
+          {/* Checkmate Protocol Project */}
+          <div style={{
+            background: 'rgba(30, 41, 59, 0.8)',
+            borderRadius: '16px',
+            padding: '48px',
+            border: '1px solid rgba(139, 92, 246, 0.2)',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s',
+            animation: `fadeInUp 0.8s ease-out both`
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-4px)';
+            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
+              <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
+                Checkmate Protocol™
+              </h3>
+              <span style={{
+                fontSize: '14px',
+                padding: '4px 12px',
+                background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
+                borderRadius: '4px',
+                color: '#ffffff',
+                fontWeight: '600'
+              }}>
+                FEATURED
+              </span>
             </div>
             
-            <div>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
-                Technical Highlights
-              </h4>
-              <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
-                <li>Custom game engine built with Pygame</li>
-                <li>Advanced AI with adjustable difficulty</li>
-                <li>Particle effects and animations</li>
-                <li>Save/load system with progress tracking</li>
-                <li>Original soundtracks and SFX</li>
-              </ul>
+            <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
+              A military-themed strategic chess game featuring advanced AI opponents, 
+              powerup systems, and an immersive story campaign mode.
+            </p>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                  Key Features
+                </h4>
+                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                  <li>9-zone story campaign with unique AI personalities</li>
+                  <li>14 military-themed powerups (airstrikes, shields, etc.)</li>
+                  <li>Arasan chess engine (800-2800 ELO difficulty)</li>
+                  <li>Cinematic cutscenes and dialogue system</li>
+                  <li>Multiple game modes: Story, Sandbox, Classic</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                  Technical Highlights
+                </h4>
+                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                  <li>Custom game engine built with Pygame</li>
+                  <li>Advanced AI with adjustable difficulty</li>
+                  <li>Particle effects and animations</li>
+                  <li>Save/load system with progress tracking</li>
+                  <li>Original soundtracks and SFX</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {['Python', 'Pygame', 'AI/ML', 'Game Design', 'Chess Engine', 'State Management', 'Audio Engineering'].map(tech => (
+                <span key={tech} style={{
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                  background: 'rgba(139, 92, 246, 0.1)',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(139, 92, 246, 0.2)'
+                }}>
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
-          
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-            {['Python', 'Pygame', 'AI/ML', 'Game Design', 'Chess Engine', 'State Management', 'Audio Engineering'].map(tech => (
-              <span key={tech} style={{
-                fontSize: '12px',
-                padding: '6px 14px',
-                background: 'rgba(139, 92, 246, 0.1)',
-                borderRadius: '4px',
-                border: '1px solid rgba(139, 92, 246, 0.2)'
-              }}>
-                {tech}
-              </span>
-            ))}
+
+          {/* Sentinel PHI Scanner Project */}
+          <div style={{
+            background: 'rgba(30, 41, 59, 0.8)',
+            borderRadius: '16px',
+            padding: '48px',
+            border: '1px solid rgba(16, 185, 129, 0.2)',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s',
+            animation: `fadeInUp 0.8s ease-out 0.2s both`
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-4px)';
+            e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
+              <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
+                🔐 Sentinel PHI Scanner
+              </h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <span style={{
+                  fontSize: '14px',
+                  padding: '4px 12px',
+                  background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
+                  borderRadius: '4px',
+                  color: '#ffffff',
+                  fontWeight: '600'
+                }}>
+                  HEALTHCARE
+                </span>
+                <a 
+                  href="https://github.com/CodingWithKantecki/sentinel-phi-scanner" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '14px',
+                    padding: '4px 12px',
+                    background: 'transparent',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '4px',
+                    color: '#ffffff',
+                    fontWeight: '500',
+                    textDecoration: 'none',
+                    transition: 'all 0.3s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#ffffff';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  VIEW CODE
+                </a>
+              </div>
+            </div>
+            
+            <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
+              A Python-based tool designed to identify potential Protected Health Information (PHI) 
+              in text documents using pattern matching and regular expressions.
+            </p>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#10B981' }}>
+                  Key Learning Outcomes
+                </h4>
+                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                  <li>Hands-on experience with healthcare data standards</li>
+                  <li>Understanding of HIPAA requirements and compliance</li>
+                  <li>Challenges in automated sensitive data detection</li>
+                  <li>Enterprise-grade DLP solution requirements</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#10B981' }}>
+                  Technical Skills
+                </h4>
+                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                  <li>Python development for text processing</li>
+                  <li>Regular expression pattern design</li>
+                  <li>Healthcare domain knowledge application</li>
+                  <li>Git version control and documentation</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style={{ 
+              background: 'rgba(239, 68, 68, 0.1)', 
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              borderRadius: '8px',
+              padding: '16px',
+              marginBottom: '24px'
+            }}>
+              <p style={{ color: '#FCA5A5', fontSize: '14px', margin: 0, fontWeight: '500' }}>
+                ⚠️ <strong>Note:</strong> This was a learning project and is not intended for production use. 
+                For actual PHI detection needs, please use certified healthcare compliance tools.
+              </p>
+            </div>
+            
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {['Python', 'Streamlit', 'Regex', 'HIPAA', 'PHI Detection', 'Healthcare IT', 'Text Processing', 'Data Security'].map(tech => (
+                <span key={tech} style={{
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                  background: 'rgba(16, 185, 129, 0.1)',
+                  borderRadius: '4px',
+                  border: '1px solid rgba(16, 185, 129, 0.2)'
+                }}>
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
