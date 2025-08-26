@@ -1383,7 +1383,7 @@ export default function Portfolio() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
               <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
-                🔐 Sentinel PHI Scanner
+                Sentinel PHI Scanner
               </h3>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <span style={{
@@ -1395,6 +1395,16 @@ export default function Portfolio() {
                   fontWeight: '600'
                 }}>
                   HEALTHCARE
+                </span>
+                <span style={{
+                  fontSize: '14px',
+                  padding: '4px 12px',
+                  background: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
+                  borderRadius: '4px',
+                  color: '#ffffff',
+                  fontWeight: '600'
+                }}>
+                  HACKATHON
                 </span>
                 <a 
                   href="https://github.com/CodingWithKantecki/sentinel-phi-scanner" 
@@ -1454,19 +1464,6 @@ export default function Portfolio() {
                   <li>Git version control and documentation</li>
                 </ul>
               </div>
-            </div>
-
-            <div style={{ 
-              background: 'rgba(239, 68, 68, 0.1)', 
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              borderRadius: '8px',
-              padding: '16px',
-              marginBottom: '24px'
-            }}>
-              <p style={{ color: '#FCA5A5', fontSize: '14px', margin: 0, fontWeight: '500' }}>
-                ⚠️ <strong>Note:</strong> This was a learning project and is not intended for production use. 
-                For actual PHI detection needs, please use certified healthcare compliance tools.
-              </p>
             </div>
             
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
