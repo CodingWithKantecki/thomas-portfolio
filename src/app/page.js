@@ -1299,7 +1299,7 @@ export default function Portfolio() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
               <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
-                Board of War
+                Board of War™
               </h3>
               <span style={{
                 fontSize: '14px',
