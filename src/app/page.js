@@ -1277,7 +1277,7 @@ export default function Portfolio() {
           maxWidth: '1000px',
           margin: '0 auto'
         }}>
-          {/* Checkmate Protocol Project */}
+          {/* Board of War Project */}
           <div style={{
             background: 'rgba(30, 41, 59, 0.8)',
             borderRadius: '16px',
@@ -1299,7 +1299,7 @@ export default function Portfolio() {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
               <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
-                Checkmate Protocol™
+                Board of War
               </h3>
               <span style={{
                 fontSize: '14px',
