@@ -898,8 +898,8 @@ export default function Portfolio() {
                 position: 'relative'
               }}>
                 {/* Replace 'headshot.jpg' with your actual image filename */}
-                <Image 
-                  src="/me.jpeg" 
+                <Image
+                  src="/me.jpeg"
                   alt="Thomas"
                   fill
                   style={{
@@ -910,26 +910,6 @@ export default function Portfolio() {
                   priority
                 />
               </div>
-            </div>
-            {/* Status indicator */}
-            <div style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-              width: '40px',
-              height: '40px',
-              background: '#0a0118',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <div className="heartbeat-glow" style={{
-                width: '20px',
-                height: '20px',
-                background: '#8B5CF6',
-                borderRadius: '50%'
-              }} />
             </div>
           </div>
 
@@ -980,11 +960,29 @@ export default function Portfolio() {
             justifyContent: 'center',
             marginBottom: '60px'
           }}>
-            <span style={{
-              fontSize: '24px',
-              color: '#8B5CF6',
-              animation: 'float 2s ease-in-out infinite'
-            }}>↓</span>
+            <button
+              onClick={() => {
+                document.getElementById('experience').scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
+              style={{
+                fontSize: '24px',
+                color: '#8B5CF6',
+                animation: 'float 2s ease-in-out infinite',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                transition: 'transform 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              aria-label="Scroll to next section"
+            >
+              ↓
+            </button>
           </div>
         </div>
       </section>
