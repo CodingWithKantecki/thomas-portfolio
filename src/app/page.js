@@ -1654,7 +1654,7 @@ export default function Portfolio() {
           color: '#94a3b8',
           opacity: 0.8
         }}>
-          made with <span style={{ color: '#EF4444' }}>♥</span> by thomas
+          made with <span style={{ color: '#EF4444' }}>♥</span> and vibes by thomas
         </p>
       </footer>
     </>
