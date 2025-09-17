@@ -1655,6 +1655,23 @@ export default function Portfolio() {
           </a>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer style={{
+        padding: '32px 48px',
+        textAlign: 'center',
+        borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+        position: 'relative',
+        zIndex: 10
+      }}>
+        <p style={{
+          fontSize: '14px',
+          color: '#94a3b8',
+          opacity: 0.8
+        }}>
+          made with <span style={{ color: '#EF4444' }}>♥</span> by thomas
+        </p>
+      </footer>
     </>
   );
 }
