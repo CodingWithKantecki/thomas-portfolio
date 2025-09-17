@@ -1513,31 +1513,18 @@ export default function Portfolio() {
           }}>
             {[
               'Python',
-              'JavaScript',
-              'Pygame',
-              'Unity',
-              'React',
-              'NextJS',
-              'Tailwind CSS',
+              'MySQL',
               'Git',
+              'Pygame',
               'Linux',
-              'Docker',
-              'SQL',
-              'NoSQL',
-              'MongoDB',
-              'Prompt Engineering',
-              'HIPAA',
               'SOC 2',
               'HITRUST',
-              'EPIC',
               'ICD-10',
               'CPT',
               'HCPCS',
               'SNOMED',
-              'LOINC',
               'HL7 FHIR',
-              'Revenue Cycle',
-              'Figma'
+              'LOINC'
             ].map((skill, index) => (
               <span
                 key={skill}
