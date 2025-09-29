@@ -1170,7 +1170,7 @@ export default function Portfolio() {
                     borderRadius: '4px',
                     fontWeight: '600'
                   }}>
-                    Aug 2023 - Present
+                    Jan 2024 - Present
                   </span>
                 </div>
               </div>
