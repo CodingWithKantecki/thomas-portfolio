@@ -603,10 +603,15 @@ export default function Portfolio() {
           box-sizing: border-box;
         }
 
-        body {
+        html, body {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
           background: #0a0118;
           color: #ffffff;
+          overflow-x: hidden;
+          max-width: 100vw;
+        }
+
+        #__next {
           overflow-x: hidden;
         }
 
@@ -697,7 +702,7 @@ export default function Portfolio() {
           }
 
           .desktop-nav {
-            display: none;
+            display: none !important;
           }
 
           .mobile-nav {
@@ -767,6 +772,18 @@ export default function Portfolio() {
           .profile-image {
             width: 150px !important;
             height: 150px !important;
+          }
+
+          /* Fix project cards overflow */
+          .project-card {
+            max-width: 100%;
+            overflow: hidden;
+          }
+
+          /* Ensure sections don't overflow */
+          section {
+            max-width: 100vw;
+            overflow-x: hidden;
           }
         }
 
@@ -1454,19 +1471,22 @@ export default function Portfolio() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
-          gap: '48px',
-          maxWidth: '1000px',
-          margin: '0 auto'
+          gap: windowWidth > 768 ? '48px' : '32px',
+          maxWidth: windowWidth > 768 ? '1000px' : '100%',
+          margin: '0 auto',
+          width: '100%'
         }}>
           {/* Board of War Project */}
-          <div style={{
+          <div className="project-card" style={{
             background: 'rgba(30, 41, 59, 0.8)',
             borderRadius: '16px',
             padding: windowWidth > 768 ? '48px' : '24px',
             border: '1px solid rgba(139, 92, 246, 0.2)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s',
-            animation: `fadeInUp 0.8s ease-out both`
+            animation: `fadeInUp 0.8s ease-out both`,
+            maxWidth: '100%',
+            boxSizing: 'border-box'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-4px)';
@@ -1543,14 +1563,16 @@ export default function Portfolio() {
           </div>
 
           {/* Sentinel PHI Scanner Project */}
-          <div style={{
+          <div className="project-card" style={{
             background: 'rgba(30, 41, 59, 0.8)',
             borderRadius: '16px',
             padding: windowWidth > 768 ? '48px' : '24px',
             border: '1px solid rgba(16, 185, 129, 0.2)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s',
-            animation: `fadeInUp 0.8s ease-out 0.2s both`
+            animation: `fadeInUp 0.8s ease-out 0.2s both`,
+            maxWidth: '100%',
+            boxSizing: 'border-box'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-4px)';
