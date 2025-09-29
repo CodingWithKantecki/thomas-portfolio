@@ -11,12 +11,22 @@ export default function Portfolio() {
   const [showCursor, setShowCursor] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
   
   const fullText = "Thomas Kantecki";
 
   useEffect(() => {
+    // Handle window resize
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Set initial width
+
     // Heartbeat animation
     const heartbeatInterval = setInterval(() => {
       setHeartbeat(prev => (prev + 1) % 100);
@@ -181,6 +191,7 @@ export default function Portfolio() {
       clearInterval(cursorInterval);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -627,14 +638,135 @@ export default function Portfolio() {
         }
 
         @keyframes gradientShift {
-          0% { 
+          0% {
             background-position: 0% 50%;
           }
-          50% { 
+          50% {
             background-position: 100% 50%;
           }
-          100% { 
+          100% {
             background-position: 0% 50%;
+          }
+        }
+
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+          display: none;
+          width: 40px;
+          height: 40px;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          position: relative;
+          z-index: 1002;
+        }
+
+        .mobile-menu-btn span {
+          display: block;
+          width: 25px;
+          height: 2px;
+          background: #8B5CF6;
+          margin: 5px auto;
+          transition: all 0.3s;
+        }
+
+        .mobile-menu-btn.open span:nth-child(1) {
+          transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.open span:nth-child(2) {
+          opacity: 0;
+        }
+
+        .mobile-menu-btn.open span:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        @media (max-width: 768px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+
+          .desktop-nav {
+            display: none;
+          }
+
+          .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 1, 24, 0.98);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+          }
+
+          .mobile-nav.open {
+            transform: translateX(0);
+          }
+
+          .mobile-nav a {
+            font-size: 24px;
+            color: #ffffff;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+          }
+
+          .mobile-nav a:hover {
+            opacity: 1;
+          }
+        }
+
+        /* Responsive typography and spacing */
+        @media (max-width: 768px) {
+          h1 {
+            font-size: 32px !important;
+          }
+
+          h2 {
+            font-size: 28px !important;
+          }
+
+          h3 {
+            font-size: 24px !important;
+          }
+
+          .hero-subtitle {
+            font-size: 18px !important;
+          }
+
+          .hero-description {
+            font-size: 14px !important;
+          }
+
+          .section-padding {
+            padding: 60px 24px !important;
+          }
+
+          .grid-responsive {
+            grid-template-columns: 1fr !important;
+          }
+
+          .profile-image {
+            width: 150px !important;
+            height: 150px !important;
           }
         }
 
@@ -793,7 +925,7 @@ export default function Portfolio() {
         top: 0,
         left: 0,
         right: 0,
-        padding: '32px 48px',
+        padding: windowWidth > 768 ? '32px 48px' : '20px 24px',
         zIndex: 1000,
         display: 'flex',
         justifyContent: 'space-between',
@@ -801,14 +933,15 @@ export default function Portfolio() {
         background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)'
       }}>
         <div style={{
-          fontSize: '24px',
+          fontSize: windowWidth > 768 ? '24px' : '20px',
           fontWeight: '600',
           color: '#8B5CF6'
         }}>
           kantecki.dev
         </div>
-        
-        <div style={{
+
+        {/* Desktop Navigation */}
+        <div className="desktop-nav" style={{
           display: 'flex',
           gap: '40px',
           alignItems: 'center'
@@ -858,6 +991,56 @@ export default function Portfolio() {
             </a>
           </div>
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className={`mobile-menu-btn ${mobileMenuOpen ? 'open' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {/* Mobile Navigation */}
+        <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+          {navItems.map(item => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item}
+            </a>
+          ))}
+          <div style={{
+            display: 'flex',
+            gap: '32px',
+            marginTop: '32px'
+          }}>
+            <a href="https://github.com/CodingWithKantecki" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }}>
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/thomas-kantecki-836b39271/" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }}>
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
+            <a href="https://linktr.ee/CodingWithKantecki" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }}>
+              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </a>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }}>
+              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </a>
+          </div>
+        </div>
       </nav>
 
       {/* Hero Section */}
@@ -876,9 +1059,9 @@ export default function Portfolio() {
           padding: '0 24px'
         }}>
           {/* Profile Image */}
-          <div style={{
-            width: '200px',
-            height: '200px',
+          <div className="profile-image" style={{
+            width: windowWidth > 768 ? '200px' : '150px',
+            height: windowWidth > 768 ? '200px' : '150px',
             margin: '0 auto 32px',
             position: 'relative'
           }}>
@@ -914,12 +1097,12 @@ export default function Portfolio() {
           </div>
 
           <h1 style={{
-            fontSize: '48px',
+            fontSize: windowWidth > 768 ? '48px' : '32px',
             fontWeight: '600',
             marginBottom: '16px',
             lineHeight: '1.2',
             color: '#ffffff',
-            minHeight: '58px' // Prevent layout shift
+            minHeight: windowWidth > 768 ? '58px' : '40px' // Prevent layout shift
           }}>
             {typedText}
             {typedText.length < fullText.length && (
@@ -932,8 +1115,8 @@ export default function Portfolio() {
             )}
           </h1>
           
-          <p style={{
-            fontSize: '24px',
+          <p className="hero-subtitle" style={{
+            fontSize: windowWidth > 768 ? '24px' : '18px',
             color: '#8B5CF6',
             marginBottom: '16px',
             opacity: showSubtitle ? 1 : 0,
@@ -944,8 +1127,8 @@ export default function Portfolio() {
             Bridging Healthcare & Technology
           </p>
           
-          <p style={{
-            fontSize: '18px',
+          <p className="hero-description" style={{
+            fontSize: windowWidth > 768 ? '18px' : '14px',
             color: '#94a3b8',
             marginBottom: '8px',
             opacity: showSubtitle ? 1 : 0,
@@ -988,8 +1171,8 @@ export default function Portfolio() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" style={{
-        padding: '120px 48px',
+      <section id="experience" className="section-padding" style={{
+        padding: windowWidth > 768 ? '120px 48px' : '60px 24px',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
@@ -1004,10 +1187,10 @@ export default function Portfolio() {
           Experience & Education
         </h2>
 
-        <div style={{
+        <div className="grid-responsive" style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
-          gap: '48px',
+          gap: windowWidth > 768 ? '48px' : '32px',
           maxWidth: '900px',
           margin: '0 auto'
         }}>
@@ -1252,8 +1435,8 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" style={{
-        padding: '120px 48px',
+      <section id="projects" className="section-padding" style={{
+          padding: windowWidth > 768 ? '120px 48px' : '60px 24px',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
@@ -1279,7 +1462,7 @@ export default function Portfolio() {
           <div style={{
             background: 'rgba(30, 41, 59, 0.8)',
             borderRadius: '16px',
-            padding: '48px',
+            padding: windowWidth > 768 ? '48px' : '24px',
             border: '1px solid rgba(139, 92, 246, 0.2)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s',
@@ -1316,7 +1499,7 @@ export default function Portfolio() {
               powerup systems, and an immersive story campaign mode.
             </p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr', gap: '24px', marginBottom: '32px' }}>
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
                   Key Features
@@ -1363,7 +1546,7 @@ export default function Portfolio() {
           <div style={{
             background: 'rgba(30, 41, 59, 0.8)',
             borderRadius: '16px',
-            padding: '48px',
+            padding: windowWidth > 768 ? '48px' : '24px',
             border: '1px solid rgba(16, 185, 129, 0.2)',
             backdropFilter: 'blur(10px)',
             transition: 'all 0.3s',
@@ -1438,7 +1621,7 @@ export default function Portfolio() {
               in text documents using pattern matching and regular expressions.
             </p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px', marginBottom: '32px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr', gap: '24px', marginBottom: '32px' }}>
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#10B981' }}>
                   Key Learning Outcomes
@@ -1482,8 +1665,8 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" style={{
-        padding: '120px 48px',
+      <section id="skills" className="section-padding" style={{
+        padding: windowWidth > 768 ? '120px 48px' : '60px 24px',
         background: 'rgba(30, 41, 59, 0.3)',
         position: 'relative',
         zIndex: 10
@@ -1574,8 +1757,8 @@ export default function Portfolio() {
 
 
       {/* Contact Section */}
-      <section id="contact" style={{
-        padding: '120px 48px',
+      <section id="contact" className="section-padding" style={{
+        padding: windowWidth > 768 ? '120px 48px' : '60px 24px',
         textAlign: 'center',
         position: 'relative',
         zIndex: 10
@@ -1600,8 +1783,10 @@ export default function Portfolio() {
         
         <div style={{
           display: 'flex',
-          gap: '24px',
-          justifyContent: 'center'
+          flexDirection: windowWidth > 768 ? 'row' : 'column',
+          gap: windowWidth > 768 ? '24px' : '16px',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}>
           <a href="mailto:thomaskantecki2003@gmail.com" style={{
             padding: '14px 32px',
