@@ -1498,33 +1498,67 @@ export default function Portfolio() {
             e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
             e.currentTarget.style.boxShadow = 'none';
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
-              <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
+            <div style={{
+              display: 'flex',
+              alignItems: windowWidth > 768 ? 'center' : 'flex-start',
+              flexDirection: windowWidth > 768 ? 'row' : 'column',
+              marginBottom: windowWidth > 768 ? '24px' : '20px',
+              gap: windowWidth > 768 ? '16px' : '12px'
+            }}>
+              <h3 style={{
+                fontSize: windowWidth > 768 ? '32px' : '24px',
+                fontWeight: '700',
+                margin: 0,
+                lineHeight: '1.2'
+              }}>
                 Board of War™
               </h3>
               <span style={{
-                fontSize: '14px',
-                padding: '4px 12px',
+                fontSize: '12px',
+                padding: '4px 10px',
                 background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
                 borderRadius: '4px',
                 color: '#ffffff',
-                fontWeight: '600'
+                fontWeight: '600',
+                whiteSpace: 'nowrap',
+                alignSelf: windowWidth > 768 ? 'auto' : 'flex-start'
               }}>
                 FEATURED
               </span>
             </div>
             
-            <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
+            <p style={{
+              color: '#ffffff',
+              fontSize: windowWidth > 768 ? '18px' : '16px',
+              marginBottom: windowWidth > 768 ? '24px' : '20px',
+              lineHeight: '1.6'
+            }}>
               A military-themed strategic chess game featuring advanced AI opponents, 
               powerup systems, and an immersive story campaign mode.
             </p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr', gap: '24px', marginBottom: '32px' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
+              gap: windowWidth > 768 ? '24px' : '20px',
+              marginBottom: windowWidth > 768 ? '32px' : '24px'
+            }}>
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                <h4 style={{
+                  fontSize: windowWidth > 768 ? '16px' : '15px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                  color: '#8B5CF6'
+                }}>
                   Key Features
                 </h4>
-                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <ul style={{
+                  color: '#94a3b8',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
+                  paddingLeft: '20px',
+                  margin: 0
+                }}>
                   <li>9-zone story campaign with unique AI personalities</li>
                   <li>14 military-themed powerups (airstrikes, shields, etc.)</li>
                   <li>Arasan chess engine (800-2800 ELO difficulty)</li>
@@ -1534,10 +1568,21 @@ export default function Portfolio() {
               </div>
               
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#8B5CF6' }}>
+                <h4 style={{
+                  fontSize: windowWidth > 768 ? '16px' : '15px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                  color: '#8B5CF6'
+                }}>
                   Technical Highlights
                 </h4>
-                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <ul style={{
+                  color: '#94a3b8',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
+                  paddingLeft: '20px',
+                  margin: 0
+                }}>
                   <li>Custom game engine built with Pygame</li>
                   <li>Advanced AI with adjustable difficulty</li>
                   <li>Particle effects and animations</li>
@@ -1547,14 +1592,19 @@ export default function Portfolio() {
               </div>
             </div>
             
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: windowWidth > 768 ? '8px' : '6px'
+            }}>
               {['Python', 'Pygame', 'AI/ML', 'Game Design', 'Chess Engine', 'State Management', 'Audio Engineering'].map(tech => (
                 <span key={tech} style={{
-                  fontSize: '12px',
-                  padding: '6px 14px',
+                  fontSize: windowWidth > 768 ? '12px' : '11px',
+                  padding: windowWidth > 768 ? '6px 14px' : '4px 10px',
                   background: 'rgba(139, 92, 246, 0.1)',
                   borderRadius: '4px',
-                  border: '1px solid rgba(139, 92, 246, 0.2)'
+                  border: '1px solid rgba(139, 92, 246, 0.2)',
+                  whiteSpace: 'nowrap'
                 }}>
                   {tech}
                 </span>
@@ -1584,14 +1634,29 @@ export default function Portfolio() {
             e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
             e.currentTarget.style.boxShadow = 'none';
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', gap: '16px' }}>
-              <h3 style={{ fontSize: '32px', fontWeight: '700', margin: 0 }}>
+            <div style={{
+              display: 'flex',
+              alignItems: windowWidth > 768 ? 'center' : 'flex-start',
+              flexDirection: windowWidth > 768 ? 'row' : 'column',
+              marginBottom: windowWidth > 768 ? '24px' : '20px',
+              gap: windowWidth > 768 ? '16px' : '12px'
+            }}>
+              <h3 style={{
+                fontSize: windowWidth > 768 ? '32px' : '24px',
+                fontWeight: '700',
+                margin: 0,
+                lineHeight: '1.2'
+              }}>
                 Sentinel PHI Scanner
               </h3>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{
+                display: 'flex',
+                gap: '8px',
+                flexWrap: 'wrap'
+              }}>
                 <span style={{
-                  fontSize: '14px',
-                  padding: '4px 12px',
+                  fontSize: '12px',
+                  padding: '4px 10px',
                   background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
                   borderRadius: '4px',
                   color: '#ffffff',
@@ -1600,8 +1665,8 @@ export default function Portfolio() {
                   HEALTHCARE
                 </span>
                 <span style={{
-                  fontSize: '14px',
-                  padding: '4px 12px',
+                  fontSize: '12px',
+                  padding: '4px 10px',
                   background: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
                   borderRadius: '4px',
                   color: '#ffffff',
@@ -1638,17 +1703,38 @@ export default function Portfolio() {
               </div>
             </div>
             
-            <p style={{ color: '#ffffff', fontSize: '18px', marginBottom: '24px', lineHeight: '1.6' }}>
+            <p style={{
+              color: '#ffffff',
+              fontSize: windowWidth > 768 ? '18px' : '16px',
+              marginBottom: windowWidth > 768 ? '24px' : '20px',
+              lineHeight: '1.6'
+            }}>
               A Python-based tool designed to identify potential Protected Health Information (PHI) 
               in text documents using pattern matching and regular expressions.
             </p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr', gap: '24px', marginBottom: '32px' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
+              gap: windowWidth > 768 ? '24px' : '20px',
+              marginBottom: windowWidth > 768 ? '32px' : '24px'
+            }}>
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#10B981' }}>
+                <h4 style={{
+                  fontSize: windowWidth > 768 ? '16px' : '15px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                  color: '#10B981'
+                }}>
                   Key Learning Outcomes
                 </h4>
-                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <ul style={{
+                  color: '#94a3b8',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
+                  paddingLeft: '20px',
+                  margin: 0
+                }}>
                   <li>Hands-on experience with healthcare data standards</li>
                   <li>Understanding of HIPAA requirements and compliance</li>
                   <li>Challenges in automated sensitive data detection</li>
@@ -1657,10 +1743,21 @@ export default function Portfolio() {
               </div>
               
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#10B981' }}>
+                <h4 style={{
+                  fontSize: windowWidth > 768 ? '16px' : '15px',
+                  fontWeight: '600',
+                  marginBottom: '12px',
+                  color: '#10B981'
+                }}>
                   Technical Skills
                 </h4>
-                <ul style={{ color: '#94a3b8', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px' }}>
+                <ul style={{
+                  color: '#94a3b8',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
+                  paddingLeft: '20px',
+                  margin: 0
+                }}>
                   <li>Python development for text processing</li>
                   <li>Regular expression pattern design</li>
                   <li>Healthcare domain knowledge application</li>
@@ -1669,14 +1766,19 @@ export default function Portfolio() {
               </div>
             </div>
             
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: windowWidth > 768 ? '8px' : '6px'
+            }}>
               {['Python', 'Streamlit', 'Regex', 'HIPAA', 'PHI Detection', 'Healthcare IT', 'Text Processing', 'Data Security'].map(tech => (
                 <span key={tech} style={{
-                  fontSize: '12px',
-                  padding: '6px 14px',
+                  fontSize: windowWidth > 768 ? '12px' : '11px',
+                  padding: windowWidth > 768 ? '6px 14px' : '4px 10px',
                   background: 'rgba(16, 185, 129, 0.1)',
                   borderRadius: '4px',
-                  border: '1px solid rgba(16, 185, 129, 0.2)'
+                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  whiteSpace: 'nowrap'
                 }}>
                   {tech}
                 </span>
