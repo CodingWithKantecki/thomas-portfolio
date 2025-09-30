@@ -696,6 +696,11 @@ export default function Portfolio() {
           transform: rotate(-45deg) translate(7px, -6px);
         }
 
+        /* Desktop - hide mobile menu by default */
+        .mobile-nav {
+          display: none;
+        }
+
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
@@ -706,13 +711,13 @@ export default function Portfolio() {
           }
 
           .mobile-nav {
+            display: flex;
             position: fixed;
             top: 0;
             right: 0;
             width: 100%;
             height: 100vh;
             background: rgba(10, 1, 24, 0.98);
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
