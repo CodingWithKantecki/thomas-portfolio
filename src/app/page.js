@@ -1026,7 +1026,9 @@ export default function Portfolio() {
         </button>
 
         {/* Mobile Navigation */}
-        <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`} style={{
+          transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(100%)'
+        }}>
           {navItems.map(item => (
             <a
               key={item}
