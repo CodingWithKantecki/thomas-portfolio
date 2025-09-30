@@ -964,7 +964,7 @@ export default function Portfolio() {
 
         {/* Desktop Navigation */}
         <div className="desktop-nav" style={{
-          display: 'flex',
+          display: windowWidth > 768 ? 'flex' : 'none',
           gap: '40px',
           alignItems: 'center'
         }}>
@@ -1019,6 +1019,9 @@ export default function Portfolio() {
           className={`mobile-menu-btn ${mobileMenuOpen ? 'open' : ''}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
+          style={{
+            display: windowWidth > 768 ? 'none' : 'block'
+          }}
         >
           <span></span>
           <span></span>
