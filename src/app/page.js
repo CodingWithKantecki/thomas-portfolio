@@ -13,12 +13,16 @@ export default function Portfolio() {
   const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [mounted, setMounted] = useState(false);
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
   
   const fullText = "Thomas Kantecki";
 
   useEffect(() => {
+    // Set mounted state
+    setMounted(true);
+
     // Handle window resize
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -952,7 +956,9 @@ export default function Portfolio() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)'
+        background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)',
+        opacity: mounted ? 1 : 0,
+        transition: 'opacity 0.15s ease-in'
       }}>
         <div style={{
           fontSize: windowWidth > 768 ? '24px' : '20px',
