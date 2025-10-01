@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
@@ -516,7 +517,13 @@ export default function Portfolio() {
     };
   }, [skillBinaryParticles]);
 
-  const navItems = ['Experience', 'Projects', 'Skills', 'Contact'];
+  const navItems = [
+    { name: 'Projects', href: '/projects', isExternal: false },
+    { name: 'Knowledge Hub', href: '/knowledge-hub', isExternal: false },
+    { name: 'Experience', href: '#experience', isExternal: false },
+    { name: 'Skills', href: '#skills', isExternal: false },
+    { name: 'Contact', href: '#contact', isExternal: false }
+  ];
 
   // Component for reactive skill items
   const SkillItem = ({ skill, index, mousePos }) => {
@@ -975,23 +982,43 @@ export default function Portfolio() {
           alignItems: 'center'
         }}>
           {navItems.map(item => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              style={{
-                color: '#ffffff',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '400',
-                opacity: 0.8,
-                transition: 'opacity 0.3s',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => e.target.style.opacity = '1'}
-              onMouseLeave={(e) => e.target.style.opacity = '0.8'}
-            >
-              {item}
-            </a>
+            item.isExternal === false && item.href.startsWith('/') ? (
+              <Link
+                key={item.name}
+                href={item.href}
+                style={{
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: '400',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => e.target.style.opacity = '1'}
+                onMouseLeave={(e) => e.target.style.opacity = '0.8'}
+              >
+                {item.name}
+              </Link>
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                style={{
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  fontSize: '16px',
+                  fontWeight: '400',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => e.target.style.opacity = '1'}
+                onMouseLeave={(e) => e.target.style.opacity = '0.8'}
+              >
+                {item.name}
+              </a>
+            )
           ))}
           <div style={{
             display: 'flex',
@@ -1039,13 +1066,37 @@ export default function Portfolio() {
           transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(100%)'
         }}>
           {navItems.map(item => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item}
-            </a>
+            item.isExternal === false && item.href.startsWith('/') ? (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  fontSize: '24px',
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s'
+                }}
+              >
+                {item.name}
+              </Link>
+            ) : (
+              <a
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  fontSize: '24px',
+                  color: '#ffffff',
+                  textDecoration: 'none',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s'
+                }}
+              >
+                {item.name}
+              </a>
+            )
           ))}
           <div style={{
             display: 'flex',
@@ -1467,340 +1518,138 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="section-padding" style={{
-          padding: windowWidth > 768 ? '120px 48px' : '60px 24px',
+      {/* Quick Links Section - Replaces Projects Section */}
+      <section style={{
+        padding: windowWidth > 768 ? '80px 48px' : '60px 24px',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
         zIndex: 10
       }}>
-        <h2 style={{
-          fontSize: '36px',
-          fontWeight: '600',
-          marginBottom: '60px',
-          textAlign: 'center'
-        }}>
-          Featured Projects
-        </h2>
-
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr',
-          gap: windowWidth > 768 ? '48px' : '32px',
-          maxWidth: windowWidth > 768 ? '1000px' : '100%',
-          margin: '0 auto',
-          width: '100%'
+          gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
+          gap: '24px',
+          maxWidth: '800px',
+          margin: '0 auto'
         }}>
-          {/* Board of War Project */}
-          <div className="project-card" style={{
-            background: 'rgba(30, 41, 59, 0.8)',
-            borderRadius: '16px',
-            padding: windowWidth > 768 ? '48px' : '24px',
-            border: '1px solid rgba(139, 92, 246, 0.2)',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s',
-            animation: `fadeInUp 0.8s ease-out both`,
-            maxWidth: '100%',
-            boxSizing: 'border-box'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-4px)';
-            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
-            e.currentTarget.style.boxShadow = 'none';
+          {/* Projects Card */}
+          <Link href="/projects" style={{
+            textDecoration: 'none',
+            display: 'block'
           }}>
             <div style={{
-              display: 'flex',
-              alignItems: windowWidth > 768 ? 'center' : 'flex-start',
-              flexDirection: windowWidth > 768 ? 'row' : 'column',
-              marginBottom: windowWidth > 768 ? '24px' : '20px',
-              gap: windowWidth > 768 ? '16px' : '12px'
+              background: 'rgba(30, 41, 59, 0.8)',
+              borderRadius: '16px',
+              padding: '32px',
+              border: '1px solid rgba(139, 92, 246, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s',
+              cursor: 'pointer',
+              height: '100%'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(139, 92, 246, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
+              e.currentTarget.style.boxShadow = 'none';
             }}>
-              <h3 style={{
-                fontSize: windowWidth > 768 ? '32px' : '24px',
-                fontWeight: '700',
-                margin: 0,
-                lineHeight: '1.2'
-              }}>
-                Board of War™
-              </h3>
-              <span style={{
-                fontSize: '12px',
-                padding: '4px 10px',
-                background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
-                borderRadius: '4px',
-                color: '#ffffff',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                alignSelf: windowWidth > 768 ? 'auto' : 'flex-start'
-              }}>
-                FEATURED
-              </span>
-            </div>
-            
-            <p style={{
-              color: '#ffffff',
-              fontSize: windowWidth > 768 ? '18px' : '16px',
-              marginBottom: windowWidth > 768 ? '24px' : '20px',
-              lineHeight: '1.6'
-            }}>
-              A military-themed strategic chess game featuring advanced AI opponents, 
-              powerup systems, and an immersive story campaign mode.
-            </p>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
-              gap: windowWidth > 768 ? '24px' : '20px',
-              marginBottom: windowWidth > 768 ? '32px' : '24px'
-            }}>
-              <div>
-                <h4 style={{
-                  fontSize: windowWidth > 768 ? '16px' : '15px',
-                  fontWeight: '600',
-                  marginBottom: '12px',
-                  color: '#8B5CF6'
-                }}>
-                  Key Features
-                </h4>
-                <ul style={{
-                  color: '#94a3b8',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
-                  paddingLeft: '20px',
-                  margin: 0
-                }}>
-                  <li>9-zone story campaign with unique AI personalities</li>
-                  <li>14 military-themed powerups (airstrikes, shields, etc.)</li>
-                  <li>Arasan chess engine (800-2800 ELO difficulty)</li>
-                  <li>Cinematic cutscenes and dialogue system</li>
-                  <li>Multiple game modes: Story, Sandbox, Classic</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 style={{
-                  fontSize: windowWidth > 768 ? '16px' : '15px',
-                  fontWeight: '600',
-                  marginBottom: '12px',
-                  color: '#8B5CF6'
-                }}>
-                  Technical Highlights
-                </h4>
-                <ul style={{
-                  color: '#94a3b8',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
-                  paddingLeft: '20px',
-                  margin: 0
-                }}>
-                  <li>Custom game engine built with Pygame</li>
-                  <li>Advanced AI with adjustable difficulty</li>
-                  <li>Particle effects and animations</li>
-                  <li>Save/load system with progress tracking</li>
-                  <li>Original soundtracks and SFX</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: windowWidth > 768 ? '8px' : '6px'
-            }}>
-              {['Python', 'Pygame', 'AI/ML', 'Game Design', 'Chess Engine', 'State Management', 'Audio Engineering'].map(tech => (
-                <span key={tech} style={{
-                  fontSize: windowWidth > 768 ? '12px' : '11px',
-                  padding: windowWidth > 768 ? '6px 14px' : '4px 10px',
-                  background: 'rgba(139, 92, 246, 0.1)',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(139, 92, 246, 0.2)',
-                  whiteSpace: 'nowrap'
-                }}>
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Sentinel PHI Scanner Project */}
-          <div className="project-card" style={{
-            background: 'rgba(30, 41, 59, 0.8)',
-            borderRadius: '16px',
-            padding: windowWidth > 768 ? '48px' : '24px',
-            border: '1px solid rgba(16, 185, 129, 0.2)',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s',
-            animation: `fadeInUp 0.8s ease-out 0.2s both`,
-            maxWidth: '100%',
-            boxSizing: 'border-box'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-4px)';
-            e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
-            e.currentTarget.style.boxShadow = 'none';
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: windowWidth > 768 ? 'center' : 'flex-start',
-              flexDirection: windowWidth > 768 ? 'row' : 'column',
-              marginBottom: windowWidth > 768 ? '24px' : '20px',
-              gap: windowWidth > 768 ? '16px' : '12px'
-            }}>
-              <h3 style={{
-                fontSize: windowWidth > 768 ? '32px' : '24px',
-                fontWeight: '700',
-                margin: 0,
-                lineHeight: '1.2'
-              }}>
-                Sentinel PHI Scanner
-              </h3>
               <div style={{
-                display: 'flex',
-                gap: '8px',
-                flexWrap: 'wrap'
+                fontSize: '48px',
+                marginBottom: '16px'
+              }}>🚀</div>
+              <h3 style={{
+                fontSize: '24px',
+                fontWeight: '600',
+                marginBottom: '12px',
+                color: '#ffffff'
               }}>
-                <span style={{
-                  fontSize: '12px',
-                  padding: '4px 10px',
-                  background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
-                  borderRadius: '4px',
-                  color: '#ffffff',
-                  fontWeight: '600'
-                }}>
-                  HEALTHCARE
-                </span>
-                <span style={{
-                  fontSize: '12px',
-                  padding: '4px 10px',
-                  background: 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
-                  borderRadius: '4px',
-                  color: '#ffffff',
-                  fontWeight: '600'
-                }}>
-                  HACKATHON
-                </span>
-                <a 
-                  href="https://github.com/CodingWithKantecki/sentinel-phi-scanner" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: '14px',
-                    padding: '4px 12px',
-                    background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontWeight: '500',
-                    textDecoration: 'none',
-                    transition: 'all 0.3s'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#ffffff';
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    e.currentTarget.style.background = 'transparent';
-                  }}
-                >
-                  VIEW CODE
-                </a>
+                View Projects
+              </h3>
+              <p style={{
+                color: '#94a3b8',
+                fontSize: '14px',
+                lineHeight: '1.6'
+              }}>
+                Explore my portfolio of healthcare technology and software development projects
+              </p>
+              <div style={{
+                marginTop: '20px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#8B5CF6',
+                fontWeight: '500',
+                fontSize: '14px'
+              }}>
+                View All Projects
+                <span style={{ fontSize: '18px' }}>→</span>
               </div>
             </div>
-            
-            <p style={{
-              color: '#ffffff',
-              fontSize: windowWidth > 768 ? '18px' : '16px',
-              marginBottom: windowWidth > 768 ? '24px' : '20px',
-              lineHeight: '1.6'
-            }}>
-              A Python-based tool designed to identify potential Protected Health Information (PHI) 
-              in text documents using pattern matching and regular expressions.
-            </p>
-            
+          </Link>
+
+          {/* Knowledge Hub Card */}
+          <Link href="/knowledge-hub" style={{
+            textDecoration: 'none',
+            display: 'block'
+          }}>
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
-              gap: windowWidth > 768 ? '24px' : '20px',
-              marginBottom: windowWidth > 768 ? '32px' : '24px'
+              background: 'rgba(30, 41, 59, 0.8)',
+              borderRadius: '16px',
+              padding: '32px',
+              border: '1px solid rgba(16, 185, 129, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s',
+              cursor: 'pointer',
+              height: '100%'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(16, 185, 129, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.2)';
+              e.currentTarget.style.boxShadow = 'none';
             }}>
-              <div>
-                <h4 style={{
-                  fontSize: windowWidth > 768 ? '16px' : '15px',
-                  fontWeight: '600',
-                  marginBottom: '12px',
-                  color: '#10B981'
-                }}>
-                  Key Learning Outcomes
-                </h4>
-                <ul style={{
-                  color: '#94a3b8',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
-                  paddingLeft: '20px',
-                  margin: 0
-                }}>
-                  <li>Hands-on experience with healthcare data standards</li>
-                  <li>Understanding of HIPAA requirements and compliance</li>
-                  <li>Challenges in automated sensitive data detection</li>
-                  <li>Enterprise-grade DLP solution requirements</li>
-                </ul>
-              </div>
-              
-              <div>
-                <h4 style={{
-                  fontSize: windowWidth > 768 ? '16px' : '15px',
-                  fontWeight: '600',
-                  marginBottom: '12px',
-                  color: '#10B981'
-                }}>
-                  Technical Skills
-                </h4>
-                <ul style={{
-                  color: '#94a3b8',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.8' : '1.7',
-                  paddingLeft: '20px',
-                  margin: 0
-                }}>
-                  <li>Python development for text processing</li>
-                  <li>Regular expression pattern design</li>
-                  <li>Healthcare domain knowledge application</li>
-                  <li>Git version control and documentation</li>
-                </ul>
+              <div style={{
+                fontSize: '48px',
+                marginBottom: '16px'
+              }}>📚</div>
+              <h3 style={{
+                fontSize: '24px',
+                fontWeight: '600',
+                marginBottom: '12px',
+                color: '#ffffff'
+              }}>
+                Knowledge Hub
+              </h3>
+              <p style={{
+                color: '#94a3b8',
+                fontSize: '14px',
+                lineHeight: '1.6'
+              }}>
+                Educational resources, guides, and insights on health informatics and technology
+              </p>
+              <div style={{
+                marginTop: '20px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: '#10B981',
+                fontWeight: '500',
+                fontSize: '14px'
+              }}>
+                Explore Resources
+                <span style={{ fontSize: '18px' }}>→</span>
               </div>
             </div>
-            
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: windowWidth > 768 ? '8px' : '6px'
-            }}>
-              {['Python', 'Streamlit', 'Regex', 'HIPAA', 'PHI Detection', 'Healthcare IT', 'Text Processing', 'Data Security'].map(tech => (
-                <span key={tech} style={{
-                  fontSize: windowWidth > 768 ? '12px' : '11px',
-                  padding: windowWidth > 768 ? '6px 14px' : '4px 10px',
-                  background: 'rgba(16, 185, 129, 0.1)',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
-                  whiteSpace: 'nowrap'
-                }}>
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
+          </Link>
         </div>
       </section>
 
