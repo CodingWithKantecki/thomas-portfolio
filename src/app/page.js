@@ -1067,7 +1067,7 @@ export default function Portfolio() {
               arrow.style.transform = 'rotate(180deg)';
             }
             if (menuIcon) {
-              menuIcon.style.opacity = '0.1';
+              menuIcon.style.opacity = '0';
             }
             if (glowEffect) {
               glowEffect.style.opacity = '0';
