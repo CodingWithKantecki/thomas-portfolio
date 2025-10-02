@@ -1050,7 +1050,9 @@ export default function Portfolio() {
             position: 'fixed',
             top: '32px',
             right: '0',
-            zIndex: 999
+            zIndex: 999,
+            width: '250px',
+            height: '45px'
           }}
           onMouseEnter={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
@@ -1065,8 +1067,7 @@ export default function Portfolio() {
               arrow.style.transform = 'rotate(180deg)';
             }
             if (menuIcon) {
-              menuIcon.style.opacity = '0';
-              menuIcon.style.pointerEvents = 'none';
+              menuIcon.style.opacity = '0.1';
             }
             if (glowEffect) {
               glowEffect.style.opacity = '0';
@@ -1087,7 +1088,6 @@ export default function Portfolio() {
             }
             if (menuIcon) {
               menuIcon.style.opacity = '1';
-              menuIcon.style.pointerEvents = 'auto';
             }
             if (glowEffect) {
               // Trigger glow animation when menu closes
