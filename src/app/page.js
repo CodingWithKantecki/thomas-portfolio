@@ -14,7 +14,7 @@ export default function Portfolio() {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
   const canvasRef = useRef(null);
@@ -1035,7 +1035,7 @@ export default function Portfolio() {
         padding: windowWidth > 768 ? '32px 48px' : '20px 24px',
         zIndex: 1000,
         display: 'flex',
-        justifyContent: windowWidth > 768 ? 'space-between' : 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)',
         opacity: mounted ? 1 : 0,
@@ -1045,13 +1045,10 @@ export default function Portfolio() {
           fontSize: windowWidth > 768 ? '24px' : '20px',
           fontWeight: '600',
           color: '#8B5CF6',
-          transform: `translateX(-${logoSlideProgress * 150}%)`,
-          opacity: 1 - (logoSlideProgress * 0.5),
+          transform: windowWidth > 768 ? `translateX(-${logoSlideProgress * 150}%)` : 'translateX(0)',
+          opacity: windowWidth > 768 ? (1 - (logoSlideProgress * 0.5)) : 1,
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
-          willChange: 'transform, opacity',
-          position: windowWidth > 768 ? 'static' : 'absolute',
-          left: windowWidth > 768 ? 'auto' : '50%',
-          marginLeft: windowWidth > 768 ? '0' : '-50px'
+          willChange: 'transform, opacity'
         }}>
           kantecki.dev
         </div>
