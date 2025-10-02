@@ -14,12 +14,12 @@ export default function Portfolio() {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 768);
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
-  
+
   const fullText = "Thomas Kantecki";
 
   useEffect(() => {
@@ -31,8 +31,18 @@ export default function Portfolio() {
       setWindowWidth(window.innerWidth);
     };
 
+    // Ensure correct initial width on mount
+    if (typeof window !== 'undefined') {
+      const actualWidth = window.innerWidth;
+      setWindowWidth(actualWidth);
+    }
+
     window.addEventListener('resize', handleResize);
-    handleResize(); // Set initial width
+
+    // Force update after a short delay to fix initial render issues
+    const timer = setTimeout(() => {
+      handleResize();
+    }, 100);
 
     // Heartbeat animation
     const heartbeatInterval = setInterval(() => {
@@ -231,6 +241,7 @@ export default function Portfolio() {
     }, 530);
 
     return () => {
+      clearTimeout(timer);
       clearInterval(heartbeatInterval);
       clearInterval(typewriterInterval);
       clearInterval(cursorInterval);
