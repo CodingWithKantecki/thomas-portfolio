@@ -1038,28 +1038,26 @@ export default function Portfolio() {
           }}
           onMouseEnter={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
-            const menuIcon = e.currentTarget.querySelector('.menu-icon');
-            if (panel && menuIcon) {
+            const arrow = e.currentTarget.querySelector('.arrow-icon');
+            if (panel) {
               panel.style.transform = 'translateX(0)';
               panel.style.opacity = '1';
-              // Hide hamburger lines
-              const lines = menuIcon.querySelectorAll('.menu-line');
-              lines.forEach(line => {
-                line.style.opacity = '0';
-              });
+            }
+            if (arrow) {
+              arrow.style.transform = 'rotate(180deg)';
+              arrow.style.opacity = '0.5';
             }
           }}
           onMouseLeave={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
-            const menuIcon = e.currentTarget.querySelector('.menu-icon');
-            if (panel && menuIcon) {
+            const arrow = e.currentTarget.querySelector('.arrow-icon');
+            if (panel) {
               panel.style.transform = 'translateX(100%)';
               panel.style.opacity = '0';
-              // Show hamburger lines
-              const lines = menuIcon.querySelectorAll('.menu-line');
-              lines.forEach(line => {
-                line.style.opacity = '1';
-              });
+            }
+            if (arrow) {
+              arrow.style.transform = 'rotate(0deg)';
+              arrow.style.opacity = '1';
             }
           }}
         >
@@ -1068,10 +1066,8 @@ export default function Portfolio() {
             cursor: 'pointer',
             padding: '12px',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '4px',
             background: 'rgba(10, 1, 24, 0.9)',
             border: '2px solid rgba(139, 92, 246, 0.3)',
             borderRadius: '12px',
@@ -1083,26 +1079,21 @@ export default function Portfolio() {
             width: '50px',
             height: '50px'
           }}>
-            <span className="menu-line" style={{
-              width: '24px',
-              height: '2px',
-              background: '#8B5CF6',
-              transition: 'all 0.3s ease',
-              transformOrigin: 'center'
-            }} />
-            <span className="menu-line" style={{
-              width: '24px',
-              height: '2px',
-              background: '#8B5CF6',
-              transition: 'all 0.3s ease'
-            }} />
-            <span className="menu-line" style={{
-              width: '24px',
-              height: '2px',
-              background: '#8B5CF6',
-              transition: 'all 0.3s ease',
-              transformOrigin: 'center'
-            }} />
+            <svg
+              className="arrow-icon"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="#8B5CF6"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              style={{
+                transition: 'all 0.3s ease',
+                transform: 'rotate(0deg)'
+              }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
           </div>
 
           {/* Side Panel */}
