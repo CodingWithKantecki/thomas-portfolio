@@ -1191,45 +1191,52 @@ export default function Portfolio() {
 
         {/* Mobile Navigation */}
         <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`} style={{
-          transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(100%)'
+          transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(100%)',
+          padding: '80px 24px'
         }}>
-          {navItems.map(item => (
-            item.isExternal === false && item.href.startsWith('/') ? (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  fontSize: '24px',
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  opacity: 0.8,
-                  transition: 'opacity 0.3s'
-                }}
-              >
-                {item.name}
-              </Link>
-            ) : (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  fontSize: '24px',
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  opacity: 0.8,
-                  transition: 'opacity 0.3s'
-                }}
-              >
-                {item.name}
-              </a>
-            )
-          ))}
+          {/* Navigation Links */}
           <div style={{
             display: 'flex',
-            gap: '32px',
-            marginTop: '32px'
+            flexDirection: 'column',
+            gap: '24px',
+            marginBottom: '48px'
+          }}>
+            {navItems.map(item => {
+              const isActive = currentSection === item.href.slice(1);
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{
+                    fontSize: '20px',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    opacity: isActive ? 1 : 0.8,
+                    transition: 'opacity 0.3s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}
+                >
+                  <span style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: isActive ? '#8B5CF6' : 'transparent',
+                    transition: 'all 0.3s'
+                  }} />
+                  {item.name}
+                </a>
+              );
+            })}
+          </div>
+
+          {/* Social Links */}
+          <div style={{
+            display: 'flex',
+            gap: '24px',
+            justifyContent: 'center'
           }}>
             <a href="https://github.com/CodingWithKantecki" target="_blank" rel="noopener noreferrer" style={{ color: '#ffffff' }}>
               <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -1391,9 +1398,9 @@ export default function Portfolio() {
         zIndex: 10
       }}>
         <h2 style={{
-          fontSize: '36px',
+          fontSize: windowWidth > 768 ? '36px' : '28px',
           fontWeight: '600',
-          marginBottom: '60px',
+          marginBottom: windowWidth > 768 ? '60px' : '40px',
           textAlign: 'center'
         }}>
           Experience & Education
@@ -1665,9 +1672,9 @@ export default function Portfolio() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: windowWidth > 768 ? '36px' : '28px',
             fontWeight: '600',
-            marginBottom: '60px',
+            marginBottom: windowWidth > 768 ? '60px' : '40px',
             textAlign: 'center'
           }}>
             Projects
@@ -1872,9 +1879,9 @@ export default function Portfolio() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: windowWidth > 768 ? '36px' : '28px',
             fontWeight: '600',
-            marginBottom: '60px',
+            marginBottom: windowWidth > 768 ? '60px' : '40px',
             textAlign: 'center'
           }}>
             Skills
@@ -1973,7 +1980,7 @@ export default function Portfolio() {
         {/* Social Icons and Contact Button */}
         <div style={{
           display: 'flex',
-          gap: '24px',
+          gap: windowWidth > 768 ? '24px' : '16px',
           justifyContent: 'center',
           alignItems: 'center',
           flexWrap: 'wrap'
@@ -2073,10 +2080,10 @@ export default function Portfolio() {
 
           {/* Divider */}
           <div style={{
-            width: '1px',
-            height: '28px',
+            width: windowWidth > 768 ? '1px' : '100%',
+            height: windowWidth > 768 ? '28px' : '1px',
             background: 'rgba(255, 255, 255, 0.2)',
-            margin: '0 8px'
+            margin: windowWidth > 768 ? '0 8px' : '8px 0'
           }} />
 
           {/* Download Resume Button */}
