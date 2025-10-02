@@ -1765,14 +1765,22 @@ export default function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects" style={{
-        padding: windowWidth > 768 ? '140px 48px 120px' : '60px 16px 40px',
+        padding: windowWidth > 768 ? '140px 48px 120px' : '60px 12px 40px',
         background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 10%, rgba(139, 92, 246, 0.05) 90%, transparent 100%)',
         position: 'relative',
         zIndex: 10,
         marginTop: windowWidth > 768 ? '60px' : '30px',
-        marginBottom: windowWidth > 768 ? '60px' : '30px'
+        marginBottom: windowWidth > 768 ? '60px' : '30px',
+        width: '100%',
+        boxSizing: 'border-box',
+        overflowX: 'hidden'
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{
+          maxWidth: windowWidth > 768 ? '1200px' : '100%',
+          margin: '0 auto',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}>
           <h2 style={{
             fontSize: windowWidth > 768 ? '36px' : '24px',
             fontWeight: '600',
@@ -1785,18 +1793,21 @@ export default function Portfolio() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: windowWidth > 768 ? 'repeat(auto-fit, minmax(500px, 1fr))' : '1fr',
-            gap: windowWidth > 768 ? '32px' : '20px'
+            gap: windowWidth > 768 ? '32px' : '16px',
+            width: '100%',
+            boxSizing: 'border-box'
           }}>
             {/* Board of War Project */}
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '16px',
+              borderRadius: windowWidth > 768 ? '16px' : '12px',
+              padding: windowWidth > 768 ? '32px' : '14px',
               border: '1px solid rgba(139, 92, 246, 0.3)',
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s',
               boxSizing: 'border-box',
               width: '100%',
+              maxWidth: '100%',
               overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
@@ -1822,30 +1833,32 @@ export default function Portfolio() {
                   flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '18px',
+                    fontSize: windowWidth > 768 ? '28px' : '16px',
                     fontWeight: '700',
                     margin: 0,
                     wordWrap: 'break-word',
                     overflowWrap: 'break-word',
-                    hyphens: 'auto'
+                    hyphens: 'auto',
+                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
                   }}>
                     Board of War™
                   </h3>
                   <span style={{
-                    fontSize: '10px',
-                    padding: windowWidth > 768 ? '4px 10px' : '3px 8px',
+                    fontSize: '9px',
+                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
                     background: 'linear-gradient(135deg, #8B5CF6 0%, #8B5CF6aa 100%)',
                     borderRadius: '4px',
                     color: '#ffffff',
-                    fontWeight: '600'
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
                   }}>
                     FEATURED
                   </span>
                 </div>
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: windowWidth > 768 ? '15px' : '14px',
-                  lineHeight: '1.6'
+                  fontSize: windowWidth > 768 ? '15px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.6' : '1.5'
                 }}>
                   A military-themed strategic chess game featuring advanced AI opponents, powerup systems, and an immersive story campaign mode.
                 </p>
@@ -1853,12 +1866,12 @@ export default function Portfolio() {
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: windowWidth > 768 ? '8px' : '6px'
+                gap: windowWidth > 768 ? '8px' : '4px'
               }}>
                 {['Python', 'Pygame', 'AI/ML', 'Game Design'].map(tech => (
                   <span key={tech} style={{
-                    fontSize: windowWidth > 768 ? '12px' : '11px',
-                    padding: windowWidth > 768 ? '6px 12px' : '4px 8px',
+                    fontSize: windowWidth > 768 ? '12px' : '10px',
+                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
                     background: 'rgba(139, 92, 246, 0.1)',
                     borderRadius: '4px',
                     border: '1px solid rgba(139, 92, 246, 0.3)'
@@ -1872,13 +1885,14 @@ export default function Portfolio() {
             {/* Sentinel PHI Scanner */}
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '16px',
+              borderRadius: windowWidth > 768 ? '16px' : '12px',
+              padding: windowWidth > 768 ? '32px' : '14px',
               border: '1px solid rgba(16, 185, 129, 0.3)',
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s',
               boxSizing: 'border-box',
               width: '100%',
+              maxWidth: '100%',
               overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
@@ -1904,30 +1918,32 @@ export default function Portfolio() {
                   flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '18px',
+                    fontSize: windowWidth > 768 ? '28px' : '16px',
                     fontWeight: '700',
                     margin: 0,
                     wordWrap: 'break-word',
                     overflowWrap: 'break-word',
-                    hyphens: 'auto'
+                    hyphens: 'auto',
+                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
                   }}>
                     Sentinel PHI Scanner
                   </h3>
                   <span style={{
-                    fontSize: '10px',
-                    padding: windowWidth > 768 ? '4px 10px' : '3px 8px',
+                    fontSize: '9px',
+                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
                     background: 'linear-gradient(135deg, #10B981 0%, #10B981aa 100%)',
                     borderRadius: '4px',
                     color: '#ffffff',
-                    fontWeight: '600'
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
                   }}>
                     HEALTHCARE
                   </span>
                 </div>
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: windowWidth > 768 ? '15px' : '14px',
-                  lineHeight: '1.6'
+                  fontSize: windowWidth > 768 ? '15px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.6' : '1.5'
                 }}>
                   A Python-based tool designed to identify potential Protected Health Information (PHI) in text documents using pattern matching and regular expressions.
                 </p>
@@ -1935,13 +1951,13 @@ export default function Portfolio() {
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: windowWidth > 768 ? '8px' : '6px',
-                marginBottom: windowWidth > 768 ? '20px' : '16px'
+                gap: windowWidth > 768 ? '8px' : '4px',
+                marginBottom: windowWidth > 768 ? '20px' : '14px'
               }}>
                 {['Python', 'Streamlit', 'HIPAA', 'PHI Detection'].map(tech => (
                   <span key={tech} style={{
-                    fontSize: windowWidth > 768 ? '12px' : '11px',
-                    padding: windowWidth > 768 ? '6px 12px' : '4px 8px',
+                    fontSize: windowWidth > 768 ? '12px' : '10px',
+                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
                     background: 'rgba(16, 185, 129, 0.1)',
                     borderRadius: '4px',
                     border: '1px solid rgba(16, 185, 129, 0.3)'
