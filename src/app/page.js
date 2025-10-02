@@ -8,6 +8,7 @@ export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [logoSlideProgress, setLogoSlideProgress] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(false);
@@ -152,6 +153,24 @@ export default function Portfolio() {
       const windowHeight = window.innerHeight;
       const progress = Math.min(scrollY / windowHeight, 1);
       setScrollProgress(progress);
+
+      // Calculate logo slide progress (starts sliding at 50% of viewport, gone by experience section)
+      const experienceSection = document.getElementById('experience');
+      if (experienceSection) {
+        const experienceTop = experienceSection.offsetTop;
+        const startSlide = windowHeight * 0.5; // Start sliding at 50% scroll
+        const endSlide = experienceTop - 100; // Fully gone before experience section
+
+        if (scrollY < startSlide) {
+          setLogoSlideProgress(0);
+        } else if (scrollY >= endSlide) {
+          setLogoSlideProgress(1);
+        } else {
+          const slideRange = endSlide - startSlide;
+          const slideProgress = (scrollY - startSlide) / slideRange;
+          setLogoSlideProgress(Math.min(Math.max(slideProgress, 0), 1));
+        }
+      }
 
       // Clear particles when scrolling away from skills section
       const skillsSection = document.getElementById('skills');
@@ -998,7 +1017,11 @@ export default function Portfolio() {
         <div style={{
           fontSize: windowWidth > 768 ? '24px' : '20px',
           fontWeight: '600',
-          color: '#8B5CF6'
+          color: '#8B5CF6',
+          transform: `translateX(-${logoSlideProgress * 150}%)`,
+          opacity: 1 - (logoSlideProgress * 0.5),
+          transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
+          willChange: 'transform, opacity'
         }}>
           kantecki.dev
         </div>
