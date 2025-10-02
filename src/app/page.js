@@ -1053,8 +1053,8 @@ export default function Portfolio() {
             const panel = e.currentTarget.querySelector('.side-panel');
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
             if (panel && menuIcon) {
-              panel.style.transform = 'translateX(calc(100% - 50px))';
-              panel.style.opacity = '0.95';
+              panel.style.transform = 'translateX(100%)';
+              panel.style.opacity = '0';
               // Show hamburger lines
               const lines = menuIcon.querySelectorAll('.menu-line');
               lines.forEach(line => {
@@ -1118,8 +1118,8 @@ export default function Portfolio() {
               border: '2px solid rgba(139, 92, 246, 0.3)',
               borderRadius: '16px',
               padding: '70px 25px 25px',
-              transform: 'translateX(calc(100% - 50px))',
-              opacity: 0.95,
+              transform: 'translateX(100%)',
+              opacity: 0,
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               boxShadow: '0 10px 40px rgba(139, 92, 246, 0.2)',
               zIndex: 1000
