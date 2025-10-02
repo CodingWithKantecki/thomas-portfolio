@@ -1030,13 +1030,10 @@ export default function Portfolio() {
         <div
           className="desktop-nav"
           style={{
-            display: windowWidth > 768 ? 'flex' : 'none',
+            display: windowWidth > 768 ? 'block' : 'none',
             position: 'fixed',
-            top: 0,
-            right: 0,
-            height: '100vh',
-            alignItems: 'flex-start',
-            paddingTop: '32px',
+            top: '32px',
+            right: '32px',
             zIndex: 999
           }}
           onMouseEnter={(e) => {
@@ -1044,48 +1041,47 @@ export default function Portfolio() {
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
             if (panel && menuIcon) {
               panel.style.transform = 'translateX(0)';
-              menuIcon.style.transform = 'translateX(0)';
-              // Transform hamburger to arrow
+              panel.style.opacity = '1';
+              // Hide hamburger lines
               const lines = menuIcon.querySelectorAll('.menu-line');
-              if (lines[0]) lines[0].style.transform = 'rotate(-45deg) translateY(6px)';
-              if (lines[1]) lines[1].style.opacity = '0';
-              if (lines[2]) lines[2].style.transform = 'rotate(45deg) translateY(-6px)';
+              lines.forEach(line => {
+                line.style.opacity = '0';
+              });
             }
           }}
           onMouseLeave={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
             if (panel && menuIcon) {
-              panel.style.transform = 'translateX(calc(100% - 60px))';
-              menuIcon.style.transform = 'translateX(0)';
-              // Transform arrow back to hamburger
+              panel.style.transform = 'translateX(calc(100% - 50px))';
+              panel.style.opacity = '0.95';
+              // Show hamburger lines
               const lines = menuIcon.querySelectorAll('.menu-line');
-              if (lines[0]) lines[0].style.transform = 'rotate(0) translateY(0)';
-              if (lines[1]) lines[1].style.opacity = '1';
-              if (lines[2]) lines[2].style.transform = 'rotate(0) translateY(0)';
+              lines.forEach(line => {
+                line.style.opacity = '1';
+              });
             }
           }}
         >
-          {/* Menu Icon that transforms to arrow */}
+          {/* Menu Icon */}
           <div className="menu-icon" style={{
             cursor: 'pointer',
-            padding: '16px 20px',
+            padding: '12px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '4px',
             background: 'rgba(10, 1, 24, 0.9)',
-            borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
-            borderTop: '2px solid rgba(139, 92, 246, 0.3)',
-            borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
-            borderTopLeftRadius: '12px',
-            borderBottomLeftRadius: '12px',
+            border: '2px solid rgba(139, 92, 246, 0.3)',
+            borderRadius: '12px',
             transition: 'all 0.3s ease',
             position: 'absolute',
             right: '0',
-            top: '32px',
-            zIndex: 1001
+            top: '0',
+            zIndex: 1001,
+            width: '50px',
+            height: '50px'
           }}>
             <span className="menu-line" style={{
               width: '24px',
@@ -1113,20 +1109,20 @@ export default function Portfolio() {
           <div
             className="side-panel"
             style={{
-              position: 'fixed',
+              position: 'absolute',
               top: 0,
               right: 0,
-              height: '100vh',
-              width: '280px',
-              background: 'linear-gradient(180deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
+              width: '260px',
+              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
-              padding: '100px 30px 40px',
-              transform: 'translateX(calc(100% - 60px))',
-              transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '-10px 0 40px rgba(139, 92, 246, 0.2)',
-              zIndex: 1000,
-              overflowY: 'auto'
+              border: '2px solid rgba(139, 92, 246, 0.3)',
+              borderRadius: '16px',
+              padding: '70px 25px 25px',
+              transform: 'translateX(calc(100% - 50px))',
+              opacity: 0.95,
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              boxShadow: '0 10px 40px rgba(139, 92, 246, 0.2)',
+              zIndex: 1000
             }}
           >
 
