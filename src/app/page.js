@@ -1024,7 +1024,7 @@ export default function Portfolio() {
         padding: windowWidth > 768 ? '32px 48px' : '20px 24px',
         zIndex: 1000,
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: windowWidth > 768 ? 'space-between' : 'center',
         alignItems: 'center',
         background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)',
         opacity: mounted ? 1 : 0,
@@ -1037,7 +1037,10 @@ export default function Portfolio() {
           transform: `translateX(-${logoSlideProgress * 150}%)`,
           opacity: 1 - (logoSlideProgress * 0.5),
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
-          willChange: 'transform, opacity'
+          willChange: 'transform, opacity',
+          position: windowWidth > 768 ? 'static' : 'absolute',
+          left: windowWidth > 768 ? 'auto' : '50%',
+          marginLeft: windowWidth > 768 ? '0' : '-50px'
         }}>
           kantecki.dev
         </div>
@@ -1788,10 +1791,13 @@ export default function Portfolio() {
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
               borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '20px',
+              padding: windowWidth > 768 ? '32px' : '16px',
               border: '1px solid rgba(139, 92, 246, 0.3)',
               backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s'
+              transition: 'all 0.3s',
+              boxSizing: 'border-box',
+              width: '100%',
+              overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
               if (windowWidth > 768) {
@@ -1816,9 +1822,12 @@ export default function Portfolio() {
                   flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '20px',
+                    fontSize: windowWidth > 768 ? '28px' : '18px',
                     fontWeight: '700',
-                    margin: 0
+                    margin: 0,
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto'
                   }}>
                     Board of War™
                   </h3>
@@ -1864,10 +1873,13 @@ export default function Portfolio() {
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
               borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '20px',
+              padding: windowWidth > 768 ? '32px' : '16px',
               border: '1px solid rgba(16, 185, 129, 0.3)',
               backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s'
+              transition: 'all 0.3s',
+              boxSizing: 'border-box',
+              width: '100%',
+              overflow: 'hidden'
             }}
             onMouseEnter={(e) => {
               if (windowWidth > 768) {
@@ -1892,9 +1904,12 @@ export default function Portfolio() {
                   flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '20px',
+                    fontSize: windowWidth > 768 ? '28px' : '18px',
                     fontWeight: '700',
-                    margin: 0
+                    margin: 0,
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto'
                   }}>
                     Sentinel PHI Scanner
                   </h3>
@@ -1942,16 +1957,17 @@ export default function Portfolio() {
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  padding: '10px 20px',
+                  gap: windowWidth > 768 ? '8px' : '6px',
+                  padding: windowWidth > 768 ? '10px 20px' : '8px 16px',
                   background: 'transparent',
                   border: '1px solid rgba(16, 185, 129, 0.4)',
                   borderRadius: '8px',
                   color: '#10B981',
                   textDecoration: 'none',
-                  fontSize: '14px',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
                   fontWeight: '500',
-                  transition: 'all 0.3s'
+                  transition: 'all 0.3s',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)';
