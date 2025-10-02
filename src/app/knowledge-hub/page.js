@@ -432,7 +432,7 @@ export default function KnowledgeHub() {
             maxWidth: '600px',
             margin: '0 auto 32px'
           }}>
-            I'm actively creating new educational resources on health informatics,
+            I&apos;m actively creating new educational resources on health informatics,
             clinical data standards, and healthcare technology. Check back regularly for updates!
           </p>
           <div style={{
