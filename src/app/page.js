@@ -1056,7 +1056,7 @@ export default function Portfolio() {
             const panel = e.currentTarget.querySelector('.side-panel');
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
             if (panel && menuIcon) {
-              panel.style.transform = 'translateX(100%)';
+              panel.style.transform = 'translateX(calc(100% - 60px))';
               menuIcon.style.transform = 'translateX(0)';
               // Transform arrow back to hamburger
               const lines = menuIcon.querySelectorAll('.menu-line');
@@ -1082,7 +1082,9 @@ export default function Portfolio() {
             borderTopLeftRadius: '12px',
             borderBottomLeftRadius: '12px',
             transition: 'all 0.3s ease',
-            marginRight: '-2px',
+            position: 'absolute',
+            right: '0',
+            top: '32px',
             zIndex: 1001
           }}>
             <span className="menu-line" style={{
@@ -1120,8 +1122,8 @@ export default function Portfolio() {
               backdropFilter: 'blur(20px)',
               borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
               padding: '100px 30px 40px',
-              transform: 'translateX(100%)',
-              transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              transform: 'translateX(calc(100% - 60px))',
+              transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               boxShadow: '-10px 0 40px rgba(139, 92, 246, 0.2)',
               zIndex: 1000,
               overflowY: 'auto'
