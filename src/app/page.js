@@ -154,20 +154,20 @@ export default function Portfolio() {
       const progress = Math.min(scrollY / windowHeight, 1);
       setScrollProgress(progress);
 
-      // Calculate logo slide progress (starts sliding at 50% of viewport, gone by experience section)
+      // Calculate logo slide progress (starts sliding immediately, gone by experience section)
       const experienceSection = document.getElementById('experience');
       if (experienceSection) {
         const experienceTop = experienceSection.offsetTop;
-        const startSlide = windowHeight * 0.5; // Start sliding at 50% scroll
+        const startSlide = 0; // Start sliding immediately
         const endSlide = experienceTop - 100; // Fully gone before experience section
 
-        if (scrollY < startSlide) {
+        if (scrollY <= startSlide) {
           setLogoSlideProgress(0);
         } else if (scrollY >= endSlide) {
           setLogoSlideProgress(1);
         } else {
           const slideRange = endSlide - startSlide;
-          const slideProgress = (scrollY - startSlide) / slideRange;
+          const slideProgress = scrollY / slideRange;
           setLogoSlideProgress(Math.min(Math.max(slideProgress, 0), 1));
         }
       }
@@ -1762,18 +1762,18 @@ export default function Portfolio() {
 
       {/* Projects Section */}
       <section id="projects" style={{
-        padding: windowWidth > 768 ? '140px 48px 120px' : '80px 24px 60px',
+        padding: windowWidth > 768 ? '140px 48px 120px' : '60px 16px 40px',
         background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 10%, rgba(139, 92, 246, 0.05) 90%, transparent 100%)',
         position: 'relative',
         zIndex: 10,
-        marginTop: '60px',
-        marginBottom: '60px'
+        marginTop: windowWidth > 768 ? '60px' : '30px',
+        marginBottom: windowWidth > 768 ? '60px' : '30px'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: windowWidth > 768 ? '36px' : '28px',
+            fontSize: windowWidth > 768 ? '36px' : '24px',
             fontWeight: '600',
-            marginBottom: windowWidth > 768 ? '60px' : '40px',
+            marginBottom: windowWidth > 768 ? '60px' : '30px',
             textAlign: 'center'
           }}>
             Projects
@@ -1782,44 +1782,49 @@ export default function Portfolio() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: windowWidth > 768 ? 'repeat(auto-fit, minmax(500px, 1fr))' : '1fr',
-            gap: '32px'
+            gap: windowWidth > 768 ? '32px' : '20px'
           }}>
             {/* Board of War Project */}
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
               borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '24px',
+              padding: windowWidth > 768 ? '32px' : '20px',
               border: '1px solid rgba(139, 92, 246, 0.3)',
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-              e.currentTarget.style.boxShadow = 'none';
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                e.currentTarget.style.boxShadow = 'none';
+              }
             }}>
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
                 <div style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px'
+                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
+                  gap: windowWidth > 768 ? '12px' : '8px',
+                  marginBottom: '12px',
+                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: '28px',
+                    fontSize: windowWidth > 768 ? '28px' : '20px',
                     fontWeight: '700',
                     margin: 0
                   }}>
                     Board of War™
                   </h3>
                   <span style={{
-                    fontSize: '11px',
-                    padding: '4px 10px',
+                    fontSize: '10px',
+                    padding: windowWidth > 768 ? '4px 10px' : '3px 8px',
                     background: 'linear-gradient(135deg, #8B5CF6 0%, #8B5CF6aa 100%)',
                     borderRadius: '4px',
                     color: '#ffffff',
@@ -1830,7 +1835,7 @@ export default function Portfolio() {
                 </div>
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '15px',
+                  fontSize: windowWidth > 768 ? '15px' : '14px',
                   lineHeight: '1.6'
                 }}>
                   A military-themed strategic chess game featuring advanced AI opponents, powerup systems, and an immersive story campaign mode.
@@ -1839,12 +1844,12 @@ export default function Portfolio() {
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '8px'
+                gap: windowWidth > 768 ? '8px' : '6px'
               }}>
                 {['Python', 'Pygame', 'AI/ML', 'Game Design'].map(tech => (
                   <span key={tech} style={{
-                    fontSize: '12px',
-                    padding: '6px 12px',
+                    fontSize: windowWidth > 768 ? '12px' : '11px',
+                    padding: windowWidth > 768 ? '6px 12px' : '4px 8px',
                     background: 'rgba(139, 92, 246, 0.1)',
                     borderRadius: '4px',
                     border: '1px solid rgba(139, 92, 246, 0.3)'
@@ -1859,38 +1864,43 @@ export default function Portfolio() {
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
               borderRadius: '16px',
-              padding: windowWidth > 768 ? '32px' : '24px',
+              padding: windowWidth > 768 ? '32px' : '20px',
               border: '1px solid rgba(16, 185, 129, 0.3)',
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.6)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(16, 185, 129, 0.3)';
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.6)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(16, 185, 129, 0.3)';
+              }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-              e.currentTarget.style.boxShadow = 'none';
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                e.currentTarget.style.boxShadow = 'none';
+              }
             }}>
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
                 <div style={{
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '12px'
+                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
+                  gap: windowWidth > 768 ? '12px' : '8px',
+                  marginBottom: '12px',
+                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
                 }}>
                   <h3 style={{
-                    fontSize: '28px',
+                    fontSize: windowWidth > 768 ? '28px' : '20px',
                     fontWeight: '700',
                     margin: 0
                   }}>
                     Sentinel PHI Scanner
                   </h3>
                   <span style={{
-                    fontSize: '11px',
-                    padding: '4px 10px',
+                    fontSize: '10px',
+                    padding: windowWidth > 768 ? '4px 10px' : '3px 8px',
                     background: 'linear-gradient(135deg, #10B981 0%, #10B981aa 100%)',
                     borderRadius: '4px',
                     color: '#ffffff',
@@ -1901,7 +1911,7 @@ export default function Portfolio() {
                 </div>
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '15px',
+                  fontSize: windowWidth > 768 ? '15px' : '14px',
                   lineHeight: '1.6'
                 }}>
                   A Python-based tool designed to identify potential Protected Health Information (PHI) in text documents using pattern matching and regular expressions.
@@ -1910,13 +1920,13 @@ export default function Portfolio() {
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '8px',
-                marginBottom: '20px'
+                gap: windowWidth > 768 ? '8px' : '6px',
+                marginBottom: windowWidth > 768 ? '20px' : '16px'
               }}>
                 {['Python', 'Streamlit', 'HIPAA', 'PHI Detection'].map(tech => (
                   <span key={tech} style={{
-                    fontSize: '12px',
-                    padding: '6px 12px',
+                    fontSize: windowWidth > 768 ? '12px' : '11px',
+                    padding: windowWidth > 768 ? '6px 12px' : '4px 8px',
                     background: 'rgba(16, 185, 129, 0.1)',
                     borderRadius: '4px',
                     border: '1px solid rgba(16, 185, 129, 0.3)'
