@@ -14,7 +14,7 @@ export default function Portfolio() {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [windowWidth, setWindowWidth] = useState(768); // Default to mobile breakpoint, will update on mount
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
   const canvasRef = useRef(null);
@@ -23,26 +23,16 @@ export default function Portfolio() {
   const fullText = "Thomas Kantecki";
 
   useEffect(() => {
-    // Set mounted state
+    // Set mounted state and initial width immediately
     setMounted(true);
+    setWindowWidth(window.innerWidth);
 
     // Handle window resize
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    // Ensure correct initial width on mount
-    if (typeof window !== 'undefined') {
-      const actualWidth = window.innerWidth;
-      setWindowWidth(actualWidth);
-    }
-
     window.addEventListener('resize', handleResize);
-
-    // Force update after a short delay to fix initial render issues
-    const timer = setTimeout(() => {
-      handleResize();
-    }, 100);
 
     // Heartbeat animation
     const heartbeatInterval = setInterval(() => {
@@ -1056,7 +1046,7 @@ export default function Portfolio() {
         <div
           className="desktop-nav"
           style={{
-            display: windowWidth > 768 ? 'block' : 'none',
+            display: !mounted ? 'none' : (windowWidth > 768 ? 'block' : 'none'),
             position: 'fixed',
             top: '32px',
             right: '0',
@@ -1295,7 +1285,7 @@ export default function Portfolio() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
           style={{
-            display: windowWidth > 768 ? 'none' : 'block',
+            display: !mounted ? 'none' : (windowWidth > 768 ? 'none' : 'block'),
             position: 'absolute',
             right: '24px',
             top: '50%',
