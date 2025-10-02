@@ -1045,8 +1045,8 @@ export default function Portfolio() {
           fontSize: windowWidth > 768 ? '24px' : '20px',
           fontWeight: '600',
           color: '#8B5CF6',
-          transform: windowWidth > 768 ? `translateX(-${logoSlideProgress * 150}%)` : 'translateX(0)',
-          opacity: windowWidth > 768 ? (1 - (logoSlideProgress * 0.5)) : 1,
+          transform: `translateX(-${logoSlideProgress * 150}%)`,
+          opacity: 1 - (logoSlideProgress * 0.5),
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
           willChange: 'transform, opacity'
         }}>
