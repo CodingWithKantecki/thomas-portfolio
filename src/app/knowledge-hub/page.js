@@ -28,7 +28,8 @@ export default function KnowledgeHub() {
       date: "2024",
       tags: ["Health IT", "Career", "Education"],
       status: "available",
-      icon: "📚"
+      icon: "📚",
+      link: "/HI.pdf"
     },
     {
       id: 2,
@@ -380,23 +381,30 @@ export default function KnowledgeHub() {
 
               {/* Action Button */}
               {item.status === 'available' && (
-                <button style={{
-                  width: '100%',
-                  padding: '10px',
-                  background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
-                  border: 'none',
-                  borderRadius: '6px',
-                  color: '#ffffff',
-                  fontWeight: '500',
-                  fontSize: '14px',
-                  cursor: 'pointer',
-                  transition: 'transform 0.3s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                <a
+                  href={item.link || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    padding: '10px',
+                    background: 'linear-gradient(135deg, #10B981 0%, #06B6D4 100%)',
+                    border: 'none',
+                    borderRadius: '6px',
+                    color: '#ffffff',
+                    fontWeight: '500',
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s',
+                    textAlign: 'center',
+                    textDecoration: 'none'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
                   View Resource
-                </button>
+                </a>
               )}
             </div>
           ))}
