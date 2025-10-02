@@ -756,7 +756,6 @@ export default function Portfolio() {
           background: transparent;
           border: none;
           cursor: pointer;
-          position: relative;
           z-index: 1002;
         }
 
@@ -1296,7 +1295,11 @@ export default function Portfolio() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
           style={{
-            display: windowWidth > 768 ? 'none' : 'block'
+            display: windowWidth > 768 ? 'none' : 'block',
+            position: 'absolute',
+            right: '24px',
+            top: '50%',
+            transform: 'translateY(-50%)'
           }}
         >
           <span></span>
