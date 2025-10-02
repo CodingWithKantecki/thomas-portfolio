@@ -1003,95 +1003,107 @@ export default function Portfolio() {
           kantecki.dev
         </div>
 
-        {/* Desktop Dropdown Menu */}
+        {/* Desktop Side Menu */}
         <div
           className="desktop-nav"
           style={{
-            display: windowWidth > 768 ? 'block' : 'none',
-            position: 'relative'
+            display: windowWidth > 768 ? 'flex' : 'none',
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            height: '100vh',
+            alignItems: 'flex-start',
+            paddingTop: '32px',
+            zIndex: 999
           }}
           onMouseEnter={(e) => {
-            const dropdown = e.currentTarget.querySelector('.dropdown-content');
-            if (dropdown) {
-              dropdown.style.opacity = '1';
-              dropdown.style.transform = 'translateX(0) scale(1)';
-              dropdown.style.pointerEvents = 'auto';
+            const panel = e.currentTarget.querySelector('.side-panel');
+            const menuIcon = e.currentTarget.querySelector('.menu-icon');
+            if (panel && menuIcon) {
+              panel.style.transform = 'translateX(0)';
+              menuIcon.style.transform = 'translateX(0)';
+              // Transform hamburger to arrow
+              const lines = menuIcon.querySelectorAll('.menu-line');
+              if (lines[0]) lines[0].style.transform = 'rotate(-45deg) translateY(6px)';
+              if (lines[1]) lines[1].style.opacity = '0';
+              if (lines[2]) lines[2].style.transform = 'rotate(45deg) translateY(-6px)';
             }
           }}
           onMouseLeave={(e) => {
-            const dropdown = e.currentTarget.querySelector('.dropdown-content');
-            if (dropdown) {
-              dropdown.style.opacity = '0';
-              dropdown.style.transform = 'translateX(20px) scale(0.95)';
-              dropdown.style.pointerEvents = 'none';
+            const panel = e.currentTarget.querySelector('.side-panel');
+            const menuIcon = e.currentTarget.querySelector('.menu-icon');
+            if (panel && menuIcon) {
+              panel.style.transform = 'translateX(100%)';
+              menuIcon.style.transform = 'translateX(0)';
+              // Transform arrow back to hamburger
+              const lines = menuIcon.querySelectorAll('.menu-line');
+              if (lines[0]) lines[0].style.transform = 'rotate(0) translateY(0)';
+              if (lines[1]) lines[1].style.opacity = '1';
+              if (lines[2]) lines[2].style.transform = 'rotate(0) translateY(0)';
             }
           }}
         >
-          {/* Menu Icon */}
-          <div style={{
+          {/* Menu Icon that transforms to arrow */}
+          <div className="menu-icon" style={{
             cursor: 'pointer',
-            padding: '10px',
+            padding: '16px 20px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            gap: '8px',
-            borderRadius: '8px',
-            background: 'rgba(139, 92, 246, 0.1)',
-            border: '1px solid rgba(139, 92, 246, 0.2)',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)';
-            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)';
-            e.currentTarget.style.transform = 'scale(1.05)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
-            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
-            e.currentTarget.style.transform = 'scale(1)';
+            justifyContent: 'center',
+            gap: '4px',
+            background: 'rgba(10, 1, 24, 0.9)',
+            borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
+            borderTop: '2px solid rgba(139, 92, 246, 0.3)',
+            borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
+            borderTopLeftRadius: '12px',
+            borderBottomLeftRadius: '12px',
+            transition: 'all 0.3s ease',
+            marginRight: '-2px',
+            zIndex: 1001
           }}>
-            <svg width="20" height="20" fill="#ffffff" viewBox="0 0 24 24" style={{ opacity: 0.9 }}>
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-            </svg>
-            <svg width="12" height="12" fill="#8B5CF6" viewBox="0 0 24 24" style={{ opacity: 0.8 }}>
-              <path d="M7 10l5 5 5-5z"/>
-            </svg>
+            <span className="menu-line" style={{
+              width: '24px',
+              height: '2px',
+              background: '#8B5CF6',
+              transition: 'all 0.3s ease',
+              transformOrigin: 'center'
+            }} />
+            <span className="menu-line" style={{
+              width: '24px',
+              height: '2px',
+              background: '#8B5CF6',
+              transition: 'all 0.3s ease'
+            }} />
+            <span className="menu-line" style={{
+              width: '24px',
+              height: '2px',
+              background: '#8B5CF6',
+              transition: 'all 0.3s ease',
+              transformOrigin: 'center'
+            }} />
           </div>
 
-          {/* Dropdown Content */}
+          {/* Side Panel */}
           <div
-            className="dropdown-content"
+            className="side-panel"
             style={{
-              position: 'absolute',
-              right: -10,
-              top: '50%',
-              marginTop: '20px',
-              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
+              position: 'fixed',
+              top: 0,
+              right: 0,
+              height: '100vh',
+              width: '280px',
+              background: 'linear-gradient(180deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              borderRadius: '16px',
-              padding: '20px',
-              minWidth: '220px',
-              opacity: 0,
-              transform: 'translateX(20px) scale(0.95)',
-              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              pointerEvents: 'none',
-              boxShadow: '0 10px 40px rgba(139, 92, 246, 0.2)'
+              borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
+              padding: '100px 30px 40px',
+              transform: 'translateX(100%)',
+              transition: 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              boxShadow: '-10px 0 40px rgba(139, 92, 246, 0.2)',
+              zIndex: 1000,
+              overflowY: 'auto'
             }}
           >
-            {/* Arrow pointing to menu */}
-            <div style={{
-              position: 'absolute',
-              top: '-8px',
-              right: '25px',
-              width: '16px',
-              height: '16px',
-              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 50%)',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              borderRight: 'none',
-              borderBottom: 'none',
-              transform: 'rotate(45deg)',
-              zIndex: -1
-            }} />
 
             {/* Navigation Links */}
             <div style={{
