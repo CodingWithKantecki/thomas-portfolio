@@ -690,6 +690,22 @@ export default function Portfolio() {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
+        @keyframes glowPulse {
+          0% {
+            opacity: 0;
+            filter: blur(15px);
+          }
+          50% {
+            opacity: 1;
+            filter: blur(20px);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+          }
+          100% {
+            opacity: 0;
+            filter: blur(15px);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0);
+          }
+        }
 
         @keyframes gradientShift {
           0% {
@@ -1039,23 +1055,44 @@ export default function Portfolio() {
           onMouseEnter={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
+            const menuIcon = e.currentTarget.querySelector('.menu-icon');
+            const glowEffect = e.currentTarget.querySelector('.glow-effect');
+
             if (panel) {
               panel.style.right = '0';
             }
             if (arrow) {
               arrow.style.transform = 'rotate(180deg)';
-              arrow.style.opacity = '0.5';
+            }
+            if (menuIcon) {
+              menuIcon.style.opacity = '0';
+              menuIcon.style.pointerEvents = 'none';
+            }
+            if (glowEffect) {
+              glowEffect.style.opacity = '0';
+              glowEffect.style.animation = 'none';
             }
           }}
           onMouseLeave={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
+            const menuIcon = e.currentTarget.querySelector('.menu-icon');
+            const glowEffect = e.currentTarget.querySelector('.glow-effect');
+
             if (panel) {
               panel.style.right = '-220px';
             }
             if (arrow) {
               arrow.style.transform = 'rotate(0deg)';
-              arrow.style.opacity = '1';
+            }
+            if (menuIcon) {
+              menuIcon.style.opacity = '1';
+              menuIcon.style.pointerEvents = 'auto';
+            }
+            if (glowEffect) {
+              // Trigger glow animation when menu closes
+              glowEffect.style.opacity = '1';
+              glowEffect.style.animation = 'glowPulse 1.5s ease-out forwards';
             }
           }}
         >
@@ -1072,13 +1109,14 @@ export default function Portfolio() {
             borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
             borderTopLeftRadius: '12px',
             borderBottomLeftRadius: '12px',
-            transition: 'all 0.3s ease',
+            transition: 'opacity 0.3s ease, border-color 0.3s ease',
             position: 'fixed',
             right: '0',
             top: '32px',
             zIndex: 1001,
             width: '45px',
-            height: '45px'
+            height: '45px',
+            opacity: 1
           }}>
             <svg
               className="arrow-icon"
@@ -1096,6 +1134,25 @@ export default function Portfolio() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </div>
+
+          {/* Glow Effect */}
+          <div
+            className="glow-effect"
+            style={{
+              position: 'fixed',
+              right: '0',
+              top: '32px',
+              width: '45px',
+              height: '45px',
+              borderTopLeftRadius: '12px',
+              borderBottomLeftRadius: '12px',
+              background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.6), transparent)',
+              filter: 'blur(15px)',
+              opacity: 0,
+              pointerEvents: 'none',
+              zIndex: 1000
+            }}
+          />
 
           {/* Side Panel */}
           <div
