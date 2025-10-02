@@ -1014,7 +1014,7 @@ export default function Portfolio() {
             const dropdown = e.currentTarget.querySelector('.dropdown-content');
             if (dropdown) {
               dropdown.style.opacity = '1';
-              dropdown.style.transform = 'translateY(0)';
+              dropdown.style.transform = 'translateX(0) scale(1)';
               dropdown.style.pointerEvents = 'auto';
             }
           }}
@@ -1022,7 +1022,7 @@ export default function Portfolio() {
             const dropdown = e.currentTarget.querySelector('.dropdown-content');
             if (dropdown) {
               dropdown.style.opacity = '0';
-              dropdown.style.transform = 'translateY(-10px)';
+              dropdown.style.transform = 'translateX(20px) scale(0.95)';
               dropdown.style.pointerEvents = 'none';
             }
           }}
@@ -1030,13 +1030,30 @@ export default function Portfolio() {
           {/* Menu Icon */}
           <div style={{
             cursor: 'pointer',
-            padding: '8px',
+            padding: '10px',
             display: 'flex',
             alignItems: 'center',
-            gap: '8px'
+            gap: '8px',
+            borderRadius: '8px',
+            background: 'rgba(139, 92, 246, 0.1)',
+            border: '1px solid rgba(139, 92, 246, 0.2)',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(139, 92, 246, 0.2)';
+            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)';
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
+            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.2)';
+            e.currentTarget.style.transform = 'scale(1)';
           }}>
-            <svg width="24" height="24" fill="#ffffff" viewBox="0 0 24 24" style={{ opacity: 0.8 }}>
+            <svg width="20" height="20" fill="#ffffff" viewBox="0 0 24 24" style={{ opacity: 0.9 }}>
               <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+            <svg width="12" height="12" fill="#8B5CF6" viewBox="0 0 24 24" style={{ opacity: 0.8 }}>
+              <path d="M7 10l5 5 5-5z"/>
             </svg>
           </div>
 
@@ -1045,21 +1062,37 @@ export default function Portfolio() {
             className="dropdown-content"
             style={{
               position: 'absolute',
-              right: 0,
-              top: '100%',
-              marginTop: '10px',
-              background: 'rgba(10, 1, 24, 0.95)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(139, 92, 246, 0.2)',
-              borderRadius: '12px',
-              padding: '16px',
-              minWidth: '200px',
+              right: -10,
+              top: '50%',
+              marginTop: '20px',
+              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(139, 92, 246, 0.3)',
+              borderRadius: '16px',
+              padding: '20px',
+              minWidth: '220px',
               opacity: 0,
-              transform: 'translateY(-10px)',
-              transition: 'all 0.3s ease',
-              pointerEvents: 'none'
+              transform: 'translateX(20px) scale(0.95)',
+              transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+              pointerEvents: 'none',
+              boxShadow: '0 10px 40px rgba(139, 92, 246, 0.2)'
             }}
           >
+            {/* Arrow pointing to menu */}
+            <div style={{
+              position: 'absolute',
+              top: '-8px',
+              right: '25px',
+              width: '16px',
+              height: '16px',
+              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 50%)',
+              border: '1px solid rgba(139, 92, 246, 0.3)',
+              borderRight: 'none',
+              borderBottom: 'none',
+              transform: 'rotate(45deg)',
+              zIndex: -1
+            }} />
+
             {/* Navigation Links */}
             <div style={{
               display: 'flex',
@@ -1078,13 +1111,13 @@ export default function Portfolio() {
                     style={{
                       color: '#ffffff',
                       textDecoration: 'none',
-                      fontSize: '16px',
-                      fontWeight: '400',
-                      opacity: isActive ? 1 : 0.8,
-                      transition: 'all 0.3s',
+                      fontSize: '15px',
+                      fontWeight: '500',
+                      opacity: isActive ? 1 : 0.7,
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       cursor: 'pointer',
-                      padding: '8px 12px',
-                      borderRadius: '6px',
+                      padding: '10px 14px',
+                      borderRadius: '8px',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
@@ -1353,7 +1386,7 @@ export default function Portfolio() {
             opacity: showSubtitle ? 1 : 0,
             transition: 'opacity 1s ease-out 0.3s'
           }}>
-            Health Informatics • AI Engineer • Full-Stack Developer
+            Health Informatics Student • Full-Stack Developer
           </p>
           
 
