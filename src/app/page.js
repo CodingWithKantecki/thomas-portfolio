@@ -1033,15 +1033,14 @@ export default function Portfolio() {
             display: windowWidth > 768 ? 'block' : 'none',
             position: 'fixed',
             top: '32px',
-            right: '32px',
+            right: '0',
             zIndex: 999
           }}
           onMouseEnter={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
             if (panel) {
-              panel.style.transform = 'translateX(0)';
-              panel.style.opacity = '1';
+              panel.style.right = '0';
             }
             if (arrow) {
               arrow.style.transform = 'rotate(180deg)';
@@ -1052,8 +1051,7 @@ export default function Portfolio() {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
             if (panel) {
-              panel.style.transform = 'translateX(100%)';
-              panel.style.opacity = '0';
+              panel.style.right = '-220px';
             }
             if (arrow) {
               arrow.style.transform = 'rotate(0deg)';
@@ -1064,20 +1062,23 @@ export default function Portfolio() {
           {/* Menu Icon */}
           <div className="menu-icon" style={{
             cursor: 'pointer',
-            padding: '12px',
+            padding: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'rgba(10, 1, 24, 0.9)',
-            border: '2px solid rgba(139, 92, 246, 0.3)',
-            borderRadius: '12px',
+            background: 'rgba(10, 1, 24, 0.95)',
+            borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
+            borderTop: '2px solid rgba(139, 92, 246, 0.3)',
+            borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
+            borderTopLeftRadius: '12px',
+            borderBottomLeftRadius: '12px',
             transition: 'all 0.3s ease',
-            position: 'absolute',
+            position: 'fixed',
             right: '0',
-            top: '0',
+            top: '32px',
             zIndex: 1001,
-            width: '50px',
-            height: '50px'
+            width: '45px',
+            height: '45px'
           }}>
             <svg
               className="arrow-icon"
@@ -1100,20 +1101,21 @@ export default function Portfolio() {
           <div
             className="side-panel"
             style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '260px',
+              position: 'fixed',
+              top: '32px',
+              right: '-220px',
+              width: '220px',
               background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              border: '2px solid rgba(139, 92, 246, 0.3)',
-              borderRadius: '16px',
-              padding: '70px 25px 25px',
-              transform: 'translateX(100%)',
-              opacity: 0,
+              borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
+              borderTop: '2px solid rgba(139, 92, 246, 0.3)',
+              borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
+              borderTopLeftRadius: '16px',
+              borderBottomLeftRadius: '16px',
+              padding: '20px 20px 20px 30px',
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '0 10px 40px rgba(139, 92, 246, 0.2)',
-              zIndex: 1000
+              boxShadow: '-10px 0 40px rgba(139, 92, 246, 0.2)',
+              zIndex: 998
             }}
           >
 
