@@ -251,7 +251,10 @@ export default function Portfolio() {
 
     let xPos = 0;
     let trailStart = 0; // Start position of the visible line
-    const speed = 8; // pixels per frame
+    // Use constant speed of 320 pixels per second (based on 1920px screen in 6 seconds)
+    // This gives consistent visual speed across all screen sizes
+    const pixelsPerSecond = 320;
+    let lastFrameTime = 0;
     let lastBeat = 0;
     let isRetracting = false; // Track if we're in retraction phase
     let binaryParticles = []; // Array to store falling binary digits
@@ -269,11 +272,11 @@ export default function Portfolio() {
         this.size = 12 + Math.random() * 8;
       }
       
-      update() {
-        this.y += this.velocity;
-        this.velocity += 0.1; // Gravity
-        this.opacity -= 0.01;
-        this.rotation += this.rotationSpeed;
+      update(deltaTime) {
+        this.y += this.velocity * deltaTime * 60; // Scale by 60 to maintain original speed at 60fps
+        this.velocity += 6 * deltaTime; // Gravity scaled by deltaTime
+        this.opacity -= 0.6 * deltaTime; // Fade rate scaled by deltaTime
+        this.rotation += this.rotationSpeed * deltaTime * 60;
         return this.opacity > 0 && this.y < canvas.height;
       }
       
@@ -294,6 +297,13 @@ export default function Portfolio() {
     }
     
     const animate = (currentTime) => {
+      // Calculate delta time in seconds
+      if (!lastFrameTime) {
+        lastFrameTime = currentTime;
+      }
+      const deltaTime = (currentTime - lastFrameTime) / 1000; // Convert to seconds
+      lastFrameTime = currentTime;
+
       // Clear canvas
       ctx.fillStyle = '#0a0118';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -399,11 +409,12 @@ export default function Portfolio() {
         ctx.fill();
       }
       
-      // Update position based on current phase
+      // Update position based on current phase and delta time
+      // Using fixed pixels per second for consistent visual speed
       if (!isRetracting) {
         // Moving forward
-        xPos += speed;
-        
+        xPos += pixelsPerSecond * deltaTime;
+
         // When we reach the end, start retracting
         if (xPos > canvas.width) {
           isRetracting = true;
@@ -411,7 +422,7 @@ export default function Portfolio() {
       } else {
         // Retracting - move the trail start forward
         const oldTrailStart = trailStart;
-        trailStart += speed * 2; // Retract faster for visual effect
+        trailStart += pixelsPerSecond * deltaTime * 2; // Retract faster for visual effect
         
         // Create binary particles at the retracting edge
         if (Math.random() < 0.3) { // 30% chance each frame
@@ -446,7 +457,7 @@ export default function Portfolio() {
       
       // Update and draw binary particles
       binaryParticles = binaryParticles.filter(particle => {
-        const alive = particle.update();
+        const alive = particle.update(deltaTime);
         if (alive) {
           particle.draw(ctx);
         }
