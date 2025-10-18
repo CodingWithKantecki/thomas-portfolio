@@ -2260,7 +2260,7 @@ export default function Portfolio() {
           color: '#94a3b8',
           opacity: 0.8
         }}>
-          made with <span style={{ color: '#A855F7' }}>♥</span> by thomas
+          Made with <span style={{ color: '#A855F7' }}>♥</span> by Thomas
         </p>
       </footer>
     </>
