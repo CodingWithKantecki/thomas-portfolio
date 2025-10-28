@@ -1809,6 +1809,149 @@ export default function Portfolio() {
             width: '100%',
             boxSizing: 'border-box'
           }}>
+            {/* KINEXIS Project */}
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.8)',
+              borderRadius: windowWidth > 768 ? '16px' : '12px',
+              padding: windowWidth > 768 ? '32px' : '14px',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s',
+              boxSizing: 'border-box',
+              width: '100%',
+              maxWidth: '100%',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.6)';
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(245, 158, 11, 0.3)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (windowWidth > 768) {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                e.currentTarget.style.boxShadow = 'none';
+              }
+            }}>
+              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
+                  gap: windowWidth > 768 ? '12px' : '8px',
+                  marginBottom: '12px',
+                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
+                }}>
+                  <h3 style={{
+                    fontSize: windowWidth > 768 ? '28px' : '16px',
+                    fontWeight: '700',
+                    margin: 0,
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto',
+                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
+                  }}>
+                    KINEXIS
+                  </h3>
+                  <span style={{
+                    fontSize: '9px',
+                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #F59E0Baa 100%)',
+                    borderRadius: '4px',
+                    color: '#ffffff',
+                    fontWeight: '600',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    WINNER
+                  </span>
+                </div>
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: windowWidth > 768 ? '15px' : '13px',
+                  lineHeight: windowWidth > 768 ? '1.6' : '1.5',
+                  marginBottom: '16px'
+                }}>
+                  Award-winning physical therapy tracking platform using computer vision for objective PT measurements. Winner of Knight Hacks VIII - Best App Development Hack.
+                </p>
+                {/* Demo GIF */}
+                <div style={{
+                  width: '100%',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
+                  marginBottom: windowWidth > 768 ? '20px' : '14px'
+                }}>
+                  <img
+                    src="/kinexis-demo.gif"
+                    alt="KINEXIS demo"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      display: 'block'
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: windowWidth > 768 ? '8px' : '4px',
+                marginBottom: windowWidth > 768 ? '20px' : '14px'
+              }}>
+                {['JavaScript', 'OpenCV', 'Computer Vision', 'Healthcare IT'].map(tech => (
+                  <span key={tech} style={{
+                    fontSize: windowWidth > 768 ? '12px' : '10px',
+                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
+                    background: 'rgba(245, 158, 11, 0.1)',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(245, 158, 11, 0.3)'
+                  }}>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <a
+                href="https://kinexis.fit"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: windowWidth > 768 ? '8px' : '6px',
+                  padding: windowWidth > 768 ? '10px 20px' : '8px 16px',
+                  background: 'transparent',
+                  border: '1px solid rgba(245, 158, 11, 0.4)',
+                  borderRadius: '8px',
+                  color: '#F59E0B',
+                  textDecoration: 'none',
+                  fontSize: windowWidth > 768 ? '14px' : '13px',
+                  fontWeight: '500',
+                  transition: 'all 0.3s',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  if (windowWidth > 768) {
+                    e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)';
+                    e.currentTarget.style.borderColor = '#F59E0B';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (windowWidth > 768) {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                  }
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                View Live Demo
+              </a>
+            </div>
+
             {/* Board of War Project */}
             <div style={{
               background: 'rgba(30, 41, 59, 0.8)',
