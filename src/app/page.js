@@ -1050,7 +1050,7 @@ export default function Portfolio() {
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
           willChange: 'transform, opacity'
         }}>
-          kantecki.dev
+          kantecki.com
         </div>
 
         {/* Desktop Side Menu */}
