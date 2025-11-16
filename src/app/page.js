@@ -1103,12 +1103,12 @@ export default function Portfolio() {
       </div>
 
       {/* ECG Background Canvas */}
-      <canvas 
+      <canvas
         ref={canvasRef}
         style={{
           position: 'fixed',
           top: 0,
-          left: 0,
+          left: '10px',
           width: '100%',
           height: '100%',
           zIndex: 1,
