@@ -17,6 +17,7 @@ export default function Portfolio() {
   const [windowWidth, setWindowWidth] = useState(768); // Default to mobile breakpoint, will update on mount
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
+  const [visibleElements, setVisibleElements] = useState(new Set());
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
 
@@ -336,12 +337,12 @@ export default function Portfolio() {
       ctx.beginPath();
       
       // Only draw the visible portion of the line
-      const startX = Math.max(0, trailStart);
-      const endX = xPos;
-      
-      if (startX < endX) {
+      const startX = Math.max(0, Math.floor(trailStart));
+      const endX = Math.floor(xPos);
+
+      if (startX < endX - 1) { // Add small gap to prevent flicker
         ctx.moveTo(startX, centerY);
-        
+
         // Draw the line from start to current position
         for (let x = startX; x <= endX; x++) {
           let y = centerY;
@@ -420,10 +421,10 @@ export default function Portfolio() {
           isRetracting = true;
         }
       } else {
-        // Retracting - move the trail start forward
-        const oldTrailStart = trailStart;
-        trailStart += pixelsPerSecond * deltaTime * 2; // Retract faster for visual effect
-        
+        // Retracting - move the trail start forward with smooth acceleration
+        const retractSpeed = pixelsPerSecond * deltaTime * 1.8; // Slightly slower for smoother effect
+        trailStart += retractSpeed;
+
         // Create binary particles at the retracting edge
         if (Math.random() < 0.3) { // 30% chance each frame
           // Get the Y position at the current trail start
@@ -439,16 +440,16 @@ export default function Portfolio() {
               particleY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
             }
           }
-          
+
           // Add some randomness to particle spawn position
           binaryParticles.push(new BinaryParticle(
             trailStart + (Math.random() - 0.5) * 20,
             particleY + (Math.random() - 0.5) * 10
           ));
         }
-        
-        // When fully retracted, reset for next cycle
-        if (trailStart >= xPos) {
+
+        // When fully retracted, reset for next cycle with smooth transition
+        if (trailStart >= xPos - 10) { // Start reset slightly before to avoid jump
           xPos = 0;
           trailStart = 0;
           isRetracting = false;
@@ -568,6 +569,29 @@ export default function Portfolio() {
       window.removeEventListener('resize', resizeCanvas);
     };
   }, [skillBinaryParticles]);
+
+  // Intersection Observer for scroll-triggered animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleElements((prev) => new Set(prev).add(entry.target.dataset.animateId));
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      }
+    );
+
+    // Observe all elements with data-animate-id
+    const elements = document.querySelectorAll('[data-animate-id]');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [mounted]);
 
   const navItems = [
     { name: 'Experience', href: '#experience', isExternal: false },
@@ -728,6 +752,49 @@ export default function Portfolio() {
           }
           100% {
             background-position: 0% 50%;
+          }
+        }
+
+        @keyframes drawCircle {
+          from {
+            strokeDashoffset: 660;
+          }
+          to {
+            strokeDashoffset: 0;
+          }
+        }
+
+        @keyframes drawLine {
+          from {
+            strokeDashoffset: 40;
+          }
+          to {
+            strokeDashoffset: 0;
+          }
+        }
+
+        @keyframes scanLine {
+          from {
+            opacity: 0;
+            transform: scaleX(0);
+            transformOrigin: center;
+          }
+          50% {
+            opacity: 0.8;
+          }
+          to {
+            opacity: 0;
+            transform: scaleX(1);
+            transformOrigin: center;
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
           }
         }
 
@@ -920,6 +987,46 @@ export default function Portfolio() {
         .skill-item:hover .gradient-sweep {
           background-position: 100% 0 !important;
           opacity: 1 !important;
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out var(--stagger-delay, 0s),
+                      transform 0.6s ease-out var(--stagger-delay, 0s);
+        }
+
+        .animate-on-scroll.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Card hover effects - instant response, no delay */
+        .hover-card {
+          transition: transform 0.12s ease-out 0s,
+                      box-shadow 0.12s ease-out 0s,
+                      border-color 0.12s ease-out 0s !important;
+          will-change: transform;
+          backface-visibility: hidden;
+        }
+
+        .hover-card:hover {
+          transform: translate3d(0, -6px, 0) !important;
+          box-shadow: 0 8px 16px rgba(139, 92, 246, 0.35);
+          border-color: rgba(139, 92, 246, 0.5) !important;
+        }
+
+        /* Section header slide-in */
+        .section-header {
+          opacity: 0;
+          transform: translateX(-50px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section-header.visible {
+          opacity: 1;
+          transform: translateX(0);
         }
       `}</style>
 
@@ -1389,21 +1496,141 @@ export default function Portfolio() {
           textAlign: 'center',
           animation: 'fadeInUp 1s ease-out',
           maxWidth: '800px',
-          padding: '0 24px'
+          padding: '0 24px',
+          position: 'relative'
         }}>
-          {/* Profile Image */}
+          {/* Profile Image with Wireframe Effect */}
           <div className="profile-image" style={{
             width: windowWidth > 768 ? '200px' : '150px',
             height: windowWidth > 768 ? '200px' : '150px',
             margin: '0 auto 32px',
             position: 'relative'
           }}>
+            {/* Animated Wireframe SVG */}
+            <svg
+              style={{
+                position: 'absolute',
+                top: '-10px',
+                left: '-10px',
+                width: 'calc(100% + 20px)',
+                height: 'calc(100% + 20px)',
+                zIndex: 2,
+                pointerEvents: 'none'
+              }}
+              viewBox="0 0 220 220"
+            >
+              {/* Outer wireframe circles */}
+              <circle
+                cx="110"
+                cy="110"
+                r="105"
+                fill="none"
+                stroke="url(#wireframeGradient)"
+                strokeWidth="2"
+                strokeDasharray="660"
+                strokeDashoffset="660"
+                style={{
+                  animation: 'drawCircle 1.5s ease-out forwards',
+                  animationDelay: '0.3s'
+                }}
+              />
+              <circle
+                cx="110"
+                cy="110"
+                r="100"
+                fill="none"
+                stroke="url(#wireframeGradient)"
+                strokeWidth="1"
+                strokeDasharray="628"
+                strokeDashoffset="628"
+                opacity="0.6"
+                style={{
+                  animation: 'drawCircle 1.5s ease-out forwards',
+                  animationDelay: '0.5s'
+                }}
+              />
+
+              {/* Scan lines */}
+              {[0, 1, 2, 3, 4].map((i) => (
+                <line
+                  key={i}
+                  x1="10"
+                  y1={45 + i * 30}
+                  x2="210"
+                  y2={45 + i * 30}
+                  stroke="#8B5CF6"
+                  strokeWidth="0.5"
+                  opacity="0"
+                  style={{
+                    animation: 'scanLine 0.3s ease-out forwards',
+                    animationDelay: `${0.2 + i * 0.1}s`
+                  }}
+                />
+              ))}
+
+              {/* Corner brackets */}
+              <path
+                d="M 30 30 L 30 50 M 30 30 L 50 30"
+                stroke="#3B82F6"
+                strokeWidth="2"
+                strokeDasharray="40"
+                strokeDashoffset="40"
+                style={{
+                  animation: 'drawLine 0.6s ease-out forwards',
+                  animationDelay: '0.1s'
+                }}
+              />
+              <path
+                d="M 190 30 L 190 50 M 190 30 L 170 30"
+                stroke="#3B82F6"
+                strokeWidth="2"
+                strokeDasharray="40"
+                strokeDashoffset="40"
+                style={{
+                  animation: 'drawLine 0.6s ease-out forwards',
+                  animationDelay: '0.2s'
+                }}
+              />
+              <path
+                d="M 30 190 L 30 170 M 30 190 L 50 190"
+                stroke="#3B82F6"
+                strokeWidth="2"
+                strokeDasharray="40"
+                strokeDashoffset="40"
+                style={{
+                  animation: 'drawLine 0.6s ease-out forwards',
+                  animationDelay: '0.15s'
+                }}
+              />
+              <path
+                d="M 190 190 L 190 170 M 190 190 L 170 190"
+                stroke="#3B82F6"
+                strokeWidth="2"
+                strokeDasharray="40"
+                strokeDashoffset="40"
+                style={{
+                  animation: 'drawLine 0.6s ease-out forwards',
+                  animationDelay: '0.25s'
+                }}
+              />
+
+              <defs>
+                <linearGradient id="wireframeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor: '#8B5CF6', stopOpacity: 1}} />
+                  <stop offset="100%" style={{stopColor: '#3B82F6', stopOpacity: 1}} />
+                </linearGradient>
+              </defs>
+            </svg>
+
             <div style={{
               width: '100%',
               height: '100%',
               borderRadius: '50%',
               background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
-              padding: '3px'
+              padding: '3px',
+              opacity: 0,
+              animation: 'fadeIn 0.5s ease-out forwards',
+              animationDelay: '0.8s'
             }}>
               <div style={{
                 width: '100%',
@@ -1413,7 +1640,6 @@ export default function Portfolio() {
                 overflow: 'hidden',
                 position: 'relative'
               }}>
-                {/* Replace 'headshot.jpg' with your actual image filename */}
                 <Image
                   src="/me.jpeg"
                   alt="Thomas"
@@ -1511,12 +1737,15 @@ export default function Portfolio() {
         position: 'relative',
         zIndex: 10
       }}>
-        <h2 style={{
-          fontSize: windowWidth > 768 ? '36px' : '28px',
-          fontWeight: '600',
-          marginBottom: windowWidth > 768 ? '60px' : '40px',
-          textAlign: 'center'
-        }}>
+        <h2
+          className={`section-header ${visibleElements.has('exp-header') ? 'visible' : ''}`}
+          data-animate-id="exp-header"
+          style={{
+            fontSize: windowWidth > 768 ? '36px' : '28px',
+            fontWeight: '600',
+            marginBottom: windowWidth > 768 ? '60px' : '40px',
+            textAlign: 'center'
+          }}>
           Experience & Education
         </h2>
 
@@ -1540,22 +1769,19 @@ export default function Portfolio() {
               Professional Experience
             </h3>
             
-            <div style={{
-              background: 'rgba(30, 41, 59, 0.5)',
-              borderRadius: '12px',
-              padding: '24px',
-              border: '1px solid rgba(139, 92, 246, 0.1)',
-              marginBottom: '24px',
-              transition: 'all 0.3s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
-              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
-            }}>
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
+              data-animate-id="exp-card-1"
+              style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                borderRadius: '12px',
+                padding: '24px',
+                border: '1px solid rgba(139, 92, 246, 0.1)',
+                marginBottom: '24px',
+                '--stagger-delay': '0.1s'
+              }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
                   <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
@@ -1591,6 +1817,8 @@ export default function Portfolio() {
             
             <div style={{
               background: 'rgba(30, 41, 59, 0.5)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
               borderRadius: '12px',
               padding: '24px',
               border: '1px solid rgba(139, 92, 246, 0.1)',
@@ -1654,21 +1882,18 @@ export default function Portfolio() {
             </h3>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{
-                background: 'rgba(30, 41, 59, 0.5)',
-                borderRadius: '12px',
-                padding: '20px',
-                border: '1px solid rgba(139, 92, 246, 0.1)',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
-              }}>
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-1') ? 'visible' : ''}`}
+                data-animate-id="edu-card-1"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.1s'
+                }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
@@ -1691,21 +1916,18 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              <div style={{
-                background: 'rgba(30, 41, 59, 0.5)',
-                borderRadius: '12px',
-                padding: '20px',
-                border: '1px solid rgba(139, 92, 246, 0.1)',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
-              }}>
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-2') ? 'visible' : ''}`}
+                data-animate-id="edu-card-2"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.2s'
+                }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
@@ -1727,21 +1949,18 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              <div style={{
-                background: 'rgba(30, 41, 59, 0.5)',
-                borderRadius: '12px',
-                padding: '20px',
-                border: '1px solid rgba(139, 92, 246, 0.1)',
-                transition: 'all 0.3s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
-                e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
-              }}>
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-3') ? 'visible' : ''}`}
+                data-animate-id="edu-card-3"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.3s'
+                }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
@@ -1793,12 +2012,15 @@ export default function Portfolio() {
           width: '100%',
           boxSizing: 'border-box'
         }}>
-          <h2 style={{
-            fontSize: windowWidth > 768 ? '36px' : '24px',
-            fontWeight: '600',
-            marginBottom: windowWidth > 768 ? '60px' : '30px',
-            textAlign: 'center'
-          }}>
+          <h2
+            className={`section-header ${visibleElements.has('projects-header') ? 'visible' : ''}`}
+            data-animate-id="projects-header"
+            style={{
+              fontSize: windowWidth > 768 ? '36px' : '24px',
+              fontWeight: '600',
+              marginBottom: windowWidth > 768 ? '60px' : '30px',
+              textAlign: 'center'
+            }}>
             Projects
           </h2>
 
@@ -1810,32 +2032,21 @@ export default function Portfolio() {
             boxSizing: 'border-box'
           }}>
             {/* KINEXIS Project */}
-            <div style={{
-              background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: windowWidth > 768 ? '16px' : '12px',
-              padding: windowWidth > 768 ? '32px' : '14px',
-              border: '1px solid rgba(245, 158, 11, 0.3)',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s',
-              boxSizing: 'border-box',
-              width: '100%',
-              maxWidth: '100%',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.6)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(245, 158, 11, 0.3)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.3)';
-                e.currentTarget.style.boxShadow = 'none';
-              }
-            }}>
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
+              data-animate-id="project-card-1"
+              style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                borderRadius: windowWidth > 768 ? '16px' : '12px',
+                padding: windowWidth > 768 ? '32px' : '14px',
+                border: '1px solid rgba(245, 158, 11, 0.3)',
+                backdropFilter: 'blur(10px)',
+                boxSizing: 'border-box',
+                width: '100%',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                '--stagger-delay': '0.1s'
+              }}>
               <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
                 <div style={{
                   display: 'flex',
@@ -1953,32 +2164,21 @@ export default function Portfolio() {
             </div>
 
             {/* Board of War Project */}
-            <div style={{
-              background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: windowWidth > 768 ? '16px' : '12px',
-              padding: windowWidth > 768 ? '32px' : '14px',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s',
-              boxSizing: 'border-box',
-              width: '100%',
-              maxWidth: '100%',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(139, 92, 246, 0.3)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                e.currentTarget.style.boxShadow = 'none';
-              }
-            }}>
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
+              data-animate-id="project-card-2"
+              style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                borderRadius: windowWidth > 768 ? '16px' : '12px',
+                padding: windowWidth > 768 ? '32px' : '14px',
+                border: '1px solid rgba(139, 92, 246, 0.3)',
+                backdropFilter: 'blur(10px)',
+                boxSizing: 'border-box',
+                width: '100%',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                '--stagger-delay': '0.2s'
+              }}>
               <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
                 <div style={{
                   display: 'flex',
@@ -2001,13 +2201,13 @@ export default function Portfolio() {
                   <span style={{
                     fontSize: '9px',
                     padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
-                    background: 'linear-gradient(135deg, #8B5CF6 0%, #8B5CF6aa 100%)',
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #F59E0Baa 100%)',
                     borderRadius: '4px',
                     color: '#ffffff',
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    FEATURED
+                    IN PROGRESS
                   </span>
                 </div>
                 <p style={{
@@ -2038,32 +2238,21 @@ export default function Portfolio() {
             </div>
 
             {/* Sentinel PHI Scanner */}
-            <div style={{
-              background: 'rgba(30, 41, 59, 0.8)',
-              borderRadius: windowWidth > 768 ? '16px' : '12px',
-              padding: windowWidth > 768 ? '32px' : '14px',
-              border: '1px solid rgba(16, 185, 129, 0.3)',
-              backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s',
-              boxSizing: 'border-box',
-              width: '100%',
-              maxWidth: '100%',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.6)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(16, 185, 129, 0.3)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (windowWidth > 768) {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-                e.currentTarget.style.boxShadow = 'none';
-              }
-            }}>
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-3') ? 'visible' : ''}`}
+              data-animate-id="project-card-3"
+              style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                borderRadius: windowWidth > 768 ? '16px' : '12px',
+                padding: windowWidth > 768 ? '32px' : '14px',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                backdropFilter: 'blur(10px)',
+                boxSizing: 'border-box',
+                width: '100%',
+                maxWidth: '100%',
+                overflow: 'hidden',
+                '--stagger-delay': '0.3s'
+              }}>
               <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
                 <div style={{
                   display: 'flex',
@@ -2174,12 +2363,15 @@ export default function Portfolio() {
         marginBottom: '60px'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: windowWidth > 768 ? '36px' : '28px',
-            fontWeight: '600',
-            marginBottom: windowWidth > 768 ? '60px' : '40px',
-            textAlign: 'center'
-          }}>
+          <h2
+            className={`section-header ${visibleElements.has('skills-header') ? 'visible' : ''}`}
+            data-animate-id="skills-header"
+            style={{
+              fontSize: windowWidth > 768 ? '36px' : '28px',
+              fontWeight: '600',
+              marginBottom: windowWidth > 768 ? '60px' : '40px',
+              textAlign: 'center'
+            }}>
             Skills
           </h2>
 
@@ -2209,7 +2401,12 @@ export default function Portfolio() {
               'HCPCS',
               'SNOMED',
               'HL7 FHIR',
-              'LOINC'
+              'LOINC',
+              'OpenCV',
+              'Render',
+              'SQLite',
+              'ThreeJS',
+              'MediaPipe'
             ].map((skill, index) => (
               <span
                 key={skill}
