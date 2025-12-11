@@ -1808,11 +1808,9 @@ export default function Portfolio() {
                 paddingLeft: '20px',
                 marginTop: '12px'
               }}>
-                <li>Analyze sales data and market trends to identify high-performing keywords and optimize ad campaigns</li>
-                <li>Conduct keyword research and A/B testing to improve book discoverability and conversion rates</li>
-                <li>Track and report on advertising ROI, providing data-driven recommendations for budget allocation</li>
-                <li>Create sales reports and ad budgeting visualizations using Tableau to inform strategic decisions</li>
-                <li>Optimize product listings and metadata to improve search rankings and sales performance</li>
+                <li>Analyze sales data and optimize ad campaigns using keyword research and A/B testing</li>
+                <li>Track advertising ROI and provide data-driven recommendations for budget allocation</li>
+                <li>Create sales reports and ad budgeting visualizations using Tableau</li>
               </ul>
             </div>
 
@@ -1855,10 +1853,8 @@ export default function Portfolio() {
                 paddingLeft: '20px',
                 marginTop: '12px'
               }}>
-                <li>Provided exceptional customer service in luxury retail environment</li>
                 <li>Achieved sales targets through product knowledge and client relationships</li>
                 <li>Maintained visual merchandising standards and inventory management</li>
-                <li>Collaborated with team to enhance store performance and customer experience</li>
               </ul>
             </div>
             
@@ -1906,11 +1902,8 @@ export default function Portfolio() {
                 paddingLeft: '20px',
                 marginTop: '12px'
               }}>
-                <li>Processed and checked in approximately 100 guests daily</li>
-                <li>Drafted contracts and handled payments using Authorize.net system</li>
-                <li>Welcomed virtual guests, collected sensitive information, and ran credit checks using Experian</li>
-                <li>Maintained office supplies, handled payroll, and distributed weekly sales reports</li>
-                <li>Managed office administrative duties and supported overall business operations</li>
+                <li>Processed approximately 100 guests daily, handling contracts and payments via Authorize.net</li>
+                <li>Managed payroll, sales reports, and credit checks using Experian</li>
               </ul>
             </div>
           </div>
