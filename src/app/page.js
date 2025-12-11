@@ -2163,7 +2163,7 @@ export default function Portfolio() {
               </a>
             </div>
 
-            {/* Board of War Project */}
+            {/* Strike Chess Project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
               data-animate-id="project-card-2"
@@ -2196,7 +2196,7 @@ export default function Portfolio() {
                     hyphens: 'auto',
                     lineHeight: windowWidth > 768 ? '1.2' : '1.1'
                   }}>
-                    Board of War™
+                    Strike Chess
                   </h3>
                   <span style={{
                     fontSize: '9px',
@@ -2213,17 +2213,36 @@ export default function Portfolio() {
                 <p style={{
                   color: '#cbd5e1',
                   fontSize: windowWidth > 768 ? '15px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.6' : '1.5'
+                  lineHeight: windowWidth > 768 ? '1.6' : '1.5',
+                  marginBottom: windowWidth > 768 ? '20px' : '14px'
                 }}>
-                  A military-themed strategic chess game featuring advanced AI opponents, powerup systems, and an immersive story campaign mode.
+                  A simultaneous-action tactical strategy game combining classic chess movement with secret planning and deterministic resolution. Both players lock in moves secretly, then watch them execute at the same time.
                 </p>
+                {/* Screenshot */}
+                <div style={{
+                  width: '100%',
+                  borderRadius: '8px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  marginBottom: windowWidth > 768 ? '20px' : '14px'
+                }}>
+                  <img
+                    src="/strike-chess.png"
+                    alt="Strike Chess gameplay"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      display: 'block'
+                    }}
+                  />
+                </div>
               </div>
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
                 gap: windowWidth > 768 ? '8px' : '4px'
               }}>
-                {['Python', 'Pygame', 'AI/ML', 'Game Design'].map(tech => (
+                {['Godot', 'GDScript', 'AI/ML', 'Game Design'].map(tech => (
                   <span key={tech} style={{
                     fontSize: windowWidth > 768 ? '12px' : '10px',
                     padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
