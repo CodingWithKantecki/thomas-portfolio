@@ -1936,17 +1936,22 @@ export default function Portfolio() {
                   border: '1px solid rgba(16, 185, 129, 0.2)',
                   borderLeft: '3px solid #10B981'
                 }}>
-                  {/* Placeholder image area */}
+                  {/* Image area */}
                   <div style={{
                     width: '100%',
                     height: '180px',
-                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
                     position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    overflow: 'hidden'
                   }}>
-                    <span style={{ fontSize: '48px', opacity: 0.3 }}>👔</span>
+                    <img
+                      src="/lacoste.png"
+                      alt="Lacoste"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
