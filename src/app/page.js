@@ -1799,6 +1799,8 @@ export default function Portfolio() {
                 style={{
                   position: 'relative',
                   marginBottom: '32px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
                   '--stagger-delay': '0.02s'
                 }}>
                 {/* Timeline dot */}
@@ -1892,27 +1894,6 @@ export default function Portfolio() {
                       Active member and Fall 2025 Mentee at UCF&apos;s premier software development organization. Won &quot;Best App Development Hack&quot; at Knight Hacks VIII with KINEXIS, a physical therapy tracking platform.
                     </p>
 
-                    {/* Skills */}
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      {['Hackathons', 'Software Development', 'Mentorship', 'Networking', 'Team Collaboration'].map(skill => (
-                        <span key={skill} style={{
-                          fontSize: '11px',
-                          padding: '5px 12px',
-                          background: 'rgba(239, 68, 68, 0.15)',
-                          borderRadius: '16px',
-                          border: '1px solid rgba(239, 68, 68, 0.3)',
-                          color: '#F87171'
-                        }}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
                     {/* Show More Details Button */}
                     <button
                       onClick={() => setExpandedExp(prev => ({ ...prev, knighthacks: !prev.knighthacks }))}
@@ -1948,6 +1929,31 @@ export default function Portfolio() {
                     {/* Expanded Content */}
                     {expandedExp.knighthacks && (
                       <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#EF4444', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#EF4444', borderRadius: '2px' }} />
+                          Key Skills
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Hackathons', 'Software Development', 'Mentorship', 'Networking', 'Team Collaboration'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(239, 68, 68, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(239, 68, 68, 0.3)',
+                              color: '#F87171'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
                         <h5 style={{ color: '#EF4444', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#EF4444', borderRadius: '2px' }} />
                           Achievements & Activities
@@ -1971,6 +1977,8 @@ export default function Portfolio() {
                 style={{
                   position: 'relative',
                   marginBottom: '32px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
                   '--stagger-delay': '0.05s'
                 }}>
                 {/* Timeline dot */}
@@ -2070,27 +2078,6 @@ export default function Portfolio() {
                       Analyzed sales data and optimized ad campaigns using keyword research and A/B testing. Tracked advertising ROI and created sales reports using Tableau.
                     </p>
 
-                    {/* Skills */}
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      {['Data Analysis', 'A/B Testing', 'Tableau', 'Ad Optimization', 'ROI Tracking'].map(skill => (
-                        <span key={skill} style={{
-                          fontSize: '11px',
-                          padding: '5px 12px',
-                          background: 'rgba(139, 92, 246, 0.15)',
-                          borderRadius: '16px',
-                          border: '1px solid rgba(139, 92, 246, 0.3)',
-                          color: '#A78BFA'
-                        }}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
                     {/* Show More Details Button */}
                     <button
                       onClick={() => setExpandedExp(prev => ({ ...prev, ajr: !prev.ajr }))}
@@ -2126,6 +2113,31 @@ export default function Portfolio() {
                     {/* Expanded Content */}
                     {expandedExp.ajr && (
                       <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
+                          Key Skills
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Data Analysis', 'A/B Testing', 'Tableau', 'Ad Optimization', 'ROI Tracking'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(139, 92, 246, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(139, 92, 246, 0.3)',
+                              color: '#A78BFA'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
                         <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
                           Key Responsibilities
@@ -2149,6 +2161,8 @@ export default function Portfolio() {
                 style={{
                   position: 'relative',
                   marginBottom: '32px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
                   '--stagger-delay': '0.1s'
                 }}>
                 {/* Timeline dot */}
@@ -2242,27 +2256,6 @@ export default function Portfolio() {
                       Achieved sales targets through product knowledge and client relationships in a luxury retail environment. Maintained visual merchandising standards and inventory management.
                     </p>
 
-                    {/* Skills */}
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      {['Sales', 'Customer Service', 'Luxury Retail', 'Inventory', 'Visual Merchandising'].map(skill => (
-                        <span key={skill} style={{
-                          fontSize: '11px',
-                          padding: '5px 12px',
-                          background: 'rgba(16, 185, 129, 0.15)',
-                          borderRadius: '16px',
-                          border: '1px solid rgba(16, 185, 129, 0.3)',
-                          color: '#34D399'
-                        }}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
                     {/* Show More Details Button */}
                     <button
                       onClick={() => setExpandedExp(prev => ({ ...prev, lacoste: !prev.lacoste }))}
@@ -2298,6 +2291,31 @@ export default function Portfolio() {
                     {/* Expanded Content */}
                     {expandedExp.lacoste && (
                       <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#10B981', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#10B981', borderRadius: '2px' }} />
+                          Key Skills
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Sales', 'Customer Service', 'Luxury Retail', 'Inventory', 'Visual Merchandising'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(16, 185, 129, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(16, 185, 129, 0.3)',
+                              color: '#34D399'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
                         <h5 style={{ color: '#10B981', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#10B981', borderRadius: '2px' }} />
                           Key Responsibilities
@@ -2321,6 +2339,8 @@ export default function Portfolio() {
                 style={{
                   position: 'relative',
                   marginBottom: '32px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
                   '--stagger-delay': '0.15s'
                 }}>
                 {/* Timeline dot */}
@@ -2418,27 +2438,6 @@ export default function Portfolio() {
                       Processed approximately 100 guests daily, handling contracts and payments via Authorize.net. Managed payroll, sales reports, and credit checks using Experian.
                     </p>
 
-                    {/* Skills */}
-                    <div style={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: '8px',
-                      marginBottom: '16px'
-                    }}>
-                      {['Authorize.net', 'Experian', 'Payroll', 'Administration', 'Guest Services'].map(skill => (
-                        <span key={skill} style={{
-                          fontSize: '11px',
-                          padding: '5px 12px',
-                          background: 'rgba(245, 158, 11, 0.15)',
-                          borderRadius: '16px',
-                          border: '1px solid rgba(245, 158, 11, 0.3)',
-                          color: '#FBBF24'
-                        }}>
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
                     {/* Show More Details Button */}
                     <button
                       onClick={() => setExpandedExp(prev => ({ ...prev, sharelife: !prev.sharelife }))}
@@ -2474,6 +2473,31 @@ export default function Portfolio() {
                     {/* Expanded Content */}
                     {expandedExp.sharelife && (
                       <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(245, 158, 11, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
+                          Key Skills
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Authorize.net', 'Experian', 'Payroll', 'Administration', 'Guest Services'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(245, 158, 11, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(245, 158, 11, 0.3)',
+                              color: '#FBBF24'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
                         <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
                           Key Responsibilities
