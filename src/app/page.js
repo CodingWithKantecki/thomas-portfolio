@@ -2069,8 +2069,8 @@ export default function Portfolio() {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: windowWidth > 768 ? 'repeat(auto-fit, minmax(500px, 1fr))' : '1fr',
-            gap: windowWidth > 768 ? '32px' : '16px',
+            gridTemplateColumns: windowWidth > 1024 ? 'repeat(3, 1fr)' : windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
+            gap: windowWidth > 768 ? '24px' : '16px',
             width: '100%',
             boxSizing: 'border-box'
           }}>
@@ -2079,133 +2079,116 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
               data-animate-id="project-card-1"
               style={{
-                background: 'rgba(30, 41, 59, 0.8)',
-                borderRadius: windowWidth > 768 ? '16px' : '12px',
-                padding: windowWidth > 768 ? '32px' : '14px',
-                border: '1px solid rgba(245, 158, 11, 0.3)',
-                backdropFilter: 'blur(10px)',
-                boxSizing: 'border-box',
-                width: '100%',
-                maxWidth: '100%',
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.1s'
               }}>
-              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
+              {/* Image with overlay title */}
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px' }}>
+                <img
+                  src="/kinexis-demo.gif"
+                  alt="KINEXIS demo"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+                <div style={{
+                  position: 'absolute',
+                  bottom: '12px',
+                  left: '12px',
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  padding: '8px 14px',
+                  borderRadius: '6px',
+                  fontSize: windowWidth > 768 ? '18px' : '16px',
+                  fontWeight: '700',
+                  color: '#fff'
+                }}>
+                  KINEXIS
+                </div>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+                {/* Event badge */}
                 <div style={{
                   display: 'flex',
-                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
-                  gap: windowWidth > 768 ? '12px' : '8px',
-                  marginBottom: '12px',
-                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F59E0B',
+                  fontSize: '13px',
+                  marginBottom: '12px'
                 }}>
-                  <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '16px',
-                    fontWeight: '700',
-                    margin: 0,
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    hyphens: 'auto',
-                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
-                  }}>
-                    KINEXIS
-                  </h3>
-                  <span style={{
-                    fontSize: '9px',
-                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
-                    background: 'linear-gradient(135deg, #F59E0B 0%, #F59E0Baa 100%)',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontWeight: '600',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    WINNER
-                  </span>
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Knight Hacks VIII - Winner
                 </div>
+                {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: windowWidth > 768 ? '15px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.6' : '1.5',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
                   marginBottom: '16px'
                 }}>
-                  Award-winning physical therapy tracking platform using computer vision for objective PT measurements. Winner of Knight Hacks VIII - Best App Development Hack.
+                  Award-winning physical therapy tracking platform using computer vision for objective PT measurements.
                 </p>
-                {/* Demo GIF */}
+                {/* Tech pills */}
                 <div style={{
-                  width: '100%',
-                  height: windowWidth > 768 ? '280px' : '180px',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(245, 158, 11, 0.3)',
-                  marginBottom: windowWidth > 768 ? '20px' : '14px'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
                 }}>
-                  <img
-                    src="/kinexis-demo.gif"
-                    alt="KINEXIS demo"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block'
-                    }}
-                  />
-                </div>
-              </div>
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: windowWidth > 768 ? '8px' : '4px',
-                marginBottom: windowWidth > 768 ? '20px' : '14px'
-              }}>
-                {['JavaScript', 'OpenCV', 'Computer Vision', 'Healthcare IT'].map(tech => (
-                  <span key={tech} style={{
-                    fontSize: windowWidth > 768 ? '12px' : '10px',
-                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
-                    background: 'rgba(245, 158, 11, 0.1)',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(245, 158, 11, 0.3)'
+                  {['JavaScript', 'OpenCV', 'Computer Vision'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                  <span style={{
+                    fontSize: '11px',
+                    padding: '4px 10px',
+                    background: 'rgba(139, 92, 246, 0.1)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(139, 92, 246, 0.3)',
+                    color: '#A78BFA'
                   }}>
-                    {tech}
+                    +1
                   </span>
-                ))}
+                </div>
+                {/* View Details link */}
+                <a
+                  href="https://devpost.com/software/kinexis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                  }}
+                >
+                  View Details
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <a
-                href="https://devpost.com/software/kinexis"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: windowWidth > 768 ? '8px' : '6px',
-                  padding: windowWidth > 768 ? '10px 20px' : '8px 16px',
-                  background: 'transparent',
-                  border: '1px solid rgba(245, 158, 11, 0.4)',
-                  borderRadius: '8px',
-                  color: '#F59E0B',
-                  textDecoration: 'none',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  fontWeight: '500',
-                  transition: 'all 0.3s',
-                  whiteSpace: 'nowrap'
-                }}
-                onMouseEnter={(e) => {
-                  if (windowWidth > 768) {
-                    e.currentTarget.style.background = 'rgba(245, 158, 11, 0.1)';
-                    e.currentTarget.style.borderColor = '#F59E0B';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (windowWidth > 768) {
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.4)';
-                  }
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                View on Devpost
-              </a>
             </div>
 
             {/* Strike Chess Project */}
@@ -2213,93 +2196,111 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
               data-animate-id="project-card-2"
               style={{
-                background: 'rgba(30, 41, 59, 0.8)',
-                borderRadius: windowWidth > 768 ? '16px' : '12px',
-                padding: windowWidth > 768 ? '32px' : '14px',
-                border: '1px solid rgba(139, 92, 246, 0.3)',
-                backdropFilter: 'blur(10px)',
-                boxSizing: 'border-box',
-                width: '100%',
-                maxWidth: '100%',
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.2s'
               }}>
-              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
+              {/* Image with overlay title */}
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px' }}>
+                <img
+                  src="/strike-chess.png"
+                  alt="Strike Chess gameplay"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
                 <div style={{
-                  display: 'flex',
-                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
-                  gap: windowWidth > 768 ? '12px' : '8px',
-                  marginBottom: '12px',
-                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
+                  position: 'absolute',
+                  bottom: '12px',
+                  left: '12px',
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  padding: '8px 14px',
+                  borderRadius: '6px',
+                  fontSize: windowWidth > 768 ? '18px' : '16px',
+                  fontWeight: '700',
+                  color: '#fff'
                 }}>
-                  <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '16px',
-                    fontWeight: '700',
-                    margin: 0,
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    hyphens: 'auto',
-                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
-                  }}>
-                    Strike Chess
-                  </h3>
-                  <span style={{
-                    fontSize: '9px',
-                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
-                    background: 'linear-gradient(135deg, #F59E0B 0%, #F59E0Baa 100%)',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontWeight: '600',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    IN DEVELOPMENT
-                  </span>
-                </div>
-                <p style={{
-                  color: '#cbd5e1',
-                  fontSize: windowWidth > 768 ? '15px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.6' : '1.5',
-                  marginBottom: windowWidth > 768 ? '20px' : '14px'
-                }}>
-                  A simultaneous-action tactical strategy game combining classic chess movement with secret planning and deterministic resolution. Both players lock in moves secretly, then watch them execute at the same time.
-                </p>
-                {/* Screenshot */}
-                <div style={{
-                  width: '100%',
-                  height: windowWidth > 768 ? '280px' : '180px',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(139, 92, 246, 0.3)',
-                  marginBottom: windowWidth > 768 ? '20px' : '14px'
-                }}>
-                  <img
-                    src="/strike-chess.png"
-                    alt="Strike Chess gameplay"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block'
-                    }}
-                  />
+                  Strike Chess
                 </div>
               </div>
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: windowWidth > 768 ? '8px' : '4px'
-              }}>
-                {['Godot', 'GDScript', 'AI/ML', 'Game Design'].map(tech => (
-                  <span key={tech} style={{
-                    fontSize: windowWidth > 768 ? '12px' : '10px',
-                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F59E0B',
+                  fontSize: '13px',
+                  marginBottom: '12px'
+                }}>
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  In Development
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
+                }}>
+                  A simultaneous-action tactical strategy game combining classic chess with secret planning.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['Godot', 'GDScript', 'Game Design'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                  <span style={{
+                    fontSize: '11px',
+                    padding: '4px 10px',
                     background: 'rgba(139, 92, 246, 0.1)',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(139, 92, 246, 0.3)'
+                    borderRadius: '12px',
+                    border: '1px solid rgba(139, 92, 246, 0.3)',
+                    color: '#A78BFA'
                   }}>
-                    {tech}
+                    +1
                   </span>
-                ))}
+                </div>
+                {/* View Details link */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#64748b',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                  }}
+                >
+                  Coming Soon
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
             </div>
 
@@ -2308,104 +2309,116 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-3') ? 'visible' : ''}`}
               data-animate-id="project-card-3"
               style={{
-                background: 'rgba(30, 41, 59, 0.8)',
-                borderRadius: windowWidth > 768 ? '16px' : '12px',
-                padding: windowWidth > 768 ? '32px' : '14px',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                backdropFilter: 'blur(10px)',
-                boxSizing: 'border-box',
-                width: '100%',
-                maxWidth: '100%',
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.3s'
               }}>
-              <div style={{ marginBottom: windowWidth > 768 ? '24px' : '16px' }}>
+              {/* Image with overlay title */}
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
+                <div style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  fontSize: '48px',
+                  opacity: 0.3
+                }}>
+                  🛡️
+                </div>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '12px',
+                  left: '12px',
+                  background: 'rgba(15, 23, 42, 0.9)',
+                  padding: '8px 14px',
+                  borderRadius: '6px',
+                  fontSize: windowWidth > 768 ? '18px' : '16px',
+                  fontWeight: '700',
+                  color: '#fff'
+                }}>
+                  Sentinel PHI Scanner
+                </div>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+                {/* Event badge */}
                 <div style={{
                   display: 'flex',
-                  alignItems: windowWidth > 768 ? 'center' : 'flex-start',
-                  gap: windowWidth > 768 ? '12px' : '8px',
-                  marginBottom: '12px',
-                  flexWrap: windowWidth > 768 ? 'nowrap' : 'wrap'
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#10B981',
+                  fontSize: '13px',
+                  marginBottom: '12px'
                 }}>
-                  <h3 style={{
-                    fontSize: windowWidth > 768 ? '28px' : '16px',
-                    fontWeight: '700',
-                    margin: 0,
-                    wordWrap: 'break-word',
-                    overflowWrap: 'break-word',
-                    hyphens: 'auto',
-                    lineHeight: windowWidth > 768 ? '1.2' : '1.1'
-                  }}>
-                    Sentinel PHI Scanner
-                  </h3>
-                  <span style={{
-                    fontSize: '9px',
-                    padding: windowWidth > 768 ? '4px 10px' : '2px 6px',
-                    background: 'linear-gradient(135deg, #10B981 0%, #10B981aa 100%)',
-                    borderRadius: '4px',
-                    color: '#ffffff',
-                    fontWeight: '600',
-                    whiteSpace: 'nowrap'
-                  }}>
-                    HEALTHCARE
-                  </span>
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Healthcare Project
                 </div>
+                {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: windowWidth > 768 ? '15px' : '13px',
-                  lineHeight: windowWidth > 768 ? '1.6' : '1.5'
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
                 }}>
-                  A Python-based tool designed to identify potential Protected Health Information (PHI) in text documents using pattern matching and regular expressions.
+                  Python tool to identify Protected Health Information (PHI) in documents using pattern matching.
                 </p>
-              </div>
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: windowWidth > 768 ? '8px' : '4px',
-                marginBottom: windowWidth > 768 ? '20px' : '14px'
-              }}>
-                {['Python', 'Streamlit', 'HIPAA', 'PHI Detection'].map(tech => (
-                  <span key={tech} style={{
-                    fontSize: windowWidth > 768 ? '12px' : '10px',
-                    padding: windowWidth > 768 ? '6px 12px' : '3px 6px',
-                    background: 'rgba(16, 185, 129, 0.1)',
-                    borderRadius: '4px',
-                    border: '1px solid rgba(16, 185, 129, 0.3)'
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['Python', 'Streamlit', 'HIPAA'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                  <span style={{
+                    fontSize: '11px',
+                    padding: '4px 10px',
+                    background: 'rgba(139, 92, 246, 0.1)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(139, 92, 246, 0.3)',
+                    color: '#A78BFA'
                   }}>
-                    {tech}
+                    +1
                   </span>
-                ))}
+                </div>
+                {/* View Details link */}
+                <a
+                  href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                  }}
+                >
+                  View Details
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <a
-                href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: windowWidth > 768 ? '8px' : '6px',
-                  padding: windowWidth > 768 ? '10px 20px' : '8px 16px',
-                  background: 'transparent',
-                  border: '1px solid rgba(16, 185, 129, 0.4)',
-                  borderRadius: '8px',
-                  color: '#10B981',
-                  textDecoration: 'none',
-                  fontSize: windowWidth > 768 ? '14px' : '13px',
-                  fontWeight: '500',
-                  transition: 'all 0.3s',
-                  whiteSpace: 'nowrap'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(16, 185, 129, 0.1)';
-                  e.currentTarget.style.borderColor = '#10B981';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.4)';
-                }}
-              >
-                View on GitHub →
-              </a>
             </div>
           </div>
         </div>
