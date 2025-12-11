@@ -2609,7 +2609,8 @@ export default function Portfolio() {
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    background: 'transparent'
                   }}>
                     <img
                       src="/valencia.png"
@@ -2666,14 +2667,14 @@ export default function Portfolio() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: '#fff'
+                    background: 'transparent'
                   }}>
                     <img
                       src="/windermere.png"
                       alt="Windermere High School Logo"
                       style={{
-                        width: '90px',
-                        height: '90px',
+                        width: '100px',
+                        height: '100px',
                         objectFit: 'contain'
                       }}
                     />
