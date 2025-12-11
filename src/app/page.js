@@ -1768,7 +1768,54 @@ export default function Portfolio() {
             }}>
               Professional Experience
             </h3>
-            
+
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
+              data-animate-id="exp-card-0"
+              style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                borderRadius: '12px',
+                padding: '24px',
+                border: '1px solid rgba(139, 92, 246, 0.1)',
+                marginBottom: '24px',
+                '--stagger-delay': '0.05s'
+              }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
+                <div>
+                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
+                    Data & Ad Optimization Analyst
+                  </h4>
+                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
+                    AJR Publishing LLC • Remote
+                  </p>
+                </div>
+                <span style={{
+                  fontSize: '14px',
+                  color: '#10B981',
+                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  padding: '4px 12px',
+                  borderRadius: '4px',
+                  fontWeight: '600'
+                }}>
+                  Nov 2024 - Present
+                </span>
+              </div>
+              <ul style={{
+                color: '#cbd5e1',
+                fontSize: '14px',
+                lineHeight: '1.8',
+                paddingLeft: '20px',
+                marginTop: '12px'
+              }}>
+                <li>Analyze sales data and market trends to identify high-performing keywords and optimize ad campaigns</li>
+                <li>Conduct keyword research and A/B testing to improve book discoverability and conversion rates</li>
+                <li>Track and report on advertising ROI, providing data-driven recommendations for budget allocation</li>
+                <li>Optimize product listings and metadata to improve search rankings and sales performance</li>
+              </ul>
+            </div>
+
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
               data-animate-id="exp-card-1"
@@ -1801,9 +1848,9 @@ export default function Portfolio() {
                   Mar 2023 - Jul 2023
                 </span>
               </div>
-              <ul style={{ 
-                color: '#cbd5e1', 
-                fontSize: '14px', 
+              <ul style={{
+                color: '#cbd5e1',
+                fontSize: '14px',
                 lineHeight: '1.8',
                 paddingLeft: '20px',
                 marginTop: '12px'
