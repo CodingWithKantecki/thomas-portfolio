@@ -2393,6 +2393,7 @@ export default function Portfolio() {
               'MySQL',
               'Git',
               'Pygame',
+              'Godot',
               'Linux',
               'SOC 2',
               'HITRUST',
