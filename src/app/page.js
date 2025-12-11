@@ -2549,14 +2549,14 @@ export default function Portfolio() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: '#fff'
+                    background: 'transparent'
                   }}>
                     <img
                       src="/ucf.png"
                       alt="UCF Logo"
                       style={{
-                        width: '90px',
-                        height: '90px',
+                        width: '100px',
+                        height: '100px',
                         objectFit: 'contain'
                       }}
                     />
