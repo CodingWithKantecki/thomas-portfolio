@@ -1761,150 +1761,391 @@ export default function Portfolio() {
             <h3 style={{
               fontSize: '24px',
               fontWeight: '600',
-              marginBottom: '32px',
-              color: '#8B5CF6',
-              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
-              paddingBottom: '12px'
+              marginBottom: '16px',
+              color: '#8B5CF6'
             }}>
               Professional Experience
             </h3>
-
-            <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
-              data-animate-id="exp-card-0"
-              style={{
-                background: 'rgba(30, 41, 59, 0.5)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                borderRadius: '12px',
-                padding: '24px',
-                border: '1px solid rgba(139, 92, 246, 0.1)',
-                marginBottom: '24px',
-                '--stagger-delay': '0.05s'
-              }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <div>
-                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
-                    Data & Ad Optimization Analyst
-                  </h4>
-                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
-                    AJR Publishing LLC • Remote
-                  </p>
-                </div>
-                <span style={{
-                  fontSize: '14px',
-                  color: '#94a3b8',
-                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                  padding: '4px 12px',
-                  borderRadius: '4px'
-                }}>
-                  Nov 2024 - Jul 2025
-                </span>
-              </div>
-              <ul style={{
-                color: '#cbd5e1',
-                fontSize: '14px',
-                lineHeight: '1.8',
-                paddingLeft: '20px',
-                marginTop: '12px'
-              }}>
-                <li>Analyze sales data and optimize ad campaigns using keyword research and A/B testing</li>
-                <li>Track advertising ROI and provide data-driven recommendations for budget allocation</li>
-                <li>Create sales reports and ad budgeting visualizations using Tableau</li>
-              </ul>
-            </div>
-
-            <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
-              data-animate-id="exp-card-1"
-              style={{
-                background: 'rgba(30, 41, 59, 0.5)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                borderRadius: '12px',
-                padding: '24px',
-                border: '1px solid rgba(139, 92, 246, 0.1)',
-                marginBottom: '24px',
-                '--stagger-delay': '0.1s'
-              }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <div>
-                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
-                    Sales Associate
-                  </h4>
-                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
-                    Lacoste • Orlando, FL
-                  </p>
-                </div>
-                <span style={{
-                  fontSize: '14px',
-                  color: '#94a3b8',
-                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                  padding: '4px 12px',
-                  borderRadius: '4px'
-                }}>
-                  Mar 2023 - Jul 2023
-                </span>
-              </div>
-              <ul style={{
-                color: '#cbd5e1',
-                fontSize: '14px',
-                lineHeight: '1.8',
-                paddingLeft: '20px',
-                marginTop: '12px'
-              }}>
-                <li>Achieved sales targets through product knowledge and client relationships</li>
-                <li>Maintained visual merchandising standards and inventory management</li>
-              </ul>
-            </div>
-            
-            <div style={{
-              background: 'rgba(30, 41, 59, 0.5)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              padding: '24px',
-              border: '1px solid rgba(139, 92, 246, 0.1)',
-              marginBottom: '24px',
-              transition: 'all 0.3s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.7)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.1)';
-              e.currentTarget.style.background = 'rgba(30, 41, 59, 0.5)';
+            <p style={{
+              color: '#94a3b8',
+              fontSize: '14px',
+              marginBottom: '32px',
+              maxWidth: '600px'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
-                <div>
-                  <h4 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '4px' }}>
-                    Administrative Assistant
-                  </h4>
-                  <p style={{ color: '#8B5CF6', fontSize: '16px' }}>
-                    Sharelife Vacation • Orlando, FL
-                  </p>
-                </div>
-                <span style={{
-                  fontSize: '14px',
-                  color: '#94a3b8',
-                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                  padding: '4px 12px',
-                  borderRadius: '4px'
+              A comprehensive overview of my professional journey from start to finish.
+            </p>
+
+            {/* Timeline container */}
+            <div style={{ position: 'relative', paddingLeft: '24px' }}>
+              {/* Timeline line */}
+              <div style={{
+                position: 'absolute',
+                left: '6px',
+                top: '0',
+                bottom: '0',
+                width: '2px',
+                background: 'rgba(139, 92, 246, 0.2)'
+              }} />
+
+              {/* AJR Publishing */}
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
+                data-animate-id="exp-card-0"
+                style={{
+                  position: 'relative',
+                  marginBottom: '32px',
+                  '--stagger-delay': '0.05s'
                 }}>
-                  Apr 2021 - Aug 2022
-                </span>
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '-21px',
+                  top: '0',
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  background: '#8B5CF6',
+                  border: '2px solid #0f172a'
+                }} />
+
+                {/* Card */}
+                <div style={{
+                  background: 'rgba(30, 41, 59, 0.8)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(139, 92, 246, 0.2)',
+                  borderLeft: '3px solid #8B5CF6'
+                }}>
+                  {/* Placeholder image area */}
+                  <div style={{
+                    width: '100%',
+                    height: '180px',
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{ fontSize: '48px', opacity: 0.3 }}>📊</span>
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '12px',
+                      left: '16px',
+                      background: 'rgba(15, 23, 42, 0.9)',
+                      padding: '8px 14px',
+                      borderRadius: '6px'
+                    }}>
+                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                        Data & Ad Optimization Analyst
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: '20px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '16px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '12px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="#8B5CF6" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        AJR Publishing LLC
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Nov 2024 - Jul 2025
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Remote
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.6',
+                      marginBottom: '16px'
+                    }}>
+                      Analyzed sales data and optimized ad campaigns using keyword research and A/B testing. Tracked advertising ROI and created sales reports using Tableau.
+                    </p>
+
+                    {/* Skills */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px'
+                    }}>
+                      {['Data Analysis', 'A/B Testing', 'Tableau', 'Ad Optimization'].map(skill => (
+                        <span key={skill} style={{
+                          fontSize: '11px',
+                          padding: '4px 10px',
+                          background: 'rgba(139, 92, 246, 0.1)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(139, 92, 246, 0.3)',
+                          color: '#A78BFA'
+                        }}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <ul style={{ 
-                color: '#cbd5e1', 
-                fontSize: '14px', 
-                lineHeight: '1.8',
-                paddingLeft: '20px',
-                marginTop: '12px'
-              }}>
-                <li>Processed approximately 100 guests daily, handling contracts and payments via Authorize.net</li>
-                <li>Managed payroll, sales reports, and credit checks using Experian</li>
-              </ul>
+
+              {/* Lacoste */}
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
+                data-animate-id="exp-card-1"
+                style={{
+                  position: 'relative',
+                  marginBottom: '32px',
+                  '--stagger-delay': '0.1s'
+                }}>
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '-21px',
+                  top: '0',
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  background: '#10B981',
+                  border: '2px solid #0f172a'
+                }} />
+
+                {/* Card */}
+                <div style={{
+                  background: 'rgba(30, 41, 59, 0.8)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(16, 185, 129, 0.2)',
+                  borderLeft: '3px solid #10B981'
+                }}>
+                  {/* Placeholder image area */}
+                  <div style={{
+                    width: '100%',
+                    height: '180px',
+                    background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{ fontSize: '48px', opacity: 0.3 }}>👔</span>
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '12px',
+                      left: '16px',
+                      background: 'rgba(15, 23, 42, 0.9)',
+                      padding: '8px 14px',
+                      borderRadius: '6px'
+                    }}>
+                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                        Sales Associate
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: '20px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '16px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '12px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="#10B981" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Lacoste
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Mar 2023 - Jul 2023
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Orlando, FL
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.6',
+                      marginBottom: '16px'
+                    }}>
+                      Achieved sales targets through product knowledge and client relationships. Maintained visual merchandising standards and inventory management.
+                    </p>
+
+                    {/* Skills */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px'
+                    }}>
+                      {['Sales', 'Customer Service', 'Luxury Retail', 'Inventory'].map(skill => (
+                        <span key={skill} style={{
+                          fontSize: '11px',
+                          padding: '4px 10px',
+                          background: 'rgba(16, 185, 129, 0.1)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(16, 185, 129, 0.3)',
+                          color: '#34D399'
+                        }}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sharelife Vacation */}
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-2') ? 'visible' : ''}`}
+                data-animate-id="exp-card-2"
+                style={{
+                  position: 'relative',
+                  marginBottom: '32px',
+                  '--stagger-delay': '0.15s'
+                }}>
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '-21px',
+                  top: '0',
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  background: '#F59E0B',
+                  border: '2px solid #0f172a'
+                }} />
+
+                {/* Card */}
+                <div style={{
+                  background: 'rgba(30, 41, 59, 0.8)',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(245, 158, 11, 0.2)',
+                  borderLeft: '3px solid #F59E0B'
+                }}>
+                  {/* Placeholder image area */}
+                  <div style={{
+                    width: '100%',
+                    height: '180px',
+                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{ fontSize: '48px', opacity: 0.3 }}>🏢</span>
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '12px',
+                      left: '16px',
+                      background: 'rgba(15, 23, 42, 0.9)',
+                      padding: '8px 14px',
+                      borderRadius: '6px'
+                    }}>
+                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                        Administrative Assistant
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: '20px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '16px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '12px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="#F59E0B" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Sharelife Vacation
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Apr 2021 - Aug 2022
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Orlando, FL
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.6',
+                      marginBottom: '16px'
+                    }}>
+                      Processed approximately 100 guests daily, handling contracts and payments via Authorize.net. Managed payroll, sales reports, and credit checks using Experian.
+                    </p>
+
+                    {/* Skills */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px'
+                    }}>
+                      {['Authorize.net', 'Experian', 'Payroll', 'Administration'].map(skill => (
+                        <span key={skill} style={{
+                          fontSize: '11px',
+                          padding: '4px 10px',
+                          background: 'rgba(245, 158, 11, 0.1)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(245, 158, 11, 0.3)',
+                          color: '#FBBF24'
+                        }}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
