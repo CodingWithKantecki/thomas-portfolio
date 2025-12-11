@@ -2526,7 +2526,6 @@ export default function Portfolio() {
                     borderRadius: '12px',
                     overflow: 'hidden',
                     flexShrink: 0,
-                    background: '#FFC904',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
@@ -2535,8 +2534,8 @@ export default function Portfolio() {
                       src="/ucf.png"
                       alt="UCF Logo"
                       style={{
-                        width: '70px',
-                        height: '70px',
+                        width: '80px',
+                        height: '80px',
                         objectFit: 'contain'
                       }}
                     />
@@ -2776,7 +2775,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={() => setExpandedProject(prev => ({ ...prev, kinexis: !prev.kinexis }))}
+                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, kinexis: !prev.kinexis })); }}
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -2938,7 +2937,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={() => setExpandedProject(prev => ({ ...prev, strikechess: !prev.strikechess }))}
+                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, strikechess: !prev.strikechess })); }}
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -3083,7 +3082,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={() => setExpandedProject(prev => ({ ...prev, sentinel: !prev.sentinel }))}
+                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, sentinel: !prev.sentinel })); }}
                   style={{
                     width: '100%',
                     display: 'flex',
