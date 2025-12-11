@@ -19,6 +19,7 @@ export default function Portfolio() {
   const [currentSection, setCurrentSection] = useState('');
   const [visibleElements, setVisibleElements] = useState(new Set());
   const [expandedExp, setExpandedExp] = useState({});
+  const [expandedProject, setExpandedProject] = useState({});
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
 
@@ -2773,28 +2774,73 @@ export default function Portfolio() {
                     +1
                   </span>
                 </div>
-                {/* View Details link */}
-                <a
-                  href="https://devpost.com/software/kinexis"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {/* View Details button */}
+                <button
+                  onClick={() => setExpandedProject(prev => ({ ...prev, kinexis: !prev.kinexis }))}
                   style={{
+                    width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    textDecoration: 'none',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
+                    paddingBottom: '0',
                     borderTop: '1px solid rgba(139, 92, 246, 0.1)'
                   }}
                 >
-                  View Details
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {expandedProject.kinexis ? 'Hide Details' : 'View Details'}
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ transform: expandedProject.kinexis ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </button>
+
+                {/* Expanded Details */}
+                {expandedProject.kinexis && (
+                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
+                      About This Project
+                    </h5>
+                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
+                      KINEXIS is a physical therapy tracking platform that uses computer vision to provide objective measurements of patient movements. Built at Knight Hacks VIII, it won &quot;Best App Development Hack&quot;.
+                    </p>
+                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
+                      <li>Real-time pose detection and angle measurement using OpenCV</li>
+                      <li>Progress tracking dashboard for patients and therapists</li>
+                      <li>Exportable reports for healthcare documentation</li>
+                    </ul>
+                    <a
+                      href="https://devpost.com/software/kinexis"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#10B981',
+                        textDecoration: 'none',
+                        fontSize: '13px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      View on Devpost
+                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -2890,24 +2936,57 @@ export default function Portfolio() {
                     +1
                   </span>
                 </div>
-                {/* View Details link */}
-                <div
+                {/* View Details button */}
+                <button
+                  onClick={() => setExpandedProject(prev => ({ ...prev, strikechess: !prev.strikechess }))}
                   style={{
+                    width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    color: '#64748b',
+                    color: '#10B981',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
+                    paddingBottom: '0',
                     borderTop: '1px solid rgba(139, 92, 246, 0.1)'
                   }}
                 >
-                  Coming Soon
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {expandedProject.strikechess ? 'Hide Details' : 'View Details'}
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ transform: expandedProject.strikechess ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </div>
+                </button>
+
+                {/* Expanded Details */}
+                {expandedProject.strikechess && (
+                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
+                      About This Project
+                    </h5>
+                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
+                      Strike Chess is a unique twist on traditional chess where both players secretly plan their moves simultaneously, then watch them resolve at the same time. This creates exciting moments of strategy and anticipation.
+                    </p>
+                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
+                      <li>Simultaneous turn-based gameplay with secret planning phase</li>
+                      <li>Built with Godot Engine using GDScript</li>
+                      <li>Custom game logic for move collision and resolution</li>
+                    </ul>
+                    <span style={{ color: '#64748b', fontSize: '13px', fontStyle: 'italic' }}>
+                      Currently in active development
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -3002,28 +3081,74 @@ export default function Portfolio() {
                     +1
                   </span>
                 </div>
-                {/* View Details link */}
-                <a
-                  href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {/* View Details button */}
+                <button
+                  onClick={() => setExpandedProject(prev => ({ ...prev, sentinel: !prev.sentinel }))}
                   style={{
+                    width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    textDecoration: 'none',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
+                    paddingBottom: '0',
                     borderTop: '1px solid rgba(139, 92, 246, 0.1)'
                   }}
                 >
-                  View Details
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {expandedProject.sentinel ? 'Hide Details' : 'View Details'}
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ transform: expandedProject.sentinel ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </button>
+
+                {/* Expanded Details */}
+                {expandedProject.sentinel && (
+                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
+                      About This Project
+                    </h5>
+                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
+                      Sentinel is an AI-powered tool for identifying Protected Health Information (PHI) in documents to ensure HIPAA compliance. It uses Google&apos;s Gemini AI to detect all 18 HIPAA identifiers.
+                    </p>
+                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
+                      <li>Detects all 18 HIPAA identifiers including subtle references</li>
+                      <li>AI-powered contextual understanding (&quot;the patient&quot;, &quot;her daughter&quot;)</li>
+                      <li>Dashboard with analytics and scan history</li>
+                      <li>Supports TXT, PDF, DOC, and DOCX files</li>
+                    </ul>
+                    <a
+                      href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#10B981',
+                        textDecoration: 'none',
+                        fontSize: '13px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      View on GitHub
+                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
