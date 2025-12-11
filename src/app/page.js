@@ -2179,7 +2179,7 @@ export default function Portfolio() {
                     overflow: 'hidden'
                   }}>
                     <img
-                      src="/lacoste.png"
+                      src="/lacoste.gif"
                       alt="Lacoste"
                       style={{
                         width: '100%',
