@@ -2529,16 +2529,15 @@ export default function Portfolio() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'transparent'
+                    background: '#000'
                   }}>
                     <img
                       src="/ucf.png"
                       alt="UCF Logo"
                       style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'contain',
-                        borderRadius: '50%'
+                        width: '85px',
+                        height: '85px',
+                        objectFit: 'contain'
                       }}
                     />
                   </div>
