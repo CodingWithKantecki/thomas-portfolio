@@ -1769,16 +1769,6 @@ export default function Portfolio() {
             }}>
               Professional Experience
             </h3>
-            <p style={{
-              color: '#94a3b8',
-              fontSize: '14px',
-              marginBottom: '48px',
-              textAlign: 'center',
-              maxWidth: '600px',
-              margin: '0 auto 48px'
-            }}>
-              A comprehensive overview of my professional journey from start to finish. I&apos;ve gotten to work in a variety of different environments - startups, non-profits, large tech companies, and even university positions!
-            </p>
 
             {/* Timeline container */}
             <div style={{ position: 'relative', paddingLeft: windowWidth > 768 ? '32px' : '20px' }}>
