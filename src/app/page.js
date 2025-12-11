@@ -2579,24 +2579,47 @@ export default function Portfolio() {
                   border: '1px solid rgba(139, 92, 246, 0.1)',
                   '--stagger-delay': '0.2s'
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                      Associate&apos;s Degree in General Studies
-                    </h4>
-                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
-                      Valencia College • Orlando, FL
-                    </p>
-                  </div>
-                  <span style={{
-                    fontSize: '14px',
-                    color: '#94a3b8',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                    padding: '4px 12px',
-                    borderRadius: '4px'
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Valencia Logo */}
+                  <div style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
-                    Aug 2021 - Aug 2023
-                  </span>
+                    <img
+                      src="/valencia.png"
+                      alt="Valencia College Logo"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Associate&apos;s Degree in General Studies
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Valencia College • Orlando, FL
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Aug 2021 - Aug 2023
+                    </span>
+                  </div>
                 </div>
               </div>
 
