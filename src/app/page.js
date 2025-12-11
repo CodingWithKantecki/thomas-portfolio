@@ -1788,8 +1788,180 @@ export default function Portfolio() {
                 top: '12px',
                 bottom: '12px',
                 width: '2px',
-                background: 'linear-gradient(180deg, #8B5CF6 0%, #10B981 50%, #F59E0B 100%)'
+                background: 'linear-gradient(180deg, #EF4444 0%, #8B5CF6 25%, #10B981 60%, #F59E0B 100%)'
               }} />
+
+              {/* Knight Hacks */}
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-kh') ? 'visible' : ''}`}
+                data-animate-id="exp-card-kh"
+                style={{
+                  position: 'relative',
+                  marginBottom: '32px',
+                  '--stagger-delay': '0.02s'
+                }}>
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: windowWidth > 768 ? '-29px' : '-18px',
+                  top: '12px',
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  background: '#EF4444',
+                  border: '3px solid #0f172a',
+                  boxShadow: '0 0 0 3px rgba(239, 68, 68, 0.3)'
+                }} />
+
+                {/* Card */}
+                <div style={{
+                  background: 'rgba(30, 41, 59, 0.95)',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(239, 68, 68, 0.3)'
+                }}>
+                  {/* Image area */}
+                  <div style={{
+                    width: '100%',
+                    height: windowWidth > 768 ? '280px' : '200px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <img
+                      src="/knighthacks.jpg"
+                      alt="Knight Hacks VIII Winners"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '16px',
+                      left: '16px',
+                      right: '16px'
+                    }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        Knight Hacks Member
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '12px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '16px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="#EF4444" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Knight Hacks @ UCF
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Fall 2025 - Present
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Orlando, FL
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.7',
+                      marginBottom: '16px'
+                    }}>
+                      Active member and Fall 2025 Mentee at UCF&apos;s premier software development organization. Won &quot;Best App Development Hack&quot; at Knight Hacks VIII with KINEXIS, a physical therapy tracking platform.
+                    </p>
+
+                    {/* Skills */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '8px',
+                      marginBottom: '16px'
+                    }}>
+                      {['Hackathons', 'Software Development', 'Mentorship', 'Networking', 'Team Collaboration'].map(skill => (
+                        <span key={skill} style={{
+                          fontSize: '11px',
+                          padding: '5px 12px',
+                          background: 'rgba(239, 68, 68, 0.15)',
+                          borderRadius: '16px',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          color: '#F87171'
+                        }}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => setExpandedExp(prev => ({ ...prev, knighthacks: !prev.knighthacks }))}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.2)',
+                        borderRadius: '8px',
+                        color: '#F87171',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.knighthacks ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.knighthacks ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.knighthacks && (
+                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                        <h5 style={{ color: '#EF4444', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#EF4444', borderRadius: '2px' }} />
+                          Achievements & Activities
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                          <li>Won &quot;Best App Development Hack&quot; at Knight Hacks VIII with KINEXIS</li>
+                          <li>Fall 2025 Mentee - receiving guidance from experienced developers</li>
+                          <li>Participating in workshops, hackathons, and networking events</li>
+                          <li>Building skills in collaborative software development</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* AJR Publishing */}
               <div
