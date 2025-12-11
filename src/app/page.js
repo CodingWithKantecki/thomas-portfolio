@@ -2000,15 +2000,26 @@ export default function Portfolio() {
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    overflow: 'hidden'
                   }}>
-                    <span style={{ fontSize: '64px', opacity: 0.4 }}>📊</span>
+                    <img
+                      src="/ajr.png"
+                      alt="Is Your Body Baby Friendly? - AJR Publishing"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '16px',
-                      left: '16px',
-                      right: '16px'
+                      bottom: '0',
+                      left: '0',
+                      right: '0',
+                      padding: '16px',
+                      background: 'linear-gradient(transparent, rgba(0,0,0,0.8))'
                     }}>
                       <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                         Data & Ad Optimization Analyst
@@ -2506,28 +2517,52 @@ export default function Portfolio() {
                   border: '1px solid rgba(139, 92, 246, 0.1)',
                   '--stagger-delay': '0.1s'
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                      Bachelor&apos;s Degree in Health Informatics
-                    </h4>
-                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
-                      University of Central Florida (UCF) • Orlando, FL
-                    </p>
-                    <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '8px' }}>
-                      GPA: 3.6 • KnightHacks • Healthcare Case Club
-                    </p>
-                  </div>
-                  <span style={{
-                    fontSize: '14px',
-                    color: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    padding: '4px 12px',
-                    borderRadius: '4px',
-                    fontWeight: '600'
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* UCF Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    background: '#FFC904',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
-                    Jan 2024 - Present
-                  </span>
+                    <img
+                      src="/ucf.png"
+                      alt="UCF Logo"
+                      style={{
+                        width: '70px',
+                        height: '70px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Bachelor&apos;s Degree in Health Informatics
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        University of Central Florida (UCF) • Orlando, FL
+                      </p>
+                      <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '8px' }}>
+                        GPA: 3.6 • KnightHacks • Healthcare Case Club
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#10B981',
+                      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px',
+                      fontWeight: '600'
+                    }}>
+                      Jan 2024 - Present
+                    </span>
+                  </div>
                 </div>
               </div>
 
