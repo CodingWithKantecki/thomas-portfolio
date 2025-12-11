@@ -2762,7 +2762,8 @@ export default function Portfolio() {
             gridTemplateColumns: windowWidth > 1024 ? 'repeat(3, 1fr)' : windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
             gap: windowWidth > 768 ? '24px' : '16px',
             width: '100%',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            alignItems: 'start'
           }}>
             {/* KINEXIS Project */}
             <div
