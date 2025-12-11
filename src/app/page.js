@@ -2056,17 +2056,26 @@ export default function Portfolio() {
                   border: '1px solid rgba(245, 158, 11, 0.2)',
                   borderLeft: '3px solid #F59E0B'
                 }}>
-                  {/* Placeholder image area */}
+                  {/* Image area */}
                   <div style={{
                     width: '100%',
                     height: '180px',
-                    background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
                     position: 'relative',
+                    overflow: 'hidden',
+                    background: '#ffffff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    <span style={{ fontSize: '48px', opacity: 0.3 }}>🏢</span>
+                    <img
+                      src="/sharelife.png"
+                      alt="Sharelife Vacation"
+                      style={{
+                        maxWidth: '80%',
+                        maxHeight: '70%',
+                        objectFit: 'contain'
+                      }}
+                    />
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
