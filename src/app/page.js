@@ -330,86 +330,94 @@ export default function Portfolio() {
       }
       
       const centerY = canvas.height / 2 + 30; // Moved down by 30 pixels total
-      
-      // Draw the ECG line
+
+      // Draw the ECG line - 8-bit pixelated style
       ctx.strokeStyle = '#8B5CF6';
-      ctx.lineWidth = 3;
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = '#8B5CF6';
+      ctx.lineWidth = 6; // Chunky pixel line
+      ctx.shadowBlur = 0; // No glow for 8-bit
+      ctx.shadowColor = 'transparent';
+      ctx.imageSmoothingEnabled = false; // Pixelated rendering
       ctx.beginPath();
-      
+
       // Only draw the visible portion of the line
       const startX = Math.max(0, Math.floor(trailStart));
       const endX = Math.floor(xPos);
 
-      if (startX < endX - 1) { // Add small gap to prevent flicker
-        ctx.moveTo(startX, centerY);
+      // Pixel grid size for 8-bit effect
+      const pixelSize = 8;
 
-        // Draw the line from start to current position
-        for (let x = startX; x <= endX; x++) {
+      if (startX < endX - 1) { // Add small gap to prevent flicker
+        // Snap to pixel grid
+        const snappedStartX = Math.floor(startX / pixelSize) * pixelSize;
+        ctx.moveTo(snappedStartX, centerY);
+
+        // Draw the line from start to current position with pixel steps
+        for (let x = snappedStartX; x <= endX; x += pixelSize) {
           let y = centerY;
-          
+
           // Check for heartbeat positions (every 500 pixels)
           // Shift pattern back by 25 pixels (half grid square) for perfect alignment
           const beatPosition = (x + 25) % 500;
-          
+
           // Start spikes at position 100 instead of 0
           if (beatPosition > 100 && beatPosition < 180) {
             const progress = (beatPosition - 100) / 80;
-            
-            // Simple heartbeat pattern
-            if (progress < 0.3) {
-              // Quick up
-              y = centerY - (progress / 0.3) * 250;
+
+            // Simple heartbeat pattern - 8-bit stepped
+            if (progress < 0.25) {
+              // Quick up - stepped
+              y = centerY - Math.floor((progress / 0.25) * 6) * 40;
             } else if (progress < 0.5) {
-              // Quick down past baseline
-              y = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
-            } else if (progress < 0.6) {
-              // Small return
-              y = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
+              // Quick down past baseline - stepped
+              y = centerY - 240 + Math.floor(((progress - 0.25) / 0.25) * 7) * 40;
+            } else if (progress < 0.65) {
+              // Small return - stepped
+              y = centerY + 40 - Math.floor(((progress - 0.5) / 0.15) * 1) * 40;
             } else {
               // Flat
               y = centerY;
             }
           }
-          
+
+          // Snap Y to pixel grid
+          y = Math.floor(y / pixelSize) * pixelSize;
+
           ctx.lineTo(x, y);
         }
-        
+
         ctx.stroke();
       }
       
-      // Draw glowing dot at current position (only when drawing forward)
+      // Draw pixelated square at current position (only when drawing forward)
       if (!isRetracting && startX < endX) {
         let currentY = centerY;
-        
+
         // Use exact same calculation as line drawing
         const beatPosition = (xPos + 25) % 500;
-        
+
         if (beatPosition > 100 && beatPosition < 180) {
           const progress = (beatPosition - 100) / 80;
-          
-          // Exact same heartbeat pattern as the line
-          if (progress < 0.3) {
-            // Quick up
-            currentY = centerY - (progress / 0.3) * 250;
+
+          // Exact same heartbeat pattern as the line - 8-bit stepped
+          if (progress < 0.25) {
+            currentY = centerY - Math.floor((progress / 0.25) * 6) * 40;
           } else if (progress < 0.5) {
-            // Quick down past baseline
-            currentY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
-          } else if (progress < 0.6) {
-            // Small return
-            currentY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
+            currentY = centerY - 240 + Math.floor(((progress - 0.25) / 0.25) * 7) * 40;
+          } else if (progress < 0.65) {
+            currentY = centerY + 40 - Math.floor(((progress - 0.5) / 0.15) * 1) * 40;
           } else {
-            // Flat
             currentY = centerY;
           }
         }
-        
-        ctx.fillStyle = '#8B5CF6';
-        ctx.shadowBlur = 30;
-        ctx.beginPath();
-        ctx.arc(xPos, currentY, 5, 0, Math.PI * 2);
-        ctx.fill();
+
+        // Snap to pixel grid
+        currentY = Math.floor(currentY / pixelSize) * pixelSize;
+        const snappedX = Math.floor(xPos / pixelSize) * pixelSize;
+
+        // Draw pixelated square instead of circle
+        ctx.fillStyle = '#06B6D4';
+        ctx.shadowBlur = 0;
+        ctx.fillRect(snappedX - 6, currentY - 6, 12, 12);
       }
       
       // Update position based on current phase and delta time
@@ -682,20 +690,181 @@ export default function Portfolio() {
   return (
     <>
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
         * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
+          border-radius: 0 !important;
         }
 
         html, body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          font-family: 'VT323', monospace;
           background: #0a0118;
           color: #ffffff;
           overflow-x: hidden;
           max-width: 100vw;
+          image-rendering: pixelated;
+        }
+
+        /* 8-bit Scrollbar */
+        ::-webkit-scrollbar {
+          width: 16px;
+          background: #1e1e3f;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: #1e1e3f;
+          border-left: 4px solid #0a0118;
+          border-right: 4px solid #0a0118;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          background: #8B5CF6;
+          border: 4px solid #1e1e3f;
+          box-shadow:
+            inset -2px -2px 0px #4C1D95,
+            inset 2px 2px 0px #A78BFA;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background: #A78BFA;
+        }
+
+        ::-webkit-scrollbar-button:single-button {
+          background: #8B5CF6;
+          height: 16px;
+          display: block;
+        }
+
+        ::-webkit-scrollbar-button:single-button:vertical:decrement {
+          background: #8B5CF6;
+          border-left: 4px solid #1e1e3f;
+          border-right: 4px solid #1e1e3f;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23ffffff' d='M4 2L1 5h6z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+
+        ::-webkit-scrollbar-button:single-button:vertical:increment {
+          background: #8B5CF6;
+          border-left: 4px solid #1e1e3f;
+          border-right: 4px solid #1e1e3f;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23ffffff' d='M4 6L1 3h6z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: center;
+        }
+
+        /* Firefox scrollbar */
+        * {
+          scrollbar-width: auto;
+          scrollbar-color: #8B5CF6 #1e1e3f;
+        }
+
+        /* 8-bit headings */
+        h1, h2, h3, h4, h5, h6 {
+          font-family: 'Press Start 2P', cursive;
+          letter-spacing: 1px;
+          text-shadow: 3px 3px 0px #000000;
+        }
+
+        /* 8-bit paragraph/description text */
+        p, span, li, a, button, label {
+          font-family: 'Press Start 2P', cursive;
+          font-size: 11px;
+          line-height: 2;
+          letter-spacing: 0.5px;
+        }
+
+        /* CRT Scanline overlay */
+        .crt-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 9999;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+        }
+
+        /* Pixel border style */
+        .pixel-border {
+          border: 4px solid;
+          border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect x='0' y='0' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='4' y='0' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='0' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='0' y='4' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='4' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='0' y='8' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='4' y='8' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%238B5CF6'/%3E%3C/svg%3E") 4 stretch;
+        }
+
+        /* 8-bit button style */
+        .pixel-btn {
+          font-family: 'Press Start 2P', cursive;
+          font-size: 12px;
+          padding: 12px 24px;
+          background: #8B5CF6;
+          color: #fff;
+          border: none;
+          box-shadow:
+            4px 4px 0px #4C1D95,
+            inset -2px -2px 0px rgba(0,0,0,0.3),
+            inset 2px 2px 0px rgba(255,255,255,0.2);
+          cursor: pointer;
+          transition: all 0.1s;
+          text-transform: uppercase;
+        }
+
+        .pixel-btn:hover {
+          transform: translate(2px, 2px);
+          box-shadow:
+            2px 2px 0px #4C1D95,
+            inset -2px -2px 0px rgba(0,0,0,0.3),
+            inset 2px 2px 0px rgba(255,255,255,0.2);
+        }
+
+        .pixel-btn:active {
+          transform: translate(4px, 4px);
+          box-shadow:
+            0px 0px 0px #4C1D95,
+            inset -2px -2px 0px rgba(0,0,0,0.3),
+            inset 2px 2px 0px rgba(255,255,255,0.2);
+        }
+
+        /* Pixel card style */
+        .pixel-card {
+          background: rgba(30, 41, 59, 0.95);
+          border: 4px solid #8B5CF6;
+          box-shadow:
+            8px 8px 0px rgba(139, 92, 246, 0.3),
+            inset 0 0 20px rgba(139, 92, 246, 0.1);
+        }
+
+        /* Blinking cursor for retro feel */
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+
+        .retro-cursor {
+          animation: blink 1s step-end infinite;
+        }
+
+        /* Glitch text effect */
+        @keyframes glitch {
+          0% { transform: translate(0); }
+          20% { transform: translate(-2px, 2px); }
+          40% { transform: translate(-2px, -2px); }
+          60% { transform: translate(2px, 2px); }
+          80% { transform: translate(2px, -2px); }
+          100% { transform: translate(0); }
+        }
+
+        .glitch-text:hover {
+          animation: glitch 0.3s ease infinite;
         }
 
         #__next {
@@ -958,14 +1127,24 @@ export default function Portfolio() {
         .skill-item {
           position: relative;
           overflow: hidden;
+          border: 3px solid #8B5CF6 !important;
+          box-shadow: 4px 4px 0px rgba(139, 92, 246, 0.3);
+          font-family: 'Press Start 2P', cursive !important;
+          font-size: 10px !important;
         }
 
         .skill-item {
-          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease-out, z-index 0s;
+          transition: transform 0.1s step-end, opacity 0.1s step-end, z-index 0s;
           position: relative;
           z-index: 0;
           transform-origin: center;
           will-change: transform;
+        }
+
+        .skill-item:hover {
+          transform: translate(-2px, -2px) !important;
+          box-shadow: 6px 6px 0px rgba(139, 92, 246, 0.5) !important;
+          border-color: #06B6D4 !important;
         }
 
         .skill-item .gradient-sweep {
@@ -1004,19 +1183,26 @@ export default function Portfolio() {
           transform: translateY(0);
         }
 
-        /* Card hover effects - instant response, no delay */
+        /* Card hover effects - 8-bit style */
         .hover-card {
-          transition: transform 0.12s ease-out 0s,
-                      box-shadow 0.12s ease-out 0s,
-                      border-color 0.12s ease-out 0s !important;
+          transition: transform 0.1s step-end,
+                      box-shadow 0.1s step-end !important;
           will-change: transform;
           backface-visibility: hidden;
+          border: 6px solid #8B5CF6 !important;
+          border-radius: 0 !important;
+          box-shadow: 8px 8px 0px #4C1D95;
         }
 
         .hover-card:hover {
-          transform: translate3d(0, -6px, 0) !important;
-          box-shadow: 0 8px 16px rgba(139, 92, 246, 0.35);
-          border-color: rgba(139, 92, 246, 0.5) !important;
+          transform: translate(-4px, -4px) !important;
+          box-shadow: 12px 12px 0px #4C1D95;
+          border-color: #06B6D4 !important;
+        }
+
+        /* Remove all border radius for 8-bit look */
+        .hover-card *, .pixel-card *, div[style*="borderRadius"] {
+          border-radius: 0 !important;
         }
 
         /* Section header slide-in */
@@ -1031,6 +1217,9 @@ export default function Portfolio() {
           transform: translateX(0);
         }
       `}</style>
+
+      {/* CRT Scanline Overlay for 8-bit effect */}
+      <div className="crt-overlay" />
 
       {/* Color-shifting background that appears on scroll */}
       <div 
@@ -1151,9 +1340,11 @@ export default function Portfolio() {
         transition: 'opacity 0.15s ease-in'
       }}>
         <div style={{
-          fontSize: windowWidth > 768 ? '24px' : '20px',
+          fontSize: windowWidth > 768 ? '16px' : '12px',
           fontWeight: '600',
+          fontFamily: "'Press Start 2P', cursive",
           color: '#8B5CF6',
+          textShadow: '2px 2px 0px #000',
           transform: `translateX(-${logoSlideProgress * 150}%)`,
           opacity: 1 - (logoSlideProgress * 0.5),
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
@@ -1676,18 +1867,6 @@ export default function Portfolio() {
             )}
           </h1>
           
-          <p className="hero-subtitle" style={{
-            fontSize: windowWidth > 768 ? '24px' : '18px',
-            color: '#8B5CF6',
-            marginBottom: '16px',
-            opacity: showSubtitle ? 1 : 0,
-            transform: showSubtitle ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.8s ease-out',
-            fontWeight: '300'
-          }}>
-            Bridging Healthcare & Technology
-          </p>
-          
           <p className="hero-description" style={{
             fontSize: windowWidth > 768 ? '18px' : '14px',
             color: '#94a3b8',
@@ -1761,58 +1940,85 @@ export default function Portfolio() {
           {/* Work Experience */}
           <div>
             <h3 style={{
-              fontSize: windowWidth > 768 ? '32px' : '24px',
+              fontSize: windowWidth > 768 ? '24px' : '16px',
               fontWeight: '700',
-              marginBottom: '16px',
+              marginBottom: '48px',
               color: '#8B5CF6',
               textAlign: 'center'
             }}>
-              Professional Experience
+              Career Journey
             </h3>
 
-            {/* Timeline container */}
-            <div style={{ position: 'relative', paddingLeft: windowWidth > 768 ? '32px' : '20px' }}>
-              {/* Timeline line */}
+            {/* Centered Timeline container */}
+            <div style={{
+              position: 'relative',
+              maxWidth: '1000px',
+              margin: '0 auto'
+            }}>
+              {/* Center Timeline line */}
               <div style={{
                 position: 'absolute',
-                left: windowWidth > 768 ? '6px' : '4px',
-                top: '12px',
-                bottom: '12px',
-                width: '2px',
-                background: 'linear-gradient(180deg, #EF4444 0%, #8B5CF6 25%, #10B981 60%, #F59E0B 100%)'
+                left: '50%',
+                transform: 'translateX(-50%)',
+                top: '0',
+                bottom: '0',
+                width: windowWidth > 768 ? '6px' : '4px',
+                background: '#8B5CF6',
+                boxShadow: '4px 4px 0px #4C1D95'
               }} />
 
-              {/* Knight Hacks */}
+              {/* Knight Hacks - LEFT SIDE */}
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-kh') ? 'visible' : ''}`}
+                className={`animate-on-scroll ${visibleElements.has('exp-card-kh') ? 'visible' : ''}`}
                 data-animate-id="exp-card-kh"
                 style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-start' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
                   position: 'relative',
-                  marginBottom: '32px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
                   '--stagger-delay': '0.02s'
                 }}>
+                {/* Date badge - on right for left cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    left: '52%',
+                    top: '20px',
+                    background: '#EF4444',
+                    color: '#fff',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #991B1B'
+                  }}>
+                    Fall 2025 - Present
+                  </div>
+                )}
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: windowWidth > 768 ? '-29px' : '-18px',
-                  top: '12px',
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
                   background: '#EF4444',
-                  border: '3px solid #0f172a',
-                  boxShadow: '0 0 0 3px rgba(239, 68, 68, 0.3)'
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #991B1B',
+                  zIndex: 10
                 }} />
 
                 {/* Card */}
-                <div style={{
-                  background: 'rgba(30, 41, 59, 0.95)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(239, 68, 68, 0.3)'
-                }}>
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #EF4444',
+                    width: windowWidth > 768 ? '45%' : '85%',
+                    marginRight: windowWidth > 768 ? '55%' : '0'
+                  }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
@@ -1960,37 +2166,58 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* AJR Publishing */}
+              {/* AJR Publishing - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
+                className={`animate-on-scroll ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
                 data-animate-id="exp-card-0"
                 style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-end' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
                   position: 'relative',
-                  marginBottom: '32px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
                   '--stagger-delay': '0.05s'
                 }}>
+                {/* Date badge - on left for right cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    right: '52%',
+                    top: '20px',
+                    background: '#8B5CF6',
+                    color: '#fff',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #4C1D95'
+                  }}>
+                    Nov 2024 - Jul 2025
+                  </div>
+                )}
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: windowWidth > 768 ? '-29px' : '-18px',
-                  top: '12px',
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
                   background: '#8B5CF6',
-                  border: '3px solid #0f172a',
-                  boxShadow: '0 0 0 3px rgba(139, 92, 246, 0.3)'
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #4C1D95',
+                  zIndex: 10
                 }} />
 
                 {/* Card */}
-                <div style={{
-                  background: 'rgba(30, 41, 59, 0.95)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(139, 92, 246, 0.3)'
-                }}>
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #8B5CF6',
+                    width: windowWidth > 768 ? '45%' : '85%',
+                    marginLeft: windowWidth > 768 ? '55%' : '0'
+                  }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
@@ -2144,37 +2371,58 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Lacoste */}
+              {/* Lacoste - LEFT SIDE */}
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
                 data-animate-id="exp-card-1"
                 style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-start' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
                   position: 'relative',
-                  marginBottom: '32px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
                   '--stagger-delay': '0.1s'
                 }}>
+                {/* Date badge - on right for left cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    left: '52%',
+                    top: '20px',
+                    background: '#10B981',
+                    color: '#fff',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #065F46'
+                  }}>
+                    Mar 2023 - Jul 2023
+                  </div>
+                )}
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: windowWidth > 768 ? '-29px' : '-18px',
-                  top: '12px',
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
                   background: '#10B981',
-                  border: '3px solid #0f172a',
-                  boxShadow: '0 0 0 3px rgba(16, 185, 129, 0.3)'
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #065F46',
+                  zIndex: 10
                 }} />
 
                 {/* Card */}
-                <div style={{
-                  background: 'rgba(30, 41, 59, 0.95)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(16, 185, 129, 0.3)'
-                }}>
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #10B981',
+                    width: windowWidth > 768 ? '45%' : '85%',
+                    marginRight: windowWidth > 768 ? '55%' : '0'
+                  }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
@@ -2322,37 +2570,58 @@ export default function Portfolio() {
                 </div>
               </div>
 
-              {/* Sharelife Vacation */}
+              {/* Sharelife Vacation - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('exp-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll ${visibleElements.has('exp-card-2') ? 'visible' : ''}`}
                 data-animate-id="exp-card-2"
                 style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-end' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
                   position: 'relative',
-                  marginBottom: '32px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
                   '--stagger-delay': '0.15s'
                 }}>
+                {/* Date badge - on left for right cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    right: '52%',
+                    top: '20px',
+                    background: '#F59E0B',
+                    color: '#fff',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #92400E'
+                  }}>
+                    Apr 2021 - Aug 2022
+                  </div>
+                )}
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: windowWidth > 768 ? '-29px' : '-18px',
-                  top: '12px',
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '50%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
                   background: '#F59E0B',
-                  border: '3px solid #0f172a',
-                  boxShadow: '0 0 0 3px rgba(245, 158, 11, 0.3)'
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #92400E',
+                  zIndex: 10
                 }} />
 
                 {/* Card */}
-                <div style={{
-                  background: 'rgba(30, 41, 59, 0.95)',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(245, 158, 11, 0.3)'
-                }}>
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #F59E0B',
+                    width: windowWidth > 768 ? '45%' : '85%',
+                    marginLeft: windowWidth > 768 ? '55%' : '0'
+                  }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
@@ -2792,12 +3061,13 @@ export default function Portfolio() {
                   position: 'absolute',
                   bottom: '12px',
                   left: '12px',
-                  background: 'rgba(15, 23, 42, 0.9)',
-                  padding: '8px 14px',
-                  borderRadius: '6px',
-                  fontSize: windowWidth > 768 ? '18px' : '16px',
-                  fontWeight: '700',
-                  color: '#fff'
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6'
                 }}>
                   KINEXIS
                 </div>
@@ -2954,12 +3224,13 @@ export default function Portfolio() {
                   position: 'absolute',
                   bottom: '12px',
                   left: '12px',
-                  background: 'rgba(15, 23, 42, 0.9)',
-                  padding: '8px 14px',
-                  borderRadius: '6px',
-                  fontSize: windowWidth > 768 ? '18px' : '16px',
-                  fontWeight: '700',
-                  color: '#fff'
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6'
                 }}>
                   Strike Chess
                 </div>
@@ -3099,14 +3370,15 @@ export default function Portfolio() {
                   position: 'absolute',
                   bottom: '12px',
                   left: '12px',
-                  background: 'rgba(15, 23, 42, 0.9)',
-                  padding: '8px 14px',
-                  borderRadius: '6px',
-                  fontSize: windowWidth > 768 ? '18px' : '16px',
-                  fontWeight: '700',
-                  color: '#fff'
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '12px' : '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6'
                 }}>
-                  Sentinel PHI Scanner
+                  Sentinel PHI
                 </div>
               </div>
               {/* Card content */}
