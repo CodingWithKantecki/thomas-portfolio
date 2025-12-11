@@ -1811,6 +1811,7 @@ export default function Portfolio() {
                 <li>Analyze sales data and market trends to identify high-performing keywords and optimize ad campaigns</li>
                 <li>Conduct keyword research and A/B testing to improve book discoverability and conversion rates</li>
                 <li>Track and report on advertising ROI, providing data-driven recommendations for budget allocation</li>
+                <li>Create sales reports and ad budgeting visualizations using Tableau to inform strategic decisions</li>
                 <li>Optimize product listings and metadata to improve search rankings and sales performance</li>
               </ul>
             </div>
@@ -2469,6 +2470,7 @@ export default function Portfolio() {
               'Linux',
               'Claude AI',
               'ChatGPT',
+              'Tableau',
               'SOC 2',
               'HITRUST',
               'ICD-10',
