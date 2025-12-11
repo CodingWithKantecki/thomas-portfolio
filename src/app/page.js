@@ -2523,20 +2523,20 @@ export default function Portfolio() {
                   <div style={{
                     width: '100px',
                     height: '100px',
-                    borderRadius: '50%',
+                    borderRadius: '12px',
                     overflow: 'hidden',
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: '#000'
+                    background: '#fff'
                   }}>
                     <img
                       src="/ucf.png"
                       alt="UCF Logo"
                       style={{
-                        width: '85px',
-                        height: '85px',
+                        width: '90px',
+                        height: '90px',
                         objectFit: 'contain'
                       }}
                     />
@@ -2645,14 +2645,15 @@ export default function Portfolio() {
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    background: '#fff'
                   }}>
                     <img
                       src="/windermere.png"
                       alt="Windermere High School Logo"
                       style={{
-                        width: '100px',
-                        height: '100px',
+                        width: '90px',
+                        height: '90px',
                         objectFit: 'contain'
                       }}
                     />
