@@ -2923,17 +2923,16 @@ export default function Portfolio() {
                 '--stagger-delay': '0.3s'
               }}>
               {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)' }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  fontSize: '48px',
-                  opacity: 0.3
-                }}>
-                  🛡️
-                </div>
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', overflow: 'hidden' }}>
+                <img
+                  src="/sentinel.png"
+                  alt="Sentinel PHI Scanner Dashboard"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
                 <div style={{
                   position: 'absolute',
                   bottom: '12px',
