@@ -1793,13 +1793,12 @@ export default function Portfolio() {
                 </div>
                 <span style={{
                   fontSize: '14px',
-                  color: '#10B981',
-                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  color: '#94a3b8',
+                  backgroundColor: 'rgba(139, 92, 246, 0.1)',
                   padding: '4px 12px',
-                  borderRadius: '4px',
-                  fontWeight: '600'
+                  borderRadius: '4px'
                 }}>
-                  Nov 2024 - Present
+                  Nov 2024 - Jul 2025
                 </span>
               </div>
               <ul style={{
