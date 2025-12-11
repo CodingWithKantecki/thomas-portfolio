@@ -2521,22 +2521,24 @@ export default function Portfolio() {
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* UCF Logo */}
                   <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '50%',
                     overflow: 'hidden',
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    background: 'transparent'
                   }}>
                     <img
                       src="/ucf.png"
                       alt="UCF Logo"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'contain',
+                        borderRadius: '50%'
                       }}
                     />
                   </div>
