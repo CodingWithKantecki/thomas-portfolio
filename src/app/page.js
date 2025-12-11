@@ -18,6 +18,7 @@ export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
   const [visibleElements, setVisibleElements] = useState(new Set());
+  const [expandedExp, setExpandedExp] = useState({});
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
 
@@ -1759,32 +1760,35 @@ export default function Portfolio() {
           {/* Work Experience */}
           <div>
             <h3 style={{
-              fontSize: '24px',
-              fontWeight: '600',
+              fontSize: windowWidth > 768 ? '32px' : '24px',
+              fontWeight: '700',
               marginBottom: '16px',
-              color: '#8B5CF6'
+              color: '#8B5CF6',
+              textAlign: 'center'
             }}>
               Professional Experience
             </h3>
             <p style={{
               color: '#94a3b8',
               fontSize: '14px',
-              marginBottom: '32px',
-              maxWidth: '600px'
+              marginBottom: '48px',
+              textAlign: 'center',
+              maxWidth: '600px',
+              margin: '0 auto 48px'
             }}>
-              A comprehensive overview of my professional journey from start to finish.
+              A comprehensive overview of my professional journey from start to finish. I&apos;ve gotten to work in a variety of different environments - startups, non-profits, large tech companies, and even university positions!
             </p>
 
             {/* Timeline container */}
-            <div style={{ position: 'relative', paddingLeft: '24px' }}>
+            <div style={{ position: 'relative', paddingLeft: windowWidth > 768 ? '32px' : '20px' }}>
               {/* Timeline line */}
               <div style={{
                 position: 'absolute',
-                left: '6px',
-                top: '0',
-                bottom: '0',
+                left: windowWidth > 768 ? '6px' : '4px',
+                top: '12px',
+                bottom: '12px',
                 width: '2px',
-                background: 'rgba(139, 92, 246, 0.2)'
+                background: 'linear-gradient(180deg, #8B5CF6 0%, #10B981 50%, #F59E0B 100%)'
               }} />
 
               {/* AJR Publishing */}
@@ -1799,59 +1803,57 @@ export default function Portfolio() {
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: '-21px',
-                  top: '0',
-                  width: '12px',
-                  height: '12px',
+                  left: windowWidth > 768 ? '-29px' : '-18px',
+                  top: '12px',
+                  width: '14px',
+                  height: '14px',
                   borderRadius: '50%',
                   background: '#8B5CF6',
-                  border: '2px solid #0f172a'
+                  border: '3px solid #0f172a',
+                  boxShadow: '0 0 0 3px rgba(139, 92, 246, 0.3)'
                 }} />
 
                 {/* Card */}
                 <div style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  borderRadius: '12px',
+                  background: 'rgba(30, 41, 59, 0.95)',
+                  borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '1px solid rgba(139, 92, 246, 0.2)',
-                  borderLeft: '3px solid #8B5CF6'
+                  border: '1px solid rgba(139, 92, 246, 0.3)'
                 }}>
-                  {/* Placeholder image area */}
+                  {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: '180px',
-                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(30, 41, 59, 1) 100%)',
+                    height: windowWidth > 768 ? '280px' : '200px',
+                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 41, 59, 1) 100%)',
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    <span style={{ fontSize: '48px', opacity: 0.3 }}>📊</span>
+                    <span style={{ fontSize: '64px', opacity: 0.4 }}>📊</span>
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '12px',
+                      bottom: '16px',
                       left: '16px',
-                      background: 'rgba(15, 23, 42, 0.9)',
-                      padding: '8px 14px',
-                      borderRadius: '6px'
+                      right: '16px'
                     }}>
-                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                         Data & Ad Optimization Analyst
                       </h4>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div style={{ padding: '20px' }}>
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
                     {/* Meta info */}
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '16px',
+                      gap: '12px',
                       fontSize: '13px',
                       color: '#94a3b8',
-                      marginBottom: '12px'
+                      marginBottom: '16px'
                     }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <svg width="14" height="14" fill="none" stroke="#8B5CF6" viewBox="0 0 24 24">
@@ -1878,7 +1880,7 @@ export default function Portfolio() {
                     <p style={{
                       color: '#cbd5e1',
                       fontSize: '14px',
-                      lineHeight: '1.6',
+                      lineHeight: '1.7',
                       marginBottom: '16px'
                     }}>
                       Analyzed sales data and optimized ad campaigns using keyword research and A/B testing. Tracked advertising ROI and created sales reports using Tableau.
@@ -1888,14 +1890,15 @@ export default function Portfolio() {
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '8px'
+                      gap: '8px',
+                      marginBottom: '16px'
                     }}>
-                      {['Data Analysis', 'A/B Testing', 'Tableau', 'Ad Optimization'].map(skill => (
+                      {['Data Analysis', 'A/B Testing', 'Tableau', 'Ad Optimization', 'ROI Tracking'].map(skill => (
                         <span key={skill} style={{
                           fontSize: '11px',
-                          padding: '4px 10px',
-                          background: 'rgba(139, 92, 246, 0.1)',
-                          borderRadius: '12px',
+                          padding: '5px 12px',
+                          background: 'rgba(139, 92, 246, 0.15)',
+                          borderRadius: '16px',
                           border: '1px solid rgba(139, 92, 246, 0.3)',
                           color: '#A78BFA'
                         }}>
@@ -1903,6 +1906,54 @@ export default function Portfolio() {
                         </span>
                       ))}
                     </div>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => setExpandedExp(prev => ({ ...prev, ajr: !prev.ajr }))}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(139, 92, 246, 0.1)',
+                        border: '1px solid rgba(139, 92, 246, 0.2)',
+                        borderRadius: '8px',
+                        color: '#A78BFA',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.ajr ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.ajr ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.ajr && (
+                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                        <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
+                          Key Responsibilities
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                          <li>Analyzed sales data and market trends to identify high-performing keywords</li>
+                          <li>Conducted A/B testing to improve book discoverability and conversion rates</li>
+                          <li>Tracked and reported on advertising ROI with data-driven budget recommendations</li>
+                          <li>Created sales reports and ad budgeting visualizations using Tableau</li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1919,27 +1970,27 @@ export default function Portfolio() {
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: '-21px',
-                  top: '0',
-                  width: '12px',
-                  height: '12px',
+                  left: windowWidth > 768 ? '-29px' : '-18px',
+                  top: '12px',
+                  width: '14px',
+                  height: '14px',
                   borderRadius: '50%',
                   background: '#10B981',
-                  border: '2px solid #0f172a'
+                  border: '3px solid #0f172a',
+                  boxShadow: '0 0 0 3px rgba(16, 185, 129, 0.3)'
                 }} />
 
                 {/* Card */}
                 <div style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  borderRadius: '12px',
+                  background: 'rgba(30, 41, 59, 0.95)',
+                  borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '1px solid rgba(16, 185, 129, 0.2)',
-                  borderLeft: '3px solid #10B981'
+                  border: '1px solid rgba(16, 185, 129, 0.3)'
                 }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: '180px',
+                    height: windowWidth > 768 ? '280px' : '200px',
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
@@ -1955,28 +2006,26 @@ export default function Portfolio() {
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '12px',
+                      bottom: '16px',
                       left: '16px',
-                      background: 'rgba(15, 23, 42, 0.9)',
-                      padding: '8px 14px',
-                      borderRadius: '6px'
+                      right: '16px'
                     }}>
-                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                         Sales Associate
                       </h4>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div style={{ padding: '20px' }}>
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
                     {/* Meta info */}
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '16px',
+                      gap: '12px',
                       fontSize: '13px',
                       color: '#94a3b8',
-                      marginBottom: '12px'
+                      marginBottom: '16px'
                     }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <svg width="14" height="14" fill="none" stroke="#10B981" viewBox="0 0 24 24">
@@ -2003,24 +2052,25 @@ export default function Portfolio() {
                     <p style={{
                       color: '#cbd5e1',
                       fontSize: '14px',
-                      lineHeight: '1.6',
+                      lineHeight: '1.7',
                       marginBottom: '16px'
                     }}>
-                      Achieved sales targets through product knowledge and client relationships. Maintained visual merchandising standards and inventory management.
+                      Achieved sales targets through product knowledge and client relationships in a luxury retail environment. Maintained visual merchandising standards and inventory management.
                     </p>
 
                     {/* Skills */}
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '8px'
+                      gap: '8px',
+                      marginBottom: '16px'
                     }}>
-                      {['Sales', 'Customer Service', 'Luxury Retail', 'Inventory'].map(skill => (
+                      {['Sales', 'Customer Service', 'Luxury Retail', 'Inventory', 'Visual Merchandising'].map(skill => (
                         <span key={skill} style={{
                           fontSize: '11px',
-                          padding: '4px 10px',
-                          background: 'rgba(16, 185, 129, 0.1)',
-                          borderRadius: '12px',
+                          padding: '5px 12px',
+                          background: 'rgba(16, 185, 129, 0.15)',
+                          borderRadius: '16px',
                           border: '1px solid rgba(16, 185, 129, 0.3)',
                           color: '#34D399'
                         }}>
@@ -2028,6 +2078,54 @@ export default function Portfolio() {
                         </span>
                       ))}
                     </div>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => setExpandedExp(prev => ({ ...prev, lacoste: !prev.lacoste }))}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        border: '1px solid rgba(16, 185, 129, 0.2)',
+                        borderRadius: '8px',
+                        color: '#34D399',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.lacoste ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.lacoste ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.lacoste && (
+                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                        <h5 style={{ color: '#10B981', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#10B981', borderRadius: '2px' }} />
+                          Key Responsibilities
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                          <li>Provided exceptional customer service in a luxury retail environment</li>
+                          <li>Achieved sales targets through product knowledge and client relationships</li>
+                          <li>Maintained visual merchandising standards and inventory management</li>
+                          <li>Collaborated with team to enhance store performance</li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -2044,27 +2142,27 @@ export default function Portfolio() {
                 {/* Timeline dot */}
                 <div style={{
                   position: 'absolute',
-                  left: '-21px',
-                  top: '0',
-                  width: '12px',
-                  height: '12px',
+                  left: windowWidth > 768 ? '-29px' : '-18px',
+                  top: '12px',
+                  width: '14px',
+                  height: '14px',
                   borderRadius: '50%',
                   background: '#F59E0B',
-                  border: '2px solid #0f172a'
+                  border: '3px solid #0f172a',
+                  boxShadow: '0 0 0 3px rgba(245, 158, 11, 0.3)'
                 }} />
 
                 {/* Card */}
                 <div style={{
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  borderRadius: '12px',
+                  background: 'rgba(30, 41, 59, 0.95)',
+                  borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '1px solid rgba(245, 158, 11, 0.2)',
-                  borderLeft: '3px solid #F59E0B'
+                  border: '1px solid rgba(245, 158, 11, 0.3)'
                 }}>
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: '180px',
+                    height: windowWidth > 768 ? '280px' : '200px',
                     position: 'relative',
                     overflow: 'hidden',
                     background: '#ffffff',
@@ -2076,36 +2174,34 @@ export default function Portfolio() {
                       src="/sharelife.png"
                       alt="Sharelife Vacation"
                       style={{
-                        maxWidth: '80%',
-                        maxHeight: '70%',
+                        maxWidth: '70%',
+                        maxHeight: '60%',
                         objectFit: 'contain'
                       }}
                     />
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '12px',
+                      bottom: '16px',
                       left: '16px',
-                      background: 'rgba(15, 23, 42, 0.9)',
-                      padding: '8px 14px',
-                      borderRadius: '6px'
+                      right: '16px'
                     }}>
-                      <h4 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#1e293b', margin: 0, textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}>
                         Administrative Assistant
                       </h4>
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div style={{ padding: '20px' }}>
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
                     {/* Meta info */}
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '16px',
+                      gap: '12px',
                       fontSize: '13px',
                       color: '#94a3b8',
-                      marginBottom: '12px'
+                      marginBottom: '16px'
                     }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <svg width="14" height="14" fill="none" stroke="#F59E0B" viewBox="0 0 24 24">
@@ -2132,7 +2228,7 @@ export default function Portfolio() {
                     <p style={{
                       color: '#cbd5e1',
                       fontSize: '14px',
-                      lineHeight: '1.6',
+                      lineHeight: '1.7',
                       marginBottom: '16px'
                     }}>
                       Processed approximately 100 guests daily, handling contracts and payments via Authorize.net. Managed payroll, sales reports, and credit checks using Experian.
@@ -2142,14 +2238,15 @@ export default function Portfolio() {
                     <div style={{
                       display: 'flex',
                       flexWrap: 'wrap',
-                      gap: '8px'
+                      gap: '8px',
+                      marginBottom: '16px'
                     }}>
-                      {['Authorize.net', 'Experian', 'Payroll', 'Administration'].map(skill => (
+                      {['Authorize.net', 'Experian', 'Payroll', 'Administration', 'Guest Services'].map(skill => (
                         <span key={skill} style={{
                           fontSize: '11px',
-                          padding: '4px 10px',
-                          background: 'rgba(245, 158, 11, 0.1)',
-                          borderRadius: '12px',
+                          padding: '5px 12px',
+                          background: 'rgba(245, 158, 11, 0.15)',
+                          borderRadius: '16px',
                           border: '1px solid rgba(245, 158, 11, 0.3)',
                           color: '#FBBF24'
                         }}>
@@ -2157,6 +2254,54 @@ export default function Portfolio() {
                         </span>
                       ))}
                     </div>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => setExpandedExp(prev => ({ ...prev, sharelife: !prev.sharelife }))}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(245, 158, 11, 0.1)',
+                        border: '1px solid rgba(245, 158, 11, 0.2)',
+                        borderRadius: '8px',
+                        color: '#FBBF24',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.sharelife ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.sharelife ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.sharelife && (
+                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(245, 158, 11, 0.2)' }}>
+                        <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
+                          Key Responsibilities
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                          <li>Processed and checked in approximately 100 guests daily</li>
+                          <li>Drafted contracts and handled payments using Authorize.net system</li>
+                          <li>Collected sensitive information and ran credit checks using Experian</li>
+                          <li>Maintained office supplies, handled payroll, and distributed weekly sales reports</li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
