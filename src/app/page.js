@@ -2635,24 +2635,47 @@ export default function Portfolio() {
                   border: '1px solid rgba(139, 92, 246, 0.1)',
                   '--stagger-delay': '0.3s'
                 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                      High School Diploma
-                    </h4>
-                    <p style={{ color: '#94a3b8', fontSize: '14px' }}>
-                      Windermere High School • Windermere, FL
-                    </p>
-                  </div>
-                  <span style={{
-                    fontSize: '14px',
-                    color: '#94a3b8',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                    padding: '4px 12px',
-                    borderRadius: '4px'
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Windermere Logo */}
+                  <div style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
-                    Aug 2017 - May 2021
-                  </span>
+                    <img
+                      src="/windermere.png"
+                      alt="Windermere High School Logo"
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        High School Diploma
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Windermere High School • Windermere, FL
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Aug 2017 - May 2021
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
