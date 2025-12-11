@@ -2478,12 +2478,32 @@ export default function Portfolio() {
                           <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
                           Key Responsibilities
                         </h5>
-                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
                           <li>Processed and checked in approximately 100 guests daily</li>
                           <li>Drafted contracts and handled payments using Authorize.net system</li>
                           <li>Collected sensitive information and ran credit checks using Experian</li>
                           <li>Maintained office supplies, handled payroll, and distributed weekly sales reports</li>
                         </ul>
+
+                        {/* NASCAR Sponsorship */}
+                        <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
+                          2022 NASCAR Xfinity Series Sponsorship
+                        </h5>
+                        <div style={{ borderRadius: '12px', overflow: 'hidden', marginBottom: '12px' }}>
+                          <img
+                            src="/nascar.png"
+                            alt="Sharelife Vacations NASCAR #66 Car"
+                            style={{
+                              width: '100%',
+                              height: 'auto',
+                              display: 'block'
+                            }}
+                          />
+                        </div>
+                        <p style={{ color: '#94a3b8', fontSize: '13px', fontStyle: 'italic' }}>
+                          Sharelife Vacations sponsored the #66 car in the 2022 NASCAR Xfinity Series
+                        </p>
                       </div>
                     )}
                   </div>
