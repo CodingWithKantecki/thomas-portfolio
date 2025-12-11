@@ -2259,7 +2259,7 @@ export default function Portfolio() {
                     fontWeight: '600',
                     whiteSpace: 'nowrap'
                   }}>
-                    IN PROGRESS
+                    IN DEVELOPMENT
                   </span>
                 </div>
                 <p style={{
