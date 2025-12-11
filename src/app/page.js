@@ -2092,6 +2092,7 @@ export default function Portfolio() {
                 {/* Demo GIF */}
                 <div style={{
                   width: '100%',
+                  height: windowWidth > 768 ? '280px' : '180px',
                   borderRadius: '8px',
                   overflow: 'hidden',
                   border: '1px solid rgba(245, 158, 11, 0.3)',
@@ -2102,7 +2103,8 @@ export default function Portfolio() {
                     alt="KINEXIS demo"
                     style={{
                       width: '100%',
-                      height: 'auto',
+                      height: '100%',
+                      objectFit: 'cover',
                       display: 'block'
                     }}
                   />
@@ -2224,6 +2226,7 @@ export default function Portfolio() {
                 {/* Screenshot */}
                 <div style={{
                   width: '100%',
+                  height: windowWidth > 768 ? '280px' : '180px',
                   borderRadius: '8px',
                   overflow: 'hidden',
                   border: '1px solid rgba(139, 92, 246, 0.3)',
@@ -2234,7 +2237,8 @@ export default function Portfolio() {
                     alt="Strike Chess gameplay"
                     style={{
                       width: '100%',
-                      height: 'auto',
+                      height: '100%',
+                      objectFit: 'cover',
                       display: 'block'
                     }}
                   />
