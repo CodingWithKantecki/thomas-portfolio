@@ -3080,7 +3080,8 @@ export default function Portfolio() {
                   alignItems: 'center',
                   gap: '6px',
                   color: '#F59E0B',
-                  fontSize: '13px',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
                   marginBottom: '12px'
                 }}>
                   <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3243,7 +3244,8 @@ export default function Portfolio() {
                   alignItems: 'center',
                   gap: '6px',
                   color: '#F59E0B',
-                  fontSize: '13px',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
                   marginBottom: '12px'
                 }}>
                   <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3389,7 +3391,8 @@ export default function Portfolio() {
                   alignItems: 'center',
                   gap: '6px',
                   color: '#10B981',
-                  fontSize: '13px',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
                   marginBottom: '12px'
                 }}>
                   <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
