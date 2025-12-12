@@ -20,6 +20,38 @@ export default function Portfolio() {
   const [visibleElements, setVisibleElements] = useState(new Set());
   const [expandedExp, setExpandedExp] = useState({});
   const [expandedProject, setExpandedProject] = useState({});
+  const [closingExp, setClosingExp] = useState({});
+  const [closingProject, setClosingProject] = useState({});
+
+  // Handle closing animation for experience dropdowns
+  const handleExpToggle = (key) => {
+    if (expandedExp[key]) {
+      // Start closing animation
+      setClosingExp(prev => ({ ...prev, [key]: true }));
+      // After animation completes, actually close
+      setTimeout(() => {
+        setExpandedExp(prev => ({ ...prev, [key]: false }));
+        setClosingExp(prev => ({ ...prev, [key]: false }));
+      }, 300);
+    } else {
+      setExpandedExp(prev => ({ ...prev, [key]: true }));
+    }
+  };
+
+  // Handle closing animation for project dropdowns
+  const handleProjectToggle = (key) => {
+    if (expandedProject[key]) {
+      // Start closing animation
+      setClosingProject(prev => ({ ...prev, [key]: true }));
+      // After animation completes, actually close
+      setTimeout(() => {
+        setExpandedProject(prev => ({ ...prev, [key]: false }));
+        setClosingProject(prev => ({ ...prev, [key]: false }));
+      }, 300);
+    } else {
+      setExpandedProject(prev => ({ ...prev, [key]: true }));
+    }
+  };
   const canvasRef = useRef(null);
   const skillCanvasRef = useRef(null);
 
@@ -865,6 +897,73 @@ export default function Portfolio() {
 
         .glitch-text:hover {
           animation: glitch 0.3s ease infinite;
+        }
+
+        /* Pixelated dropdown animation */
+        @keyframes pixelReveal {
+          0% {
+            max-height: 0;
+            opacity: 0;
+            clip-path: inset(0 0 100% 0);
+          }
+          25% {
+            max-height: 150px;
+            opacity: 0.3;
+            clip-path: inset(0 0 75% 0);
+          }
+          50% {
+            max-height: 300px;
+            opacity: 0.6;
+            clip-path: inset(0 0 50% 0);
+          }
+          75% {
+            max-height: 450px;
+            opacity: 0.8;
+            clip-path: inset(0 0 25% 0);
+          }
+          100% {
+            max-height: 1000px;
+            opacity: 1;
+            clip-path: inset(0 0 0% 0);
+          }
+        }
+
+        .pixel-dropdown {
+          animation: pixelReveal 0.4s steps(4) forwards;
+          overflow: hidden;
+        }
+
+        @keyframes pixelClose {
+          0% {
+            max-height: 1000px;
+            opacity: 1;
+            clip-path: inset(0 0 0% 0);
+          }
+          25% {
+            max-height: 450px;
+            opacity: 0.8;
+            clip-path: inset(0 0 25% 0);
+          }
+          50% {
+            max-height: 300px;
+            opacity: 0.6;
+            clip-path: inset(0 0 50% 0);
+          }
+          75% {
+            max-height: 150px;
+            opacity: 0.3;
+            clip-path: inset(0 0 75% 0);
+          }
+          100% {
+            max-height: 0;
+            opacity: 0;
+            clip-path: inset(0 0 100% 0);
+          }
+        }
+
+        .pixel-dropdown-closing {
+          animation: pixelClose 0.3s steps(4) forwards;
+          overflow: hidden;
         }
 
         #__next {
@@ -2092,7 +2191,7 @@ export default function Portfolio() {
 
                     {/* Show More Details Button */}
                     <button
-                      onClick={() => setExpandedExp(prev => ({ ...prev, knighthacks: !prev.knighthacks }))}
+                      onClick={() => handleExpToggle('knighthacks')}
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -2124,7 +2223,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.knighthacks && (
-                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                      <div className={closingExp.knighthacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(239, 68, 68, 0.2)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#EF4444', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#EF4444', borderRadius: '2px' }} />
@@ -2297,7 +2396,7 @@ export default function Portfolio() {
 
                     {/* Show More Details Button */}
                     <button
-                      onClick={() => setExpandedExp(prev => ({ ...prev, ajr: !prev.ajr }))}
+                      onClick={() => handleExpToggle('ajr')}
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -2329,7 +2428,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.ajr && (
-                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                      <div className={closingExp.ajr ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(139, 92, 246, 0.2)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
@@ -2496,7 +2595,7 @@ export default function Portfolio() {
 
                     {/* Show More Details Button */}
                     <button
-                      onClick={() => setExpandedExp(prev => ({ ...prev, lacoste: !prev.lacoste }))}
+                      onClick={() => handleExpToggle('lacoste')}
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -2528,7 +2627,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.lacoste && (
-                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                      <div className={closingExp.lacoste ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#10B981', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#10B981', borderRadius: '2px' }} />
@@ -2699,7 +2798,7 @@ export default function Portfolio() {
 
                     {/* Show More Details Button */}
                     <button
-                      onClick={() => setExpandedExp(prev => ({ ...prev, sharelife: !prev.sharelife }))}
+                      onClick={() => handleExpToggle('sharelife')}
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -2731,7 +2830,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.sharelife && (
-                      <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(245, 158, 11, 0.2)' }}>
+                      <div className={closingExp.sharelife ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(245, 158, 11, 0.2)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
@@ -3130,7 +3229,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, kinexis: !prev.kinexis })); }}
+                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('kinexis'); }}
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -3162,7 +3261,7 @@ export default function Portfolio() {
 
                 {/* Expanded Details */}
                 {expandedProject.kinexis && (
-                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                  <div className={closingProject.kinexis ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
                       About This Project
                     </h5>
@@ -3294,7 +3393,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, strikechess: !prev.strikechess })); }}
+                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('strikechess'); }}
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -3326,7 +3425,7 @@ export default function Portfolio() {
 
                 {/* Expanded Details */}
                 {expandedProject.strikechess && (
-                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                  <div className={closingProject.strikechess ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
                       About This Project
                     </h5>
@@ -3441,7 +3540,7 @@ export default function Portfolio() {
                 </div>
                 {/* View Details button */}
                 <button
-                  onClick={(e) => { e.stopPropagation(); setExpandedProject(prev => ({ ...prev, sentinel: !prev.sentinel })); }}
+                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('sentinel'); }}
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -3473,7 +3572,7 @@ export default function Portfolio() {
 
                 {/* Expanded Details */}
                 {expandedProject.sentinel && (
-                  <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                  <div className={closingProject.sentinel ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
                     <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
                       About This Project
                     </h5>
