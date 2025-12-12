@@ -3084,6 +3084,142 @@ export default function Portfolio() {
               </div>
             </div>
           </div>
+
+          {/* Certifications */}
+          <div style={{ marginTop: '48px' }}>
+            <h3 style={{
+              fontSize: '24px',
+              fontWeight: '600',
+              marginBottom: '32px',
+              color: '#8B5CF6',
+              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
+              paddingBottom: '12px'
+            }}>
+              Licenses & Certifications
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('cert-card-1') ? 'visible' : ''}`}
+                data-animate-id="cert-card-1"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.1s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Stanford Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/stanford.png"
+                      alt="Stanford University Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Introduction to Clinical Data
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Stanford University
+                      </p>
+                      <p style={{ color: '#64748b', fontSize: '12px', marginTop: '4px' }}>
+                        Credential ID: 30LFS303XXHV
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Sep 2025
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`animate-on-scroll hover-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
+                data-animate-id="cert-card-2"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.2s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Stanford Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/stanford.png"
+                      alt="Stanford University Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Introduction to Healthcare
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Stanford University
+                      </p>
+                      <p style={{ color: '#64748b', fontSize: '12px', marginTop: '4px' }}>
+                        Credential ID: OFC9L64RNMCM
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Jul 2025
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
