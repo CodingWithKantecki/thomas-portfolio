@@ -1215,12 +1215,32 @@ export default function Portfolio() {
             padding-right: 16px !important;
           }
 
-          /* Fix experience cards on mobile - full width and centered */
+          /* Fix experience cards on mobile - full width, compact */
           .hover-card {
             width: 100% !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
             max-width: 100% !important;
+            border-width: 2px !important;
+          }
+
+          .hover-card h4 {
+            font-size: 16px !important;
+          }
+
+          .hover-card p {
+            font-size: 12px !important;
+            line-height: 1.5 !important;
+            margin-bottom: 10px !important;
+          }
+
+          .hover-card > div {
+            padding: 12px !important;
+          }
+
+          /* Reduce spacing between experience cards */
+          .animate-on-scroll {
+            margin-bottom: 24px !important;
           }
 
           /* Fix skill items for mobile */
@@ -2161,7 +2181,7 @@ export default function Portfolio() {
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: windowWidth > 768 ? '280px' : '200px',
+                    height: windowWidth > 768 ? '280px' : '140px',
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
@@ -2360,7 +2380,7 @@ export default function Portfolio() {
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: windowWidth > 768 ? '280px' : '200px',
+                    height: windowWidth > 768 ? '280px' : '140px',
                     background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 41, 59, 1) 100%)',
                     position: 'relative',
                     display: 'flex',
@@ -2565,7 +2585,7 @@ export default function Portfolio() {
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: windowWidth > 768 ? '280px' : '200px',
+                    height: windowWidth > 768 ? '280px' : '140px',
                     position: 'relative',
                     overflow: 'hidden'
                   }}>
@@ -2764,7 +2784,7 @@ export default function Portfolio() {
                   {/* Image area */}
                   <div style={{
                     width: '100%',
-                    height: windowWidth > 768 ? '280px' : '200px',
+                    height: windowWidth > 768 ? '280px' : '140px',
                     position: 'relative',
                     overflow: 'hidden',
                     background: '#ffffff',
