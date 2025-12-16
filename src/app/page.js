@@ -1271,6 +1271,50 @@ export default function Portfolio() {
           [style*="display: flex"] {
             max-width: 100%;
           }
+
+          /* Fix Education & Certification cards - stack vertically on mobile */
+          .edu-cert-card > div {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            gap: 12px !important;
+          }
+
+          /* Make logos smaller on mobile */
+          .edu-cert-card > div > div:first-child {
+            width: 50px !important;
+            height: 50px !important;
+            min-width: 50px !important;
+          }
+
+          .edu-cert-card > div > div:first-child img {
+            width: 50px !important;
+            height: 50px !important;
+          }
+
+          /* Stack the content and date badge vertically */
+          .edu-cert-card > div > div:last-child {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center !important;
+            width: 100% !important;
+            gap: 8px !important;
+          }
+
+          /* Make text smaller in edu-cert cards */
+          .edu-cert-card h4 {
+            font-size: 14px !important;
+          }
+
+          .edu-cert-card p {
+            font-size: 12px !important;
+          }
+
+          /* Make date badges centered */
+          .edu-cert-card span {
+            align-self: center !important;
+            font-size: 11px !important;
+          }
         }
 
         .vibey-gradient {
@@ -2969,7 +3013,7 @@ export default function Portfolio() {
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-1') ? 'visible' : ''}`}
                 data-animate-id="edu-card-1"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
@@ -3030,7 +3074,7 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-2') ? 'visible' : ''}`}
                 data-animate-id="edu-card-2"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
@@ -3087,7 +3131,7 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('edu-card-3') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-3') ? 'visible' : ''}`}
                 data-animate-id="edu-card-3"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
@@ -3160,7 +3204,7 @@ export default function Portfolio() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('cert-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-1') ? 'visible' : ''}`}
                 data-animate-id="cert-card-1"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
@@ -3220,7 +3264,7 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
                 data-animate-id="cert-card-2"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
