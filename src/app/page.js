@@ -1177,7 +1177,7 @@ export default function Portfolio() {
           }
 
           h3 {
-            font-size: 24px !important;
+            font-size: 20px !important;
           }
 
           .hero-subtitle {
@@ -1189,7 +1189,7 @@ export default function Portfolio() {
           }
 
           .section-padding {
-            padding: 60px 24px !important;
+            padding: 60px 16px !important;
           }
 
           .grid-responsive {
@@ -1211,6 +1211,45 @@ export default function Portfolio() {
           section {
             max-width: 100vw;
             overflow-x: hidden;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+          }
+
+          /* Fix experience cards on mobile - full width and centered */
+          .hover-card {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            max-width: 100% !important;
+          }
+
+          /* Fix skill items for mobile */
+          .skill-item {
+            font-size: 9px !important;
+            padding: 8px 12px !important;
+            border-width: 2px !important;
+            box-shadow: 2px 2px 0px rgba(139, 92, 246, 0.3) !important;
+          }
+
+          /* Fix nav padding */
+          nav {
+            padding: 16px !important;
+          }
+
+          /* Fix any absolute positioned elements that might overflow */
+          [style*="position: absolute"] {
+            max-width: 100vw;
+          }
+
+          /* Ensure images don't overflow */
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+
+          /* Fix flex containers */
+          [style*="display: flex"] {
+            max-width: 100%;
           }
         }
 
@@ -1398,9 +1437,10 @@ export default function Portfolio() {
         style={{
           position: 'fixed',
           top: 0,
-          left: '10px',
+          left: 0,
           width: '100%',
           height: '100%',
+          maxWidth: '100vw',
           zIndex: 1,
           pointerEvents: 'none',
           filter: `blur(${scrollProgress * 15}px)`,
@@ -2115,7 +2155,7 @@ export default function Portfolio() {
                     background: 'rgba(30, 41, 59, 0.95)',
                     overflow: 'hidden',
                     border: '4px solid #EF4444',
-                    width: windowWidth > 768 ? '45%' : '85%',
+                    width: windowWidth > 768 ? '45%' : '100%',
                     marginRight: windowWidth > 768 ? '55%' : '0'
                   }}>
                   {/* Image area */}
@@ -2314,7 +2354,7 @@ export default function Portfolio() {
                     background: 'rgba(30, 41, 59, 0.95)',
                     overflow: 'hidden',
                     border: '4px solid #8B5CF6',
-                    width: windowWidth > 768 ? '45%' : '85%',
+                    width: windowWidth > 768 ? '45%' : '100%',
                     marginLeft: windowWidth > 768 ? '55%' : '0'
                   }}>
                   {/* Image area */}
@@ -2519,7 +2559,7 @@ export default function Portfolio() {
                     background: 'rgba(30, 41, 59, 0.95)',
                     overflow: 'hidden',
                     border: '4px solid #10B981',
-                    width: windowWidth > 768 ? '45%' : '85%',
+                    width: windowWidth > 768 ? '45%' : '100%',
                     marginRight: windowWidth > 768 ? '55%' : '0'
                   }}>
                   {/* Image area */}
@@ -2718,7 +2758,7 @@ export default function Portfolio() {
                     background: 'rgba(30, 41, 59, 0.95)',
                     overflow: 'hidden',
                     border: '4px solid #F59E0B',
-                    width: windowWidth > 768 ? '45%' : '85%',
+                    width: windowWidth > 768 ? '45%' : '100%',
                     marginLeft: windowWidth > 768 ? '55%' : '0'
                   }}>
                   {/* Image area */}
