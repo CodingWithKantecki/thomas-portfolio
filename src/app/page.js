@@ -3419,7 +3419,7 @@ export default function Portfolio() {
                     background: 'transparent'
                   }}>
                     <img
-                      src="/johnshopkins.png"
+                      src="/johnshopkins.jpg"
                       alt="Johns Hopkins University Logo"
                       style={{
                         width: '80px',
