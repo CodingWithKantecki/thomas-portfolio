@@ -1349,9 +1349,14 @@ export default function Portfolio() {
           border-color: #06B6D4 !important;
         }
 
+        .skill-tooltip {
+          opacity: 0;
+          visibility: hidden;
+        }
+
         .skill-item:hover .skill-tooltip {
-          opacity: 1 !important;
-          visibility: visible !important;
+          opacity: 1;
+          visibility: visible;
         }
 
         .skill-item .gradient-sweep {
@@ -4076,8 +4081,6 @@ export default function Portfolio() {
                   fontSize: '12px',
                   color: '#94a3b8',
                   whiteSpace: 'nowrap',
-                  opacity: 0,
-                  visibility: 'hidden',
                   transition: 'opacity 0.2s, visibility 0.2s',
                   zIndex: 100,
                   pointerEvents: 'none'
