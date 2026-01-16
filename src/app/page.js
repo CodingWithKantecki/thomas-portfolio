@@ -1349,6 +1349,11 @@ export default function Portfolio() {
           border-color: #06B6D4 !important;
         }
 
+        .skill-item:hover .skill-tooltip {
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
         .skill-item .gradient-sweep {
           background: linear-gradient(90deg, 
             transparent 0%, 
@@ -3986,28 +3991,39 @@ export default function Portfolio() {
             perspective: '1000px'
           }}>
             {[
-              'Python',
-              'MySQL',
-              'Git',
-              'Pygame',
-              'Godot',
-              'Linux',
-              'Claude Code',
-              'Tableau',
-              'ICD-10',
-              'CPT',
-              'HCPCS',
-              'SNOMED',
-              'HL7',
-              'FHIR',
-              'OpenCV',
-              'Render',
-              'SQLite',
-              'ThreeJS',
-              'MediaPipe'
+              { name: 'Python', desc: 'General-purpose programming language' },
+              { name: 'MySQL', desc: 'Relational database management system' },
+              { name: 'Git', desc: 'Version control system' },
+              { name: 'Pygame', desc: 'Python library for game development' },
+              { name: 'Godot', desc: 'Open-source game engine' },
+              { name: 'Linux', desc: 'Open-source operating system' },
+              { name: 'Claude Code', desc: 'AI-powered coding assistant by Anthropic' },
+              { name: 'PyCharm', desc: 'Python IDE by JetBrains' },
+              { name: 'Tableau', desc: 'Data visualization platform' },
+              { name: 'ICD-10', desc: 'International Classification of Diseases' },
+              { name: 'CPT', desc: 'Current Procedural Terminology codes' },
+              { name: 'HCPCS', desc: 'Healthcare Common Procedure Coding System' },
+              { name: 'SNOMED', desc: 'Systematized medical terminology' },
+              { name: 'HL7', desc: 'Health Level Seven messaging standard' },
+              { name: 'FHIR', desc: 'Fast Healthcare Interoperability Resources' },
+              { name: 'OpenCV', desc: 'Computer vision library' },
+              { name: 'Render', desc: 'Cloud application hosting platform' },
+              { name: 'SQLite', desc: 'Lightweight embedded database' },
+              { name: 'ThreeJS', desc: '3D graphics library for the web' },
+              { name: 'MediaPipe', desc: 'ML framework for media processing' },
+              { name: 'OpenGL', desc: 'Cross-platform graphics rendering API' },
+              { name: 'GDScript', desc: 'Godot game engine scripting language' },
+              { name: 'GLSL', desc: 'OpenGL shading language for graphics' },
+              { name: 'Next.js', desc: 'React framework for production apps' },
+              { name: 'React', desc: 'JavaScript library for building UIs' },
+              { name: 'JavaScript', desc: 'Web programming language' },
+              { name: 'Tailwind CSS', desc: 'Utility-first CSS framework' },
+              { name: 'Streamlit', desc: 'Python framework for data apps' },
+              { name: 'pandas', desc: 'Python data analysis library' },
+              { name: 'Vercel', desc: 'Cloud platform for frontend deployment' }
             ].map((skill, index) => (
               <span
-                key={skill}
+                key={skill.name}
                 className="skill-item"
                 data-index={index}
                 style={{
@@ -4026,9 +4042,9 @@ export default function Portfolio() {
                   zIndex: 2,
                   display: 'inline-block'
                 }}>
-                  {skill}
+                  {skill.name}
                 </span>
-                <span 
+                <span
                   className="gradient-sweep"
                   style={{
                     position: 'absolute',
@@ -4042,9 +4058,31 @@ export default function Portfolio() {
                     pointerEvents: 'none',
                     zIndex: 3
                   }}
-                  data-text={skill}
+                  data-text={skill.name}
                 >
-                  {skill}
+                  {skill.name}
+                </span>
+                {/* Tooltip */}
+                <span className="skill-tooltip" style={{
+                  position: 'absolute',
+                  bottom: '100%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  marginBottom: '8px',
+                  padding: '8px 12px',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  color: '#94a3b8',
+                  whiteSpace: 'nowrap',
+                  opacity: 0,
+                  visibility: 'hidden',
+                  transition: 'opacity 0.2s, visibility 0.2s',
+                  zIndex: 100,
+                  pointerEvents: 'none'
+                }}>
+                  {skill.desc}
                 </span>
               </span>
             ))}
