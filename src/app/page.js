@@ -3322,6 +3322,126 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
+
+              <div
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-3') ? 'visible' : ''}`}
+                data-animate-id="cert-card-3"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.3s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Stanford Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/stanford.png"
+                      alt="Stanford University Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Fundamentals of Machine Learning for Healthcare
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Stanford University
+                      </p>
+                      <p style={{ color: '#64748b', fontSize: '12px', marginTop: '4px' }}>
+                        Credential ID: BVNF1MLRFEUN
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Jan 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-4') ? 'visible' : ''}`}
+                data-animate-id="cert-card-4"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.4s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Johns Hopkins Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/johnshopkins.png"
+                      alt="Johns Hopkins University Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        The Social and Technical Context of Health Informatics
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        The Johns Hopkins University
+                      </p>
+                      <p style={{ color: '#64748b', fontSize: '12px', marginTop: '4px' }}>
+                        Credential ID: SVZ3W1FTDS18
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Oct 2025
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
