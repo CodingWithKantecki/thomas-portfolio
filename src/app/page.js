@@ -3576,16 +3576,6 @@ export default function Portfolio() {
                       {tech}
                     </span>
                   ))}
-                  <span style={{
-                    fontSize: '11px',
-                    padding: '4px 10px',
-                    background: 'rgba(139, 92, 246, 0.1)',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(139, 92, 246, 0.3)',
-                    color: '#A78BFA'
-                  }}>
-                    +1
-                  </span>
                 </div>
                 {/* View Details button */}
                 <button
@@ -3740,16 +3730,6 @@ export default function Portfolio() {
                       {tech}
                     </span>
                   ))}
-                  <span style={{
-                    fontSize: '11px',
-                    padding: '4px 10px',
-                    background: 'rgba(139, 92, 246, 0.1)',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(139, 92, 246, 0.3)',
-                    color: '#A78BFA'
-                  }}>
-                    +1
-                  </span>
                 </div>
                 {/* View Details button */}
                 <button
@@ -3887,16 +3867,6 @@ export default function Portfolio() {
                       {tech}
                     </span>
                   ))}
-                  <span style={{
-                    fontSize: '11px',
-                    padding: '4px 10px',
-                    background: 'rgba(139, 92, 246, 0.1)',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(139, 92, 246, 0.3)',
-                    color: '#A78BFA'
-                  }}>
-                    +1
-                  </span>
                 </div>
                 {/* View Details button */}
                 <button
