@@ -1328,7 +1328,7 @@ export default function Portfolio() {
 
         .skill-item {
           position: relative;
-          overflow: hidden;
+          overflow: visible;
           border: 3px solid #8B5CF6 !important;
           box-shadow: 4px 4px 0px rgba(139, 92, 246, 0.3);
           font-family: 'Press Start 2P', cursive !important;
