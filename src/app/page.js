@@ -4002,7 +4002,7 @@ export default function Portfolio() {
               { name: 'Pygame', desc: 'Python library for game development' },
               { name: 'Godot', desc: 'Open-source game engine' },
               { name: 'Linux', desc: 'Open-source operating system' },
-              { name: 'Claude Code', desc: 'AI-powered coding assistant by Anthropic' },
+              { name: 'Claude CLI', desc: 'AI-powered coding assistant by Anthropic' },
               { name: 'PyCharm', desc: 'Python IDE by JetBrains' },
               { name: 'Tableau', desc: 'Data visualization platform' },
               { name: 'ICD-10', desc: 'International Classification of Diseases' },
