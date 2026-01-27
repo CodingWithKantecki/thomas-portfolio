@@ -2180,6 +2180,265 @@ export default function Portfolio() {
                 boxShadow: '4px 4px 0px #4C1D95'
               }} />
 
+              {/* SwampHacks XI - RIGHT SIDE */}
+              <div
+                className={`animate-on-scroll ${visibleElements.has('exp-card-sh') ? 'visible' : ''}`}
+                data-animate-id="exp-card-sh"
+                style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-end' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
+                  position: 'relative',
+                  '--stagger-delay': '0.01s'
+                }}>
+                {/* Date badge - on left for right cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    right: '52%',
+                    top: '20px',
+                    background: '#FFD700',
+                    color: '#000',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #B8860B'
+                  }}>
+                    January 2026
+                  </div>
+                )}
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
+                  background: '#FFD700',
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #B8860B',
+                  zIndex: 10
+                }} />
+
+                {/* Card */}
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #FFD700',
+                    width: windowWidth > 768 ? '45%' : '100%',
+                    marginLeft: windowWidth > 768 ? '55%' : '0'
+                  }}>
+                  {/* Image area */}
+                  <div style={{
+                    width: '100%',
+                    height: windowWidth > 768 ? '280px' : '140px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <img
+                      src="/neuroview.png"
+                      alt="SwampHacks XI Winner"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    {/* Winner Ribbon */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '20px',
+                      right: '-35px',
+                      background: 'linear-gradient(135deg, #FFD700 0%, #FFC107 100%)',
+                      color: '#000',
+                      padding: '6px 40px',
+                      fontSize: '10px',
+                      fontWeight: '700',
+                      fontFamily: "'Press Start 2P', cursive",
+                      transform: 'rotate(45deg)',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                      zIndex: 10,
+                      letterSpacing: '1px'
+                    }}>
+                      WINNER
+                    </div>
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '16px',
+                      left: '16px',
+                      right: '16px'
+                    }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        SwampHacks XI Winner
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '12px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '16px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="#FFD700" viewBox="0 0 24 24">
+                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                        </svg>
+                        Best User Design
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        January 2026
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Gainesville, FL
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.7',
+                      marginBottom: '16px'
+                    }}>
+                      Won &quot;Best User Design&quot; at SwampHacks XI with NeuroView, a free, open-source web-based 3D brain MRI viewer making neuroanatomy accessible through interactive visualization.
+                    </p>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => handleExpToggle('swamphacks')}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(255, 215, 0, 0.1)',
+                        border: '1px solid rgba(255, 215, 0, 0.2)',
+                        borderRadius: '8px',
+                        color: '#FFD700',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.swamphacks ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.swamphacks ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.swamphacks && (
+                      <div className={closingExp.swamphacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(255, 215, 0, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#FFD700', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#FFD700', borderRadius: '2px' }} />
+                          Technologies Used
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Three.js', 'WebGL', 'React', 'NIfTI', 'Real-time Collaboration'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(255, 215, 0, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(255, 215, 0, 0.3)',
+                              color: '#FFD700'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
+                        <h5 style={{ color: '#FFD700', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#FFD700', borderRadius: '2px' }} />
+                          Project Highlights
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '20px' }}>
+                          <li>Created UI art elements and visual design for the application</li>
+                          <li>Helped contribute to landing page, presentation, and conducted research</li>
+                          <li>Built interactive 3D brain visualization with NIfTI file support</li>
+                          <li>Implemented real-time collaborative viewing features</li>
+                        </ul>
+
+                        {/* Links */}
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                          <a
+                            href="https://devpost.com/software/neuroview"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#FFD700',
+                              textDecoration: 'none',
+                              fontSize: '13px',
+                              fontWeight: '500'
+                            }}
+                          >
+                            View on Devpost
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                          <a
+                            href="https://www.youtube.com/watch?v=4fMkUkWLkVI"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#FF0000',
+                              textDecoration: 'none',
+                              fontSize: '13px',
+                              fontWeight: '500'
+                            }}
+                          >
+                            Watch Demo
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* Knight Hacks - LEFT SIDE */}
               <div
                 className={`animate-on-scroll ${visibleElements.has('exp-card-kh') ? 'visible' : ''}`}
@@ -2248,6 +2507,24 @@ export default function Portfolio() {
                         objectFit: 'cover'
                       }}
                     />
+                    {/* Winner Ribbon */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '20px',
+                      right: '-35px',
+                      background: 'linear-gradient(135deg, #FFD700 0%, #FFC107 100%)',
+                      color: '#000',
+                      padding: '6px 40px',
+                      fontSize: '10px',
+                      fontWeight: '700',
+                      fontFamily: "'Press Start 2P', cursive",
+                      transform: 'rotate(45deg)',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                      zIndex: 10,
+                      letterSpacing: '1px'
+                    }}>
+                      WINNER
+                    </div>
                     {/* Title overlay */}
                     <div style={{
                       position: 'absolute',
@@ -2256,7 +2533,7 @@ export default function Portfolio() {
                       right: '16px'
                     }}>
                       <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                        Knight Hacks Member
+                        Knight Hacks VIII Winner
                       </h4>
                     </div>
                   </div>
@@ -2272,6 +2549,12 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       marginBottom: '16px'
                     }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="#FFD700" viewBox="0 0 24 24">
+                          <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                        </svg>
+                        Best App Development
+                      </span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <svg width="14" height="14" fill="none" stroke="#EF4444" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -2373,6 +2656,48 @@ export default function Portfolio() {
                           <li>Participating in workshops, hackathons, and networking events</li>
                           <li>Building skills in collaborative software development</li>
                         </ul>
+
+                        {/* Links */}
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '20px' }}>
+                          <a
+                            href="https://devpost.com/software/kinexis"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#EF4444',
+                              textDecoration: 'none',
+                              fontSize: '13px',
+                              fontWeight: '500'
+                            }}
+                          >
+                            View KINEXIS on Devpost
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                          <a
+                            href="https://www.youtube.com/watch?v=HFNppbczE-M"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#FF0000',
+                              textDecoration: 'none',
+                              fontSize: '13px',
+                              fontWeight: '500'
+                            }}
+                          >
+                            Watch Demo
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                          </a>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -3655,25 +3980,46 @@ export default function Portfolio() {
                       <li>Toggle between wireframe and solid surface rendering</li>
                       <li>Real-time collaborative viewing for study groups</li>
                     </ul>
-                    <a
-                      href="https://devpost.com/software/neuroview"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        color: '#10B981',
-                        textDecoration: 'none',
-                        fontSize: '13px',
-                        fontWeight: '500'
-                      }}
-                    >
-                      View on Devpost
-                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
+                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                      <a
+                        href="https://devpost.com/software/neuroview"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#10B981',
+                          textDecoration: 'none',
+                          fontSize: '13px',
+                          fontWeight: '500'
+                        }}
+                      >
+                        View on Devpost
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                      <a
+                        href="https://www.youtube.com/watch?v=4fMkUkWLkVI"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#FF0000',
+                          textDecoration: 'none',
+                          fontSize: '13px',
+                          fontWeight: '500'
+                        }}
+                      >
+                        Watch Demo
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 )}
               </div>
@@ -3830,25 +4176,46 @@ export default function Portfolio() {
                       <li>Progress tracking dashboard for patients and therapists</li>
                       <li>Exportable reports for healthcare documentation</li>
                     </ul>
-                    <a
-                      href="https://devpost.com/software/kinexis"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        color: '#10B981',
-                        textDecoration: 'none',
-                        fontSize: '13px',
-                        fontWeight: '500'
-                      }}
-                    >
-                      View on Devpost
-                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
+                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                      <a
+                        href="https://devpost.com/software/kinexis"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#10B981',
+                          textDecoration: 'none',
+                          fontSize: '13px',
+                          fontWeight: '500'
+                        }}
+                      >
+                        View on Devpost
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                      <a
+                        href="https://www.youtube.com/watch?v=HFNppbczE-M"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          color: '#FF0000',
+                          textDecoration: 'none',
+                          fontSize: '13px',
+                          fontWeight: '500'
+                        }}
+                      >
+                        Watch Demo
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 )}
               </div>
