@@ -3501,9 +3501,9 @@ export default function Portfolio() {
             gap: windowWidth > 768 ? '24px' : '16px',
             width: '100%',
             boxSizing: 'border-box',
-            alignItems: 'start'
+            alignItems: 'stretch'
           }}>
-            {/* KINEXIS Project */}
+            {/* NeuroView Project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
               data-animate-id="project-card-1"
@@ -3512,10 +3512,188 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.1s'
+                '--stagger-delay': '0.1s',
+                display: 'flex',
+                flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px' }}>
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', overflow: 'hidden' }}>
+                <img
+                  src="/neuroview.png"
+                  alt="NeuroView 3D Brain Visualization"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                />
+                {/* Winner Ribbon */}
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '-35px',
+                  background: 'linear-gradient(135deg, #FFD700 0%, #FFC107 100%)',
+                  color: '#000',
+                  padding: '6px 40px',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  fontFamily: "'Press Start 2P', cursive",
+                  transform: 'rotate(45deg)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  zIndex: 10,
+                  letterSpacing: '1px'
+                }}>
+                  WINNER
+                </div>
+                <div style={{
+                  position: 'absolute',
+                  bottom: '12px',
+                  left: '12px',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6'
+                }}>
+                  NeuroView
+                </div>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F59E0B',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '12px'
+                }}>
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  SwampHacks XI - Best User Design
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
+                }}>
+                  Making neuroanatomy accessible through interactive 3D brain visualization with real-time collaboration.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['Three.js', 'WebGL', 'NIfTI', 'React'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {/* View Details button */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('neuroview'); }}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  {expandedProject.neuroview ? 'Hide Details' : 'View Details'}
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ transform: expandedProject.neuroview ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Expanded Details */}
+                {expandedProject.neuroview && (
+                  <div className={closingProject.neuroview ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
+                      About This Project
+                    </h5>
+                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
+                      NeuroView is a free, open-source web-based 3D brain MRI viewer with real-time collaboration. Medical students spend years trying to understand brain anatomy from flat 2D MRI slices—we asked: what if learning neuroanatomy could be as simple and collaborative as editing a Google Doc?
+                    </p>
+                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
+                      <li>Load NIfTI (.nii.gz) brain scans or use built-in demo MRIs</li>
+                      <li>Rotate, zoom, and explore brain structure from any angle</li>
+                      <li>Toggle between wireframe and solid surface rendering</li>
+                      <li>Real-time collaborative viewing for study groups</li>
+                    </ul>
+                    <a
+                      href="https://devpost.com/software/neuroview"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#10B981',
+                        textDecoration: 'none',
+                        fontSize: '13px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      View on Devpost
+                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* KINEXIS Project */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
+              data-animate-id="project-card-2"
+              style={{
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.1s',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              {/* Image with overlay title */}
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', overflow: 'hidden' }}>
                 <img
                   src="/kinexis-demo.gif"
                   alt="KINEXIS demo"
@@ -3526,6 +3704,24 @@ export default function Portfolio() {
                     display: 'block'
                   }}
                 />
+                {/* Winner Ribbon */}
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '-35px',
+                  background: 'linear-gradient(135deg, #FFD700 0%, #FFC107 100%)',
+                  color: '#000',
+                  padding: '6px 40px',
+                  fontSize: '10px',
+                  fontWeight: '700',
+                  fontFamily: "'Press Start 2P', cursive",
+                  transform: 'rotate(45deg)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  zIndex: 10,
+                  letterSpacing: '1px'
+                }}>
+                  WINNER
+                </div>
                 <div style={{
                   position: 'absolute',
                   bottom: '12px',
@@ -3542,7 +3738,7 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -3553,10 +3749,10 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   marginBottom: '12px'
                 }}>
-                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                   </svg>
-                  Knight Hacks VIII - Winner
+                  Knight Hacks VIII - Best App
                 </div>
                 {/* Description */}
                 <p style={{
@@ -3603,7 +3799,8 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
                   }}
                 >
                   {expandedProject.kinexis ? 'Hide Details' : 'View Details'}
@@ -3659,14 +3856,16 @@ export default function Portfolio() {
 
             {/* Strike Chess Project */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
-              data-animate-id="project-card-2"
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-3') ? 'visible' : ''}`}
+              data-animate-id="project-card-3"
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.2s'
+                '--stagger-delay': '0.2s',
+                display: 'flex',
+                flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
               <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px' }}>
@@ -3696,7 +3895,7 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -3757,7 +3956,8 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
                   }}
                 >
                   {expandedProject.strikechess ? 'Hide Details' : 'View Details'}
@@ -3797,14 +3997,16 @@ export default function Portfolio() {
 
             {/* Sentinel PHI Scanner */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-3') ? 'visible' : ''}`}
-              data-animate-id="project-card-3"
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-4') ? 'visible' : ''}`}
+              data-animate-id="project-card-4"
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(139, 92, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.3s'
+                '--stagger-delay': '0.3s',
+                display: 'flex',
+                flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
               <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', overflow: 'hidden' }}>
@@ -3833,7 +4035,7 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px' }}>
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -3894,7 +4096,8 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)'
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
                   }}
                 >
                   {expandedProject.sentinel ? 'Hide Details' : 'View Details'}
