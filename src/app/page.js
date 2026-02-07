@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import GitHubContributionGraph from '@/components/GitHubContributionGraph';
 
 export default function Portfolio() {
   const [heartbeat, setHeartbeat] = useState(0);
@@ -22,8 +23,6 @@ export default function Portfolio() {
   const [expandedProject, setExpandedProject] = useState({});
   const [closingExp, setClosingExp] = useState({});
   const [closingProject, setClosingProject] = useState({});
-  const [contributions, setContributions] = useState(null);
-  const [contributionTotal, setContributionTotal] = useState('0');
 
   // Handle closing animation for experience dropdowns
   const handleExpToggle = (key) => {
@@ -58,19 +57,6 @@ export default function Portfolio() {
   const skillCanvasRef = useRef(null);
 
   const fullText = "Thomas Kantecki";
-
-  // Fetch GitHub contributions
-  useEffect(() => {
-    fetch('/api/github')
-      .then(res => res.json())
-      .then(data => {
-        if (data.contributions) {
-          setContributions(data.contributions);
-          setContributionTotal(data.total);
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     // Set mounted state and initial width immediately
@@ -4675,186 +4661,7 @@ export default function Portfolio() {
             ))}
           </div>
 
-          {/* GitHub Contributions Graph */}
-          {contributions && (() => {
-            // Sort contributions by date, then group into weeks
-            const sorted = [...contributions].sort((a, b) => a.date.localeCompare(b.date));
-
-            // Build a grid: weeks as columns, days (Sun=0..Sat=6) as rows
-            const weeks = [];
-            let currentWeek = new Array(7).fill(null);
-            sorted.forEach((day) => {
-              const d = new Date(day.date + 'T00:00:00Z');
-              const dow = d.getUTCDay(); // 0=Sun
-              if (weeks.length === 0 && currentWeek.every(c => c === null)) {
-                // First entry — no need to start a new week yet
-              } else if (dow === 0 && currentWeek.some(c => c !== null)) {
-                // New week starts on Sunday
-                weeks.push(currentWeek);
-                currentWeek = new Array(7).fill(null);
-              }
-              currentWeek[dow] = day;
-            });
-            if (currentWeek.some(c => c !== null)) {
-              weeks.push(currentWeek);
-            }
-
-            // Month labels
-            const monthLabels = [];
-            let lastMonth = -1;
-            weeks.forEach((week, wi) => {
-              const firstDay = week.find(d => d !== null);
-              if (firstDay) {
-                const m = new Date(firstDay.date + 'T00:00:00Z').getUTCMonth();
-                if (m !== lastMonth) {
-                  monthLabels.push({ index: wi, name: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m] });
-                  lastMonth = m;
-                }
-              }
-            });
-
-            const cellSize = windowWidth > 768 ? 12 : 8;
-            const cellGap = windowWidth > 768 ? 3 : 2;
-            const step = cellSize + cellGap;
-            const colors = ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'];
-            const font = "'VT323', monospace";
-
-            return (
-              <div
-                style={{
-                  marginTop: windowWidth > 768 ? '80px' : '50px',
-                  padding: windowWidth > 768 ? '32px 40px' : '20px 16px',
-                  background: 'rgba(13, 17, 23, 0.6)',
-                  border: '1px solid rgba(139, 92, 246, 0.15)',
-                  borderRadius: '0px',
-                  maxWidth: '900px',
-                  margin: windowWidth > 768 ? '80px auto 0' : '50px auto 0',
-                  overflow: 'hidden',
-                  animation: 'fadeInUp 0.6s ease-out both',
-                  fontFamily: font
-                }}
-              >
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  marginBottom: '16px',
-                  flexWrap: 'wrap',
-                  gap: '8px'
-                }}>
-                  <span style={{
-                    fontSize: windowWidth > 768 ? '18px' : '15px',
-                    color: '#e6edf3',
-                    fontWeight: '400'
-                  }}>
-                    {contributionTotal} contributions in the last year
-                  </span>
-                  <a
-                    href="https://github.com/CodingWithKantecki"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      fontSize: '16px',
-                      color: '#8b5cf6',
-                      textDecoration: 'none',
-                      opacity: 0.8,
-                      transition: 'opacity 0.2s',
-                      fontFamily: font
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.opacity = '1'}
-                    onMouseLeave={e => e.currentTarget.style.opacity = '0.8'}
-                  >
-                    @CodingWithKantecki
-                  </a>
-                </div>
-
-                <div style={{ paddingBottom: '8px' }}>
-                  <svg
-                    viewBox={`0 0 ${weeks.length * step + 36} ${7 * step + 28}`}
-                    width="100%"
-                    style={{ display: 'block', fontFamily: font }}
-                  >
-                    {/* Month labels */}
-                    {monthLabels.map((m, i) => (
-                      <text
-                        key={i}
-                        x={m.index * step + 36}
-                        y={10}
-                        fill="#8b949e"
-                        fontSize={windowWidth > 768 ? '13' : '10'}
-                        fontFamily={font}
-                      >
-                        {m.name}
-                      </text>
-                    ))}
-
-                    {/* Day labels */}
-                    {['Mon', 'Wed', 'Fri'].map((label, i) => (
-                      <text
-                        key={label}
-                        x={0}
-                        y={[1, 3, 5][i] * step + 28}
-                        fill="#8b949e"
-                        fontSize={windowWidth > 768 ? '12' : '9'}
-                        dominantBaseline="middle"
-                        fontFamily={font}
-                      >
-                        {label}
-                      </text>
-                    ))}
-
-                    {/* Contribution cells */}
-                    {weeks.map((week, wi) =>
-                      week.map((day, di) => {
-                        if (!day) return null;
-                        return (
-                          <rect
-                            key={`${wi}-${di}`}
-                            x={wi * step + 36}
-                            y={di * step + 18}
-                            width={cellSize}
-                            height={cellSize}
-                            rx={2}
-                            ry={2}
-                            fill={colors[day.level]}
-                            style={{ outline: '1px solid rgba(27, 31, 35, 0.06)' }}
-                          >
-                            <title>{day.date}: Level {day.level}</title>
-                          </rect>
-                        );
-                      })
-                    )}
-                  </svg>
-                </div>
-
-                {/* Legend */}
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center',
-                  gap: '4px',
-                  marginTop: '8px',
-                  fontSize: '14px',
-                  color: '#8b949e'
-                }}>
-                  <span>Less</span>
-                  {colors.map((c, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        width: windowWidth > 768 ? '12px' : '10px',
-                        height: windowWidth > 768 ? '12px' : '10px',
-                        background: c,
-                        borderRadius: '2px',
-                        display: 'inline-block'
-                      }}
-                    />
-                  ))}
-                  <span>More</span>
-                </div>
-              </div>
-            );
-          })()}
+          <GitHubContributionGraph username="CodingWithKantecki" />
         </div>
       </section>
 
