@@ -3778,6 +3778,66 @@ export default function Portfolio() {
                   </div>
                 </div>
               </div>
+
+              <div
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-5') ? 'visible' : ''}`}
+                data-animate-id="cert-card-5"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.5s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Stanford Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/stanford.png"
+                      alt="Stanford University Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Evaluations of AI Applications in Healthcare
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        Stanford University
+                      </p>
+                      <p style={{ color: '#64748b', fontSize: '12px', marginTop: '4px' }}>
+                        Credential ID: 0SRHE3F8YHFY
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Mar 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -4595,7 +4655,8 @@ export default function Portfolio() {
               { name: 'Tailwind CSS', desc: 'Utility-first CSS framework' },
               { name: 'Streamlit', desc: 'Python framework for data apps' },
               { name: 'pandas', desc: 'Python data analysis library' },
-              { name: 'Vercel', desc: 'Cloud platform for frontend deployment' }
+              { name: 'Vercel', desc: 'Cloud platform for frontend deployment' },
+              { name: 'Docker', desc: 'Containerization and deployment platform' }
             ].map((skill, index) => (
               <span
                 key={skill.name}
