@@ -3392,7 +3392,7 @@ export default function Portfolio() {
                         University of Central Florida (UCF) • Orlando, FL
                       </p>
                       <p style={{ color: '#94a3b8', fontSize: '14px', marginTop: '8px' }}>
-                        GPA: 3.6 • KnightHacks • Healthcare Case Club
+                        Major GPA: 3.5 • KnightHacks • Healthcare Case Club
                       </p>
                     </div>
                     <span style={{
