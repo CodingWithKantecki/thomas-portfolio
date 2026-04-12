@@ -3889,6 +3889,166 @@ export default function Portfolio() {
             boxSizing: 'border-box',
             alignItems: 'stretch'
           }}>
+            {/* Strike Chess — flagship project */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
+              data-animate-id="project-card-strike"
+              style={{
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.05s',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              {/* Logo hero — same dimensions as other project cards */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: windowWidth > 768 ? '180px' : '140px',
+                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #2d1b5e 100%)',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '2px'
+              }}>
+                <img
+                  src="/strike-chess-logo.png"
+                  alt="Strike Chess"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    imageRendering: 'pixelated',
+                    display: 'block',
+                    filter: 'drop-shadow(0 0 14px rgba(139, 92, 246, 0.7))',
+                    transform: 'scale(1.55)',
+                    transformOrigin: 'center'
+                  }}
+                />
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F472B6',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '12px'
+                }}>
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  Indie Game / Steam
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
+                }}>
+                  Simultaneous-turn chess with tactical strike cards, a 9-chapter campaign, and Steam P2P multiplayer. Built in Godot 4.5 with a custom C AI engine.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['Godot 4.5', 'GDScript', 'C', 'Steamworks', 'Pixel Art'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                {/* View Details button */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('strikechess'); }}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  {expandedProject.strikechess ? 'Hide Details' : 'View Details'}
+                  <svg
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    style={{ transform: expandedProject.strikechess ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+
+                {/* Expanded Details */}
+                {expandedProject.strikechess && (
+                  <div className={closingProject.strikechess ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
+                      About This Project
+                    </h5>
+                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
+                      Strike Chess keeps classic chess rules but both players plan their moves at the same time (SimuFire) and resolve simultaneously — collisions, bonks, and explosions included. Tactical &quot;strike cards&quot; (FLASHBANG, SHIELD, STRIKE JET, RECON, FORTIFY, BREACH) drop every few rounds and change the tempo.
+                    </p>
+                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
+                      <li>Custom C chess engine with smooth ELO 400–2000 difficulty curves</li>
+                      <li>9-chapter story campaign across 9 trial generals</li>
+                      <li>Steam P2P multiplayer with friend invites, lobby browser, and in-game chat</li>
+                      <li>CRT/VHS pixel-art aesthetic with holographic card shaders</li>
+                    </ul>
+                    <a
+                      href="https://store.steampowered.com/app/4026780/Strike_Chess/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        color: '#66C0F4',
+                        textDecoration: 'none',
+                        fontSize: '13px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      View on Steam
+                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* NeuroView Project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
@@ -4282,147 +4442,6 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Strike Chess Project */}
-            <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-3') ? 'visible' : ''}`}
-              data-animate-id="project-card-3"
-              style={{
-                background: 'rgba(30, 41, 59, 0.9)',
-                borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
-                overflow: 'hidden',
-                '--stagger-delay': '0.2s',
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-              {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px' }}>
-                <img
-                  src="/strike-chess.png"
-                  alt="Strike Chess gameplay"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block'
-                  }}
-                />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '12px',
-                  left: '12px',
-                  background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
-                  fontSize: windowWidth > 768 ? '14px' : '12px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  color: '#fff',
-                  boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6'
-                }}>
-                  Strike Chess
-                </div>
-              </div>
-              {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Event badge */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: '#F59E0B',
-                  fontSize: '10px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
-                }}>
-                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  In Development
-                </div>
-                {/* Description */}
-                <p style={{
-                  color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
-                }}>
-                  A simultaneous-action tactical strategy game combining classic chess with secret planning.
-                </p>
-                {/* Tech pills */}
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
-                }}>
-                  {['Godot', 'GDScript', 'Game Design'].map(tech => (
-                    <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
-                      background: 'rgba(34, 211, 238, 0.1)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
-                      color: '#22D3EE'
-                    }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                {/* View Details button */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('strikechess'); }}
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    color: '#10B981',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    paddingTop: '12px',
-                    paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
-                    marginTop: 'auto'
-                  }}
-                >
-                  {expandedProject.strikechess ? 'Hide Details' : 'View Details'}
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ transform: expandedProject.strikechess ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-
-                {/* Expanded Details */}
-                {expandedProject.strikechess && (
-                  <div className={closingProject.strikechess ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
-                      About This Project
-                    </h5>
-                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      Strike Chess is a unique twist on traditional chess where both players secretly plan their moves simultaneously, then watch them resolve at the same time. This creates exciting moments of strategy and anticipation.
-                    </p>
-                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
-                      <li>Simultaneous turn-based gameplay with secret planning phase</li>
-                      <li>Built with Godot Engine using GDScript</li>
-                      <li>Custom game logic for move collision and resolution</li>
-                    </ul>
-                    <span style={{ color: '#64748b', fontSize: '13px', fontStyle: 'italic' }}>
-                      Currently in active development
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* Sentinel PHI Scanner */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-4') ? 'visible' : ''}`}
@@ -4579,6 +4598,7 @@ export default function Portfolio() {
                 )}
               </div>
             </div>
+
           </div>
         </div>
       </section>
