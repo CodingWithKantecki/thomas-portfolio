@@ -2319,7 +2319,7 @@ export default function Portfolio() {
                       lineHeight: '1.7',
                       marginBottom: '16px'
                     }}>
-                      Won &quot;Best User Design&quot; at SwampHacks XI with NeuroView, a free, open-source web-based 3D brain MRI viewer making neuroanatomy accessible through interactive visualization.
+                      Won "Best User Design" at SwampHacks XI with NeuroView, a free, open-source web-based 3D brain MRI viewer making neuroanatomy accessible through interactive visualization.
                     </p>
 
                     {/* Show More Details Button */}
@@ -2584,7 +2584,7 @@ export default function Portfolio() {
                       lineHeight: '1.7',
                       marginBottom: '16px'
                     }}>
-                      Active member and Fall 2025 Mentee at UCF&apos;s premier software development organization. Won &quot;Best App Development Hack&quot; at Knight Hacks VIII with KINEXIS, a physical therapy tracking platform.
+                      Active member and Fall 2025 Mentee at UCF's premier software development organization. Won "Best App Development Hack" at Knight Hacks VIII with KINEXIS, a physical therapy tracking platform.
                     </p>
 
                     {/* Show More Details Button */}
@@ -2652,7 +2652,7 @@ export default function Portfolio() {
                           Achievements & Activities
                         </h5>
                         <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
-                          <li>Won &quot;Best App Development Hack&quot; at Knight Hacks VIII with KINEXIS</li>
+                          <li>Won "Best App Development Hack" at Knight Hacks VIII with KINEXIS</li>
                           <li>Fall 2025 Mentee - receiving guidance from experienced developers</li>
                           <li>Participating in workshops, hackathons, and networking events</li>
                           <li>Building skills in collaborative software development</li>
@@ -3386,7 +3386,7 @@ export default function Portfolio() {
                   <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                        Bachelor&apos;s Degree in Health Informatics
+                        Bachelor's Degree in Health Informatics
                       </h4>
                       <p style={{ color: '#94a3b8', fontSize: '14px' }}>
                         University of Central Florida (UCF) • Orlando, FL
@@ -3447,7 +3447,7 @@ export default function Portfolio() {
                   <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
-                        Associate&apos;s Degree in General Studies
+                        Associate's Degree in General Studies
                       </h4>
                       <p style={{ color: '#94a3b8', fontSize: '14px' }}>
                         Valencia College • Orlando, FL
@@ -3889,7 +3889,7 @@ export default function Portfolio() {
             boxSizing: 'border-box',
             alignItems: 'stretch'
           }}>
-            {/* Strike Chess — flagship project */}
+            {/* Strike Chess - flagship project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
               data-animate-id="project-card-strike"
@@ -3902,7 +3902,7 @@ export default function Portfolio() {
                 display: 'flex',
                 flexDirection: 'column'
               }}>
-              {/* Logo hero — same dimensions as other project cards */}
+              {/* Logo hero - same dimensions as other project cards */}
               <div style={{
                 position: 'relative',
                 width: '100%',
@@ -4017,7 +4017,7 @@ export default function Portfolio() {
                       About This Project
                     </h5>
                     <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      Strike Chess keeps classic chess rules but both players plan their moves at the same time (SimuFire) and resolve simultaneously — collisions, bonks, and explosions included. Tactical &quot;strike cards&quot; (FLASHBANG, SHIELD, STRIKE JET, RECON, FORTIFY, BREACH) drop every few rounds and change the tempo.
+                      Strike Chess keeps classic chess rules but both players plan their moves at the same time (SimuFire) and resolve simultaneously - collisions, bonks, and explosions included. Tactical "strike cards" (FLASHBANG, SHIELD, STRIKE JET, RECON, FORTIFY, BREACH) drop every few rounds and change the tempo.
                     </p>
                     <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
                       <li>Custom C chess engine with smooth ELO 400–2000 difficulty curves</li>
@@ -4193,7 +4193,7 @@ export default function Portfolio() {
                       About This Project
                     </h5>
                     <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      NeuroView is a free, open-source web-based 3D brain MRI viewer with real-time collaboration. Medical students spend years trying to understand brain anatomy from flat 2D MRI slices—we asked: what if learning neuroanatomy could be as simple and collaborative as editing a Google Doc?
+                      NeuroView is a free, open-source web-based 3D brain MRI viewer with real-time collaboration. Medical students learn brain anatomy from flat 2D MRI slices. NeuroView lets a study group annotate the same 3D scan together in real time, like a Google Doc for brains.
                     </p>
                     <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
                       <li>Load NIfTI (.nii.gz) brain scans or use built-in demo MRIs</li>
@@ -4390,7 +4390,7 @@ export default function Portfolio() {
                       About This Project
                     </h5>
                     <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      KINEXIS is a physical therapy tracking platform that uses computer vision to provide objective measurements of patient movements. Built at Knight Hacks VIII, it won &quot;Best App Development Hack&quot;.
+                      KINEXIS is a physical therapy tracking platform that uses computer vision to provide objective measurements of patient movements. Built at Knight Hacks VIII, it won "Best App Development Hack".
                     </p>
                     <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
                       <li>Real-time pose detection and angle measurement using OpenCV</li>
@@ -4567,11 +4567,11 @@ export default function Portfolio() {
                       About This Project
                     </h5>
                     <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      Sentinel is an AI-powered tool for identifying Protected Health Information (PHI) in documents to ensure HIPAA compliance. It uses Google&apos;s Gemini AI to detect all 18 HIPAA identifiers.
+                      Sentinel is an AI-powered tool for identifying Protected Health Information (PHI) in documents to ensure HIPAA compliance. It uses Google's Gemini AI to detect all 18 HIPAA identifiers.
                     </p>
                     <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
                       <li>Detects all 18 HIPAA identifiers including subtle references</li>
-                      <li>AI-powered contextual understanding (&quot;the patient&quot;, &quot;her daughter&quot;)</li>
+                      <li>AI-powered contextual understanding ("the patient", "her daughter")</li>
                       <li>Dashboard with analytics and scan history</li>
                       <li>Supports TXT, PDF, DOC, and DOCX files</li>
                     </ul>
