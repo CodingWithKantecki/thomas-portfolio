@@ -3933,6 +3933,20 @@ export default function Portfolio() {
               </div>
               {/* Card content */}
               <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
+                }}>
+                  Strike Chess
+                </div>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -3977,18 +3991,18 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                {/* View Details button */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('strikechess'); }}
+                <a
+                  href="https://store.steampowered.com/app/4026780/Strike_Chess/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
+                    textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
@@ -3997,55 +4011,139 @@ export default function Portfolio() {
                     marginTop: 'auto'
                   }}
                 >
-                  {expandedProject.strikechess ? 'Hide Details' : 'View Details'}
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ transform: expandedProject.strikechess ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  View on Steam
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </button>
+                </a>
+              </div>
+            </div>
 
-                {/* Expanded Details */}
-                {expandedProject.strikechess && (
-                  <div className={closingProject.strikechess ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
-                      About This Project
-                    </h5>
-                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      Strike Chess keeps classic chess rules but both players plan their moves at the same time (SimuFire) and resolve simultaneously - collisions, bonks, and explosions included. Tactical "strike cards" (FLASHBANG, SHIELD, STRIKE JET, RECON, FORTIFY, BREACH) drop every few rounds and change the tempo.
-                    </p>
-                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
-                      <li>Custom C chess engine with smooth ELO 400–2000 difficulty curves</li>
-                      <li>9-chapter story campaign across 9 trial generals</li>
-                      <li>Steam P2P multiplayer with friend invites, lobby browser, and in-game chat</li>
-                      <li>CRT/VHS pixel-art aesthetic with holographic card shaders</li>
-                    </ul>
-                    <a
-                      href="https://store.steampowered.com/app/4026780/Strike_Chess/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        color: '#66C0F4',
-                        textDecoration: 'none',
-                        fontSize: '13px',
-                        fontWeight: '500'
-                      }}
-                    >
-                      View on Steam
-                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                )}
+            {/* CapySynth - VST plugin */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-capysynth') ? 'visible' : ''}`}
+              data-animate-id="project-card-capysynth"
+              style={{
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.075s',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              {/* Logo hero */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: windowWidth > 768 ? '180px' : '140px',
+                background: '#FA7241',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '2px'
+              }}>
+                <img
+                  src="/capysynth.png"
+                  alt="CapySynth"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    imageRendering: 'pixelated',
+                    display: 'block',
+                    transform: 'scale(1.2)',
+                    transformOrigin: 'center'
+                  }}
+                />
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
+                }}>
+                  CapySynth
+                </div>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F472B6',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '12px'
+                }}>
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 18V5l12-2v13" />
+                    <circle cx="6" cy="18" r="3" />
+                    <circle cx="18" cy="16" r="3" />
+                  </svg>
+                  VST3 / AU Plugin
+                </div>
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
+                }}>
+                  Pixel-art capybara-themed synthesizer plugin for lofi, house, and synthwave producers. 1000+ factory presets, 14 knobs, custom DSP. Built in JUCE 8 + C++17.
+                </p>
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['JUCE 8', 'C++17', 'VST3', 'AU', 'DSP'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(244, 114, 182, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(244, 114, 182, 0.3)',
+                      color: '#F472B6'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://github.com/CodingWithKantecki/CapySynth"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  View on GitHub
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
               </div>
             </div>
 
@@ -4092,23 +4190,23 @@ export default function Portfolio() {
                 }}>
                   WINNER
                 </div>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
                 <div style={{
-                  position: 'absolute',
-                  bottom: '12px',
-                  left: '12px',
+                  alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
                   padding: '10px 16px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6'
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
                 }}>
                   NeuroView
                 </div>
-              </div>
-              {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -4153,18 +4251,18 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                {/* View Details button */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('neuroview'); }}
+                <a
+                  href="https://devpost.com/software/neuroview"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
+                    textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
@@ -4173,76 +4271,11 @@ export default function Portfolio() {
                     marginTop: 'auto'
                   }}
                 >
-                  {expandedProject.neuroview ? 'Hide Details' : 'View Details'}
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ transform: expandedProject.neuroview ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  View on Devpost
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </button>
-
-                {/* Expanded Details */}
-                {expandedProject.neuroview && (
-                  <div className={closingProject.neuroview ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
-                      About This Project
-                    </h5>
-                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      NeuroView is a free, open-source web-based 3D brain MRI viewer with real-time collaboration. Medical students learn brain anatomy from flat 2D MRI slices. NeuroView lets a study group annotate the same 3D scan together in real time, like a Google Doc for brains.
-                    </p>
-                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
-                      <li>Load NIfTI (.nii.gz) brain scans or use built-in demo MRIs</li>
-                      <li>Rotate, zoom, and explore brain structure from any angle</li>
-                      <li>Toggle between wireframe and solid surface rendering</li>
-                      <li>Real-time collaborative viewing for study groups</li>
-                    </ul>
-                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                      <a
-                        href="https://devpost.com/software/neuroview"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: '#10B981',
-                          textDecoration: 'none',
-                          fontSize: '13px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        View on Devpost
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                      <a
-                        href="https://www.youtube.com/watch?v=4fMkUkWLkVI"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: '#FF0000',
-                          textDecoration: 'none',
-                          fontSize: '13px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        Watch Demo
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                )}
+                </a>
               </div>
             </div>
 
@@ -4289,23 +4322,23 @@ export default function Portfolio() {
                 }}>
                   WINNER
                 </div>
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
                 <div style={{
-                  position: 'absolute',
-                  bottom: '12px',
-                  left: '12px',
+                  alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
                   padding: '10px 16px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6'
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
                 }}>
                   KINEXIS
                 </div>
-              </div>
-              {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -4350,18 +4383,18 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                {/* View Details button */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('kinexis'); }}
+                <a
+                  href="https://devpost.com/software/kinexis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
+                    textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
@@ -4370,75 +4403,11 @@ export default function Portfolio() {
                     marginTop: 'auto'
                   }}
                 >
-                  {expandedProject.kinexis ? 'Hide Details' : 'View Details'}
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ transform: expandedProject.kinexis ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  View on Devpost
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </button>
-
-                {/* Expanded Details */}
-                {expandedProject.kinexis && (
-                  <div className={closingProject.kinexis ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
-                      About This Project
-                    </h5>
-                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      KINEXIS is a physical therapy tracking platform that uses computer vision to provide objective measurements of patient movements. Built at Knight Hacks VIII, it won "Best App Development Hack".
-                    </p>
-                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
-                      <li>Real-time pose detection and angle measurement using OpenCV</li>
-                      <li>Progress tracking dashboard for patients and therapists</li>
-                      <li>Exportable reports for healthcare documentation</li>
-                    </ul>
-                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                      <a
-                        href="https://devpost.com/software/kinexis"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: '#10B981',
-                          textDecoration: 'none',
-                          fontSize: '13px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        View on Devpost
-                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                      </a>
-                      <a
-                        href="https://www.youtube.com/watch?v=HFNppbczE-M"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: '#FF0000',
-                          textDecoration: 'none',
-                          fontSize: '13px',
-                          fontWeight: '500'
-                        }}
-                      >
-                        Watch Demo
-                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                )}
+                </a>
               </div>
             </div>
 
@@ -4466,23 +4435,23 @@ export default function Portfolio() {
                     objectFit: 'cover'
                   }}
                 />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '12px',
-                  left: '12px',
-                  background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
-                  fontSize: windowWidth > 768 ? '12px' : '10px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  color: '#fff',
-                  boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6'
-                }}>
-                  Sentinel PHI
-                </div>
               </div>
               {/* Card content */}
               <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
+                }}>
+                  Sentinel PHI
+                </div>
                 {/* Event badge */}
                 <div style={{
                   display: 'flex',
@@ -4527,18 +4496,18 @@ export default function Portfolio() {
                     </span>
                   ))}
                 </div>
-                {/* View Details button */}
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleProjectToggle('sentinel'); }}
+                <a
+                  href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   style={{
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     color: '#10B981',
-                    background: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
+                    textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
                     paddingTop: '12px',
@@ -4547,55 +4516,11 @@ export default function Portfolio() {
                     marginTop: 'auto'
                   }}
                 >
-                  {expandedProject.sentinel ? 'Hide Details' : 'View Details'}
-                  <svg
-                    width="16"
-                    height="16"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    style={{ transform: expandedProject.sentinel ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  View on GitHub
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                </button>
-
-                {/* Expanded Details */}
-                {expandedProject.sentinel && (
-                  <div className={closingProject.sentinel ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                    <h5 style={{ color: '#10B981', fontSize: '15px', fontWeight: '600', marginBottom: '12px' }}>
-                      About This Project
-                    </h5>
-                    <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '12px' }}>
-                      Sentinel is an AI-powered tool for identifying Protected Health Information (PHI) in documents to ensure HIPAA compliance. It uses Google's Gemini AI to detect all 18 HIPAA identifiers.
-                    </p>
-                    <ul style={{ color: '#94a3b8', fontSize: '13px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '16px' }}>
-                      <li>Detects all 18 HIPAA identifiers including subtle references</li>
-                      <li>AI-powered contextual understanding ("the patient", "her daughter")</li>
-                      <li>Dashboard with analytics and scan history</li>
-                      <li>Supports TXT, PDF, DOC, and DOCX files</li>
-                    </ul>
-                    <a
-                      href="https://github.com/CodingWithKantecki/sentinel-phi-scanner"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        color: '#10B981',
-                        textDecoration: 'none',
-                        fontSize: '13px',
-                        fontWeight: '500'
-                      }}
-                    >
-                      View on GitHub
-                      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                )}
+                </a>
               </div>
             </div>
 
