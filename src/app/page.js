@@ -4120,7 +4120,7 @@ export default function Portfolio() {
                   ))}
                 </div>
                 <a
-                  href="https://github.com/CodingWithKantecki/CapySynth"
+                  href="https://www.capysynth.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
@@ -4139,7 +4139,7 @@ export default function Portfolio() {
                     marginTop: 'auto'
                   }}
                 >
-                  View on GitHub
+                  Visit CapySynth.com
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
