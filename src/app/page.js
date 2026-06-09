@@ -2181,6 +2181,234 @@ export default function Portfolio() {
                 boxShadow: '4px 4px 0px #4C1D95'
               }} />
 
+              {/* Statura - LEFT SIDE */}
+              <div
+                className={`animate-on-scroll ${visibleElements.has('exp-card-statura') ? 'visible' : ''}`}
+                data-animate-id="exp-card-statura"
+                style={{
+                  display: 'flex',
+                  justifyContent: windowWidth > 768 ? 'flex-start' : 'center',
+                  alignItems: 'center',
+                  marginBottom: '60px',
+                  position: 'relative',
+                  '--stagger-delay': '0.01s'
+                }}>
+                {/* Date badge - on right for left cards */}
+                {windowWidth > 768 && (
+                  <div style={{
+                    position: 'absolute',
+                    left: '52%',
+                    top: '20px',
+                    background: '#C9954A',
+                    color: '#000',
+                    padding: '8px 16px',
+                    fontSize: '10px',
+                    fontFamily: "'Press Start 2P', cursive",
+                    boxShadow: '4px 4px 0px #8A6230'
+                  }}>
+                    May 2026 - Present
+                  </div>
+                )}
+                {/* Timeline dot */}
+                <div style={{
+                  position: 'absolute',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  top: '24px',
+                  width: '20px',
+                  height: '20px',
+                  background: '#C9954A',
+                  border: '4px solid #0f172a',
+                  boxShadow: '3px 3px 0px #8A6230',
+                  zIndex: 10
+                }} />
+
+                {/* Card */}
+                <div
+                  className="hover-card"
+                  style={{
+                    background: 'rgba(30, 41, 59, 0.95)',
+                    overflow: 'hidden',
+                    border: '4px solid #C9954A',
+                    width: windowWidth > 768 ? '45%' : '100%',
+                    marginRight: windowWidth > 768 ? '55%' : '0'
+                  }}>
+                  {/* Image area */}
+                  <div style={{
+                    width: '100%',
+                    height: windowWidth > 768 ? '280px' : '140px',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <img
+                      src="/statura.png"
+                      alt="Statura - legislative intelligence platform"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    {/* Bottom gradient for title legibility on light image */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(15, 23, 42, 0.8) 0%, rgba(15, 23, 42, 0) 50%)'
+                    }} />
+                    {/* Title overlay */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '16px',
+                      left: '16px',
+                      right: '16px'
+                    }}>
+                      <h4 style={{ fontSize: windowWidth > 768 ? '24px' : '20px', fontWeight: '700', color: '#fff', margin: 0, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                        Software Engineer
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ padding: windowWidth > 768 ? '24px' : '16px' }}>
+                    {/* Meta info */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '12px',
+                      fontSize: '13px',
+                      color: '#94a3b8',
+                      marginBottom: '16px'
+                    }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="#C9954A" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        Statura
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        May 2026 - Present
+                      </span>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Remote
+                      </span>
+                    </div>
+
+                    {/* Description */}
+                    <p style={{
+                      color: '#cbd5e1',
+                      fontSize: '14px',
+                      lineHeight: '1.7',
+                      marginBottom: '16px'
+                    }}>
+                      Building the frontend of Statura, an AI-native legislative intelligence platform that shows Florida businesses exactly how every bill, ordinance, and appropriation affects them — across federal, state, county, and municipal government.
+                    </p>
+
+                    {/* Show More Details Button */}
+                    <button
+                      onClick={() => handleExpToggle('statura')}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: 'rgba(201, 149, 74, 0.1)',
+                        border: '1px solid rgba(201, 149, 74, 0.2)',
+                        borderRadius: '8px',
+                        color: '#E8D49E',
+                        fontSize: '14px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        transition: 'all 0.3s'
+                      }}
+                    >
+                      {expandedExp.statura ? 'Show Less' : 'Show More Details'}
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        style={{ transform: expandedExp.statura ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expanded Content */}
+                    {expandedExp.statura && (
+                      <div className={closingExp.statura ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(201, 149, 74, 0.2)' }}>
+                        {/* Skills */}
+                        <h5 style={{ color: '#C9954A', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#C9954A', borderRadius: '2px' }} />
+                          Key Skills
+                        </h5>
+                        <div style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '8px',
+                          marginBottom: '20px'
+                        }}>
+                          {['Next.js', 'React', 'TypeScript', 'Supabase', 'PostgreSQL', 'AI Integration'].map(skill => (
+                            <span key={skill} style={{
+                              fontSize: '11px',
+                              padding: '5px 12px',
+                              background: 'rgba(201, 149, 74, 0.15)',
+                              borderRadius: '16px',
+                              border: '1px solid rgba(201, 149, 74, 0.3)',
+                              color: '#E8D49E'
+                            }}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
+                        <h5 style={{ color: '#C9954A', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#C9954A', borderRadius: '2px' }} />
+                          Key Responsibilities
+                        </h5>
+                        <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
+                          <li>Build core product surfaces: the intelligence dashboard and county, state, and federal legislative pages</li>
+                          <li>Develop the legislative news experience and relevance filtering so each workspace sees the bills that matter to it</li>
+                          <li>Ship responsive UI and performance improvements across the marketing site and app</li>
+                          <li>Work across a Next.js + Supabase monorepo with AI-powered bill analysis pipelines</li>
+                        </ul>
+
+                        {/* Links */}
+                        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '20px' }}>
+                          <a
+                            href="https://statura.app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              color: '#E8D49E',
+                              textDecoration: 'none',
+                              fontSize: '13px',
+                              fontWeight: '500'
+                            }}
+                          >
+                            Visit statura.app
+                            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* SwampHacks XI - RIGHT SIDE */}
               <div
                 className={`animate-on-scroll ${visibleElements.has('exp-card-sh') ? 'visible' : ''}`}
