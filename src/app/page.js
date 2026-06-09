@@ -4118,6 +4118,132 @@ export default function Portfolio() {
             boxSizing: 'border-box',
             alignItems: 'stretch'
           }}>
+            {/* Statura - legislative intelligence platform */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-statura') ? 'visible' : ''}`}
+              data-animate-id="project-card-statura"
+              style={{
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(139, 92, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.025s',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              {/* Logo hero */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: windowWidth > 768 ? '180px' : '140px',
+                background: '#14233E',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '2px'
+              }}>
+                <img
+                  src="/statura.png"
+                  alt="Statura"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    display: 'block'
+                  }}
+                />
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '10px 16px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #8B5CF6',
+                  marginBottom: '14px'
+                }}>
+                  Statura
+                </div>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F472B6',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '12px'
+                }}>
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  AI SaaS / Startup
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  marginBottom: '16px'
+                }}>
+                  Legislative intelligence platform showing Florida businesses how every bill, ordinance, and appropriation affects them. I build the frontend: dashboards, county/state/federal surfaces, and AI-powered news.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  {['Next.js', 'TypeScript', 'React', 'Supabase', 'PostgreSQL'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '11px',
+                      padding: '4px 10px',
+                      background: 'rgba(201, 149, 74, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(201, 149, 74, 0.3)',
+                      color: '#E8D49E'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://statura.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '12px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  Visit statura.app
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
             {/* Strike Chess - flagship project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
