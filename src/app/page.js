@@ -2238,18 +2238,19 @@ export default function Portfolio() {
                     width: '100%',
                     height: windowWidth > 768 ? '280px' : '140px',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    background: '#14233E'
                   }}>
                     <img
                       src="/statura.png"
-                      alt="Statura - legislative intelligence platform"
+                      alt="Statura logo"
                       style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover'
+                        objectFit: 'contain'
                       }}
                     />
-                    {/* Bottom gradient for title legibility on light image */}
+                    {/* Bottom gradient for title legibility */}
                     <div style={{
                       position: 'absolute',
                       inset: 0,
