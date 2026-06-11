@@ -3781,6 +3781,63 @@ export default function Portfolio() {
                   '--stagger-delay': '0.1s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* HIMSS Logo */}
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'transparent'
+                  }}>
+                    <img
+                      src="/himss.svg"
+                      alt="HIMSS Logo"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </div>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                    <div>
+                      <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
+                        Certified Associate in Healthcare Information and Management Systems (CAHIMS)
+                      </h4>
+                      <p style={{ color: '#94a3b8', fontSize: '14px' }}>
+                        HIMSS
+                      </p>
+                    </div>
+                    <span style={{
+                      fontSize: '14px',
+                      color: '#94a3b8',
+                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      padding: '4px 12px',
+                      borderRadius: '4px'
+                    }}>
+                      Issued Jun 2026
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
+                data-animate-id="cert-card-2"
+                style={{
+                  background: 'rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px',
+                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  '--stagger-delay': '0.2s'
+                }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* Stanford Logo */}
                   <div style={{
                     width: '80px',
@@ -3829,8 +3886,8 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
-                data-animate-id="cert-card-2"
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-3') ? 'visible' : ''}`}
+                data-animate-id="cert-card-3"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
                   backdropFilter: 'blur(10px)',
@@ -3838,7 +3895,7 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
-                  '--stagger-delay': '0.2s'
+                  '--stagger-delay': '0.3s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* Stanford Logo */}
@@ -3889,8 +3946,8 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-3') ? 'visible' : ''}`}
-                data-animate-id="cert-card-3"
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-4') ? 'visible' : ''}`}
+                data-animate-id="cert-card-4"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
                   backdropFilter: 'blur(10px)',
@@ -3898,7 +3955,7 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
-                  '--stagger-delay': '0.3s'
+                  '--stagger-delay': '0.4s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* Stanford Logo */}
@@ -3949,8 +4006,8 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-4') ? 'visible' : ''}`}
-                data-animate-id="cert-card-4"
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-5') ? 'visible' : ''}`}
+                data-animate-id="cert-card-5"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
                   backdropFilter: 'blur(10px)',
@@ -3958,7 +4015,7 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
-                  '--stagger-delay': '0.4s'
+                  '--stagger-delay': '0.5s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* Johns Hopkins Logo */}
@@ -4009,8 +4066,8 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-5') ? 'visible' : ''}`}
-                data-animate-id="cert-card-5"
+                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-6') ? 'visible' : ''}`}
+                data-animate-id="cert-card-6"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
                   backdropFilter: 'blur(10px)',
@@ -4018,7 +4075,7 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
-                  '--stagger-delay': '0.5s'
+                  '--stagger-delay': '0.6s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
                   {/* Stanford Logo */}
