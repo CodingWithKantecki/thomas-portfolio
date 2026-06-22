@@ -4481,8 +4481,8 @@ export default function Portfolio() {
                       <stop offset="100%" stopColor="#059669" />
                     </linearGradient>
                   </defs>
-                  <line x1="44" y1="-50" x2="218" y2="124" stroke="url(#capyDlGrad)" strokeWidth="26" />
-                  <text x="131" y="37" fill="#fff" fontFamily="'Press Start 2P', monospace" fontSize="7" fontWeight="700" textAnchor="middle" dominantBaseline="central" letterSpacing="0" transform="rotate(45 131 37)">10K+ DOWNLOADS</text>
+                  <line x1="26" y1="-50" x2="218" y2="142" stroke="url(#capyDlGrad)" strokeWidth="28" />
+                  <text x="122" y="46" fill="#fff" fontFamily="'Press Start 2P', monospace" fontSize="8" fontWeight="700" textAnchor="middle" dominantBaseline="central" letterSpacing="0" transform="rotate(45 122 46)">10K+ DOWNLOADS</text>
                 </svg>
               </div>
               {/* Card content */}
