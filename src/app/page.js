@@ -4451,6 +4451,7 @@ export default function Portfolio() {
                 height: windowWidth > 768 ? '180px' : '140px',
                 background: '#FA7241',
                 overflow: 'hidden',
+                isolation: 'isolate',
                 padding: '2px'
               }}>
                 <img
