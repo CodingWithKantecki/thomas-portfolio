@@ -4451,26 +4451,41 @@ export default function Portfolio() {
                 height: windowWidth > 768 ? '180px' : '140px',
                 background: '#FA7241',
                 overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 padding: '2px'
               }}>
                 <img
                   src="/capysynth.png"
                   alt="CapySynth"
                   style={{
-                    width: 'auto',
-                    height: 'auto',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
                     maxWidth: '100%',
                     maxHeight: '100%',
-                    objectFit: 'contain',
                     imageRendering: 'pixelated',
                     display: 'block',
-                    transform: 'scale(1.2)',
-                    transformOrigin: 'center'
+                    transform: 'translate(-50%, -50%) scale(1.2)'
                   }}
                 />
+                {/* Downloads Ribbon (same diagonal corner pattern as the WINNER ribbons —
+                    works because the hero is now a plain non-flex overflow:hidden block) */}
+                <div style={{
+                  position: 'absolute',
+                  top: '34px',
+                  right: '-26px',
+                  background: 'linear-gradient(135deg, #34D399 0%, #059669 100%)',
+                  color: '#fff',
+                  padding: '6px 40px',
+                  fontSize: '8px',
+                  fontWeight: '700',
+                  fontFamily: "'Press Start 2P', cursive",
+                  transform: 'rotate(45deg)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  zIndex: 10,
+                  letterSpacing: '1px'
+                }}>
+                  10K+ DOWNLOADS
+                </div>
               </div>
               {/* Card content */}
               <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
