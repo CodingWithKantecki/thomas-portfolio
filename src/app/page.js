@@ -4451,42 +4451,39 @@ export default function Portfolio() {
                 height: windowWidth > 768 ? '180px' : '140px',
                 background: '#FA7241',
                 overflow: 'hidden',
-                isolation: 'isolate',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 padding: '2px'
               }}>
                 <img
                   src="/capysynth.png"
                   alt="CapySynth"
                   style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
+                    width: 'auto',
+                    height: 'auto',
                     maxWidth: '100%',
                     maxHeight: '100%',
+                    objectFit: 'contain',
                     imageRendering: 'pixelated',
                     display: 'block',
-                    transform: 'translate(-50%, -50%) scale(1.2)'
+                    transform: 'scale(1.2)',
+                    transformOrigin: 'center'
                   }}
                 />
-                {/* Downloads Ribbon (same diagonal corner pattern as the WINNER ribbons —
-                    works because the hero is now a plain non-flex overflow:hidden block) */}
-                <div style={{
-                  position: 'absolute',
-                  top: '34px',
-                  right: '-26px',
-                  background: 'linear-gradient(135deg, #34D399 0%, #059669 100%)',
-                  color: '#fff',
-                  padding: '6px 40px',
-                  fontSize: '8px',
-                  fontWeight: '700',
-                  fontFamily: "'Press Start 2P', cursive",
-                  transform: 'rotate(45deg)',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                  zIndex: 10,
-                  letterSpacing: '1px'
-                }}>
-                  10K+ DOWNLOADS
-                </div>
+                {/* Downloads ribbon — drawn as SVG so it clips to its OWN viewport.
+                    A CSS overflow/clip-path ribbon leaks past the card edge under the
+                    card's :hover transform on GPU compositing; SVG clipping is immune. */}
+                <svg width="168" height="168" viewBox="0 0 168 168" style={{ position: 'absolute', top: 0, right: 0, zIndex: 10, pointerEvents: 'none' }}>
+                  <defs>
+                    <linearGradient id="capyDlGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#34D399" />
+                      <stop offset="100%" stopColor="#059669" />
+                    </linearGradient>
+                  </defs>
+                  <line x1="44" y1="0" x2="168" y2="124" stroke="url(#capyDlGrad)" strokeWidth="30" />
+                  <text x="106" y="62" fill="#fff" fontFamily="'Press Start 2P', monospace" fontSize="9" fontWeight="700" textAnchor="middle" dominantBaseline="central" letterSpacing="1" transform="rotate(45 106 62)">10K+ DOWNLOADS</text>
+                </svg>
               </div>
               {/* Card content */}
               <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
