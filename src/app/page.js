@@ -4481,7 +4481,7 @@ export default function Portfolio() {
                       <stop offset="100%" stopColor="#059669" />
                     </linearGradient>
                   </defs>
-                  <line x1="94" y1="0" x2="168" y2="74" stroke="url(#capyDlGrad)" strokeWidth="26" />
+                  <line x1="44" y1="-50" x2="218" y2="124" stroke="url(#capyDlGrad)" strokeWidth="26" />
                   <text x="131" y="37" fill="#fff" fontFamily="'Press Start 2P', monospace" fontSize="7" fontWeight="700" textAnchor="middle" dominantBaseline="central" letterSpacing="0" transform="rotate(45 131 37)">10K+ DOWNLOADS</text>
                 </svg>
               </div>
