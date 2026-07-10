@@ -11,7 +11,7 @@ export const metadata = {
     title: "Thomas Kantecki - Health Informatics & AI Developer",
     description: "Building innovative AI solutions for healthcare applications",
     type: "website",
-    url: "https://kantecki.dev",
+    url: "https://kantecki.com",
   },
   icons: {
     icon: '/favicon.svg',

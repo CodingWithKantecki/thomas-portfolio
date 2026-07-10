@@ -1,11 +1,8 @@
-function safeUsername(input) {
-  if (!input) {
-    return "CodingWithKantecki";
-  }
+const ALLOWED_USERNAMES = new Set(["CodingWithKantecki"]);
 
-  const value = String(input).trim();
-  const valid = /^[A-Za-z0-9-]{1,39}$/.test(value);
-  return valid ? value : "CodingWithKantecki";
+function safeUsername(input) {
+  const value = String(input ?? "").trim();
+  return ALLOWED_USERNAMES.has(value) ? value : "CodingWithKantecki";
 }
 
 function getAttribute(tag, attributeName) {
