@@ -6,7 +6,6 @@ import Link from 'next/link';
 import GitHubContributionGraph from '@/components/GitHubContributionGraph';
 
 export default function Portfolio() {
-  const [heartbeat, setHeartbeat] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [logoSlideProgress, setLogoSlideProgress] = useState(0);
@@ -69,11 +68,6 @@ export default function Portfolio() {
     };
 
     window.addEventListener('resize', handleResize);
-
-    // Heartbeat animation
-    const heartbeatInterval = setInterval(() => {
-      setHeartbeat(prev => (prev + 1) % 100);
-    }, 20);
 
     // Mouse position tracker with proximity effects
     const handleMouseMove = (e) => {
@@ -242,9 +236,10 @@ export default function Portfolio() {
     window.addEventListener('scroll', handleScroll);
 
     // Typewriter effect
-    setTimeout(() => {
+    let typewriterInterval = null;
+    const typewriterTimer = setTimeout(() => {
       let currentIndex = 0;
-      const typewriterInterval = setInterval(() => {
+      typewriterInterval = setInterval(() => {
         if (currentIndex < fullText.length) {
           setTypedText(fullText.substring(0, currentIndex + 1));
           currentIndex++;
@@ -267,8 +262,7 @@ export default function Portfolio() {
     }, 530);
 
     return () => {
-      clearTimeout(timer);
-      clearInterval(heartbeatInterval);
+      clearTimeout(typewriterTimer);
       clearInterval(typewriterInterval);
       clearInterval(cursorInterval);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -508,10 +502,10 @@ export default function Portfolio() {
         return alive;
       });
       
-      requestAnimationFrame(animate);
+      rafId = requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animate);
+    let rafId = requestAnimationFrame(animate);
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -519,7 +513,10 @@ export default function Portfolio() {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Update particles physics separately

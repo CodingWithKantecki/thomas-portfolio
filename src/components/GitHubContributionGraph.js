@@ -172,7 +172,11 @@ export default function GitHubContributionGraph({ username = 'CodingWithKantecki
           textAlign: 'center',
         }}
       >
-        {isLoading ? 'Loading contributions...' : `${(data?.total || 0).toLocaleString()} contributions in the last year`}
+        {isLoading
+          ? 'Loading contributions...'
+          : error
+            ? 'GitHub Contributions'
+            : `${(data?.total || 0).toLocaleString()} contributions in the last year`}
       </h3>
 
       {error && (
