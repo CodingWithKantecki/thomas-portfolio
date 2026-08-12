@@ -12,7 +12,6 @@ export default function Portfolio() {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(false);
-  const [skillBinaryParticles, setSkillBinaryParticles] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(768); // Default to mobile breakpoint, will update on mount
   const [mounted, setMounted] = useState(false);
@@ -53,7 +52,6 @@ export default function Portfolio() {
     }
   };
   const canvasRef = useRef(null);
-  const skillCanvasRef = useRef(null);
 
   const fullText = "Thomas Kantecki";
 
@@ -73,15 +71,12 @@ export default function Portfolio() {
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       
-      // Check if mouse is in skills section
+      // Skip skill-item proximity work when the cursor is outside the skills section
       const skillsSection = document.getElementById('skills');
       if (skillsSection) {
         const rect = skillsSection.getBoundingClientRect();
         const inSkillsSection = e.clientY >= rect.top && e.clientY <= rect.bottom;
-        
-        // Clear particles if not in skills section
         if (!inSkillsSection) {
-          setSkillBinaryParticles([]);
           return;
         }
       }
@@ -130,33 +125,7 @@ export default function Portfolio() {
             gradientSweep.style.backgroundPosition = `${position}% 0`;
           }
           
-          // Create binary particles when very close
-          if (distance < 60) { // Reduced trigger distance
-            if (Math.random() < 0.08) { // Further reduced to 8% chance
-              // Create particle at a random position along the text
-              const textWidth = rect.width;
-              const particleX = rect.left + Math.random() * textWidth;
-              
-              setSkillBinaryParticles(prev => {
-                // Limit maximum particles to prevent lag
-                if (prev.length >= 15) return prev; // Reduced from 30 to 15
-                
-                const newParticle = {
-                  id: Date.now() + Math.random(),
-                  x: particleX,
-                  y: rect.bottom,
-                  value: Math.random() > 0.5 ? '1' : '0',
-                  velocity: 1 + Math.random() * 2,
-                  opacity: 1,
-                  rotation: Math.random() * Math.PI * 2,
-                  rotationSpeed: (Math.random() - 0.5) * 0.1,
-                  size: 12 + Math.random() * 6, // Smaller particles
-                  color: '#8B5CF6'
-                };
-                return [...prev, newParticle];
-              });
-            }
-          } else {
+          if (distance >= 60) {
             item.classList.remove('hovering');
             if (gradientSweep) {
               gradientSweep.style.backgroundPosition = '-150% 0';
@@ -199,16 +168,6 @@ export default function Portfolio() {
           const slideRange = endSlide - startSlide;
           const slideProgress = scrollY / slideRange;
           setLogoSlideProgress(Math.min(Math.max(slideProgress, 0), 1));
-        }
-      }
-
-      // Clear particles when scrolling away from skills section
-      const skillsSection = document.getElementById('skills');
-      if (skillsSection) {
-        const rect = skillsSection.getBoundingClientRect();
-        const inView = rect.top < window.innerHeight && rect.bottom > 0;
-        if (!inView) {
-          setSkillBinaryParticles([]);
         }
       }
 
@@ -518,97 +477,6 @@ export default function Portfolio() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  // Update particles physics separately
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSkillBinaryParticles(prev => {
-        // Get Skills section boundary
-        const skillsSection = document.getElementById('skills');
-        let maxY = window.innerHeight;
-        
-        if (skillsSection) {
-          const rect = skillsSection.getBoundingClientRect();
-          maxY = rect.bottom - 20; // Stop 20px before section ends
-        }
-        
-        return prev.filter(particle => {
-          particle.y += particle.velocity;
-          particle.velocity += 0.05;
-          particle.opacity -= 0.015; // Faster fade out (was 0.008)
-          particle.rotation += particle.rotationSpeed;
-          
-          // Remove particles that go below Skills section or fade out
-          return particle.opacity > 0 && particle.y < maxY;
-        });
-      });
-    }, 33); // ~30fps (reduced from 60fps)
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Skill binary particles animation
-  useEffect(() => {
-    const canvas = skillCanvasRef.current;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    let animationId;
-    
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Get Skills section boundary for clipping
-      const skillsSection = document.getElementById('skills');
-      if (skillsSection) {
-        const rect = skillsSection.getBoundingClientRect();
-        
-        // Set clipping region to Skills section
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(0, rect.top, canvas.width, rect.height);
-        ctx.clip();
-      }
-      
-      // Draw all particles
-      skillBinaryParticles.forEach((particle) => {
-        // Draw the binary digit
-        ctx.save();
-        ctx.globalAlpha = particle.opacity;
-        ctx.translate(particle.x, particle.y);
-        ctx.rotate(particle.rotation);
-        ctx.font = `bold ${particle.size}px monospace`;
-        ctx.fillStyle = particle.color;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        // Removed shadow for better performance
-        ctx.fillText(particle.value, 0, 0);
-        ctx.restore();
-      });
-      
-      if (skillsSection) {
-        ctx.restore(); // Restore clipping
-      }
-      
-      animationId = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resizeCanvas);
-    };
-  }, [skillBinaryParticles]);
 
   // Intersection Observer for scroll-triggered animations
   useEffect(() => {
@@ -1241,14 +1109,6 @@ export default function Portfolio() {
             margin-bottom: 24px !important;
           }
 
-          /* Fix skill items for mobile */
-          .skill-item {
-            font-size: 9px !important;
-            padding: 8px 12px !important;
-            border-width: 2px !important;
-            box-shadow: 2px 2px 0px rgba(139, 92, 246, 0.3) !important;
-          }
-
           /* Fix nav padding */
           nav {
             padding: 16px !important;
@@ -1327,10 +1187,16 @@ export default function Portfolio() {
         .skill-item {
           position: relative;
           overflow: visible;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          padding: 12px 16px;
+          white-space: nowrap;
           border: 3px solid #8B5CF6 !important;
           box-shadow: 4px 4px 0px rgba(139, 92, 246, 0.3);
           font-family: 'Press Start 2P', cursive !important;
-          font-size: 10px !important;
+          font-size: 12px !important;
         }
 
         .skill-item {
@@ -1358,7 +1224,10 @@ export default function Portfolio() {
         }
 
         .skill-item .gradient-sweep {
-          background: linear-gradient(90deg, 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(90deg,
             transparent 0%, 
             #8B5CF6 25%, 
             #06B6D4 50%, 
@@ -1378,6 +1247,104 @@ export default function Portfolio() {
         .skill-item:hover .gradient-sweep {
           background-position: 100% 0 !important;
           opacity: 1 !important;
+        }
+
+        .skills-groups {
+          display: flex;
+          flex-direction: column;
+          gap: 44px;
+        }
+
+        .skill-group-header {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          margin-bottom: 18px;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 13px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        .skill-group-bullet {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+          flex-shrink: 0;
+        }
+
+        .skills-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 14px 16px;
+        }
+
+        .pixel-divider {
+          height: 11px;
+          width: 100%;
+          background-image:
+            repeating-linear-gradient(90deg, var(--divider-color) 0px, var(--divider-color) 16px, transparent 16px, transparent 28px),
+            repeating-linear-gradient(90deg, var(--divider-shadow) 0px, var(--divider-shadow) 16px, transparent 16px, transparent 28px);
+          background-size: calc(100% + 28px) 8px, calc(100% + 28px) 8px;
+          background-position: -28px 0, -25px 3px;
+          background-repeat: no-repeat;
+          animation: pixel-divider-scroll 1.2s linear infinite;
+        }
+
+        @keyframes pixel-divider-scroll {
+          to {
+            background-position: 0 0, 3px 3px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .pixel-divider {
+            animation: none;
+          }
+        }
+
+        @media (max-width: 1023px) {
+          .skills-groups {
+            gap: 36px;
+          }
+
+          .skill-group-header {
+            font-size: 11px;
+          }
+
+          .skills-grid {
+            gap: 12px 14px;
+          }
+
+          .skill-item {
+            font-size: 11px !important;
+            padding: 10px 14px;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .skills-groups {
+            gap: 30px;
+          }
+
+          .skill-group-header {
+            font-size: 10px;
+            gap: 10px;
+          }
+
+          .skills-grid {
+            gap: 10px 12px;
+          }
+
+          .skill-item {
+            font-size: 10px !important;
+            padding: 9px 12px;
+            box-shadow: 3px 3px 0px rgba(139, 92, 246, 0.3);
+          }
         }
 
         /* Scroll-triggered animations */
@@ -1521,19 +1488,6 @@ export default function Portfolio() {
         }}
       />
       
-      {/* Skill Binary Particles Canvas */}
-      <canvas 
-        ref={skillCanvasRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 5,
-          pointerEvents: 'none'
-        }}
-      />
 
       {/* Navigation */}
       <nav style={{
@@ -4127,11 +4081,9 @@ export default function Portfolio() {
       </section>
 
       {/* Section Separator */}
-      <div style={{
-        height: '2px',
-        background: 'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.3) 25%, rgba(139, 92, 246, 0.3) 75%, transparent 100%)',
-        maxWidth: '600px',
-        margin: '0 auto'
+      <div className="pixel-divider" style={{
+        '--divider-color': 'rgba(139, 92, 246, 0.6)',
+        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
       }} />
 
       {/* Projects Section */}
@@ -4951,11 +4903,9 @@ export default function Portfolio() {
       </section>
 
       {/* Section Separator */}
-      <div style={{
-        height: '2px',
-        background: 'linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.3) 25%, rgba(16, 185, 129, 0.3) 75%, transparent 100%)',
-        maxWidth: '600px',
-        margin: '0 auto'
+      <div className="pixel-divider" style={{
+        '--divider-color': 'rgba(139, 92, 246, 0.6)',
+        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
       }} />
 
       {/* Skills Section */}
@@ -4980,13 +4930,8 @@ export default function Portfolio() {
             Skills
           </h2>
 
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '12px 24px',
-            justifyContent: 'center',
-            alignItems: 'center',
-            maxWidth: '900px',
+          <div className="skills-groups" style={{
+            maxWidth: '1000px',
             margin: '0 auto',
             padding: '40px',
             position: 'relative',
@@ -4994,50 +4939,93 @@ export default function Portfolio() {
             perspective: '1000px'
           }}>
             {[
-              { name: 'Python', desc: 'General-purpose programming language' },
-              { name: 'MySQL', desc: 'Relational database management system' },
-              { name: 'Git', desc: 'Version control system' },
-              { name: 'Pygame', desc: 'Python library for game development' },
-              { name: 'Godot', desc: 'Open-source game engine' },
-              { name: 'Linux', desc: 'Open-source operating system' },
-              { name: 'PyCharm', desc: 'Python IDE by JetBrains' },
-              { name: 'Tableau', desc: 'Data visualization platform' },
-              { name: 'ICD-10', desc: 'International Classification of Diseases' },
-              { name: 'CPT', desc: 'Current Procedural Terminology codes' },
-              { name: 'HCPCS', desc: 'Healthcare Common Procedure Coding System' },
-              { name: 'SNOMED', desc: 'Systematized medical terminology' },
-              { name: 'HL7', desc: 'Health Level Seven messaging standard' },
-              { name: 'FHIR', desc: 'Fast Healthcare Interoperability Resources' },
-              { name: 'OpenCV', desc: 'Computer vision library' },
-              { name: 'Render', desc: 'Cloud application hosting platform' },
-              { name: 'SQLite', desc: 'Lightweight embedded database' },
-              { name: 'ThreeJS', desc: '3D graphics library for the web' },
-              { name: 'MediaPipe', desc: 'ML framework for media processing' },
-              { name: 'OpenGL', desc: 'Cross-platform graphics rendering API' },
-              { name: 'GDScript', desc: 'Godot game engine scripting language' },
-              { name: 'GLSL', desc: 'OpenGL shading language for graphics' },
-              { name: 'Next.js', desc: 'React framework for production apps' },
-              { name: 'React', desc: 'JavaScript library for building UIs' },
-              { name: 'JavaScript', desc: 'Web programming language' },
-              { name: 'Tailwind CSS', desc: 'Utility-first CSS framework' },
-              { name: 'Streamlit', desc: 'Python framework for data apps' },
-              { name: 'pandas', desc: 'Python data analysis library' },
-              { name: 'Vercel', desc: 'Cloud platform for frontend deployment' },
-              { name: 'Docker', desc: 'Containerization and deployment platform' }
-            ].map((skill, index) => (
+              {
+                title: 'Health Informatics',
+                accent: '#34D399',
+                offset: 0,
+                skills: [
+                  { name: 'ICD-10', desc: 'International Classification of Diseases' },
+                  { name: 'CPT', desc: 'Current Procedural Terminology codes' },
+                  { name: 'HCPCS', desc: 'Healthcare Common Procedure Coding System' },
+                  { name: 'SNOMED', desc: 'Systematized medical terminology' },
+                  { name: 'HL7', desc: 'Health Level Seven messaging standard' },
+                  { name: 'FHIR', desc: 'Fast Healthcare Interoperability Resources' }
+                ]
+              },
+              {
+                title: 'Web & Full-Stack',
+                accent: '#22D3EE',
+                offset: 6,
+                skills: [
+                  { name: 'JavaScript', desc: 'Web programming language' },
+                  { name: 'React', desc: 'JavaScript library for building UIs' },
+                  { name: 'Next.js', desc: 'React framework for production apps' },
+                  { name: 'Tailwind CSS', desc: 'Utility-first CSS framework' },
+                  { name: 'Vercel', desc: 'Cloud platform for frontend deployment' },
+                  { name: 'Render', desc: 'Cloud application hosting platform' }
+                ]
+              },
+              {
+                title: 'Data & ML',
+                accent: '#A78BFA',
+                offset: 12,
+                skills: [
+                  { name: 'Python', desc: 'General-purpose programming language' },
+                  { name: 'pandas', desc: 'Python data analysis library' },
+                  { name: 'OpenCV', desc: 'Computer vision library' },
+                  { name: 'MediaPipe', desc: 'ML framework for media processing' },
+                  { name: 'Streamlit', desc: 'Python framework for data apps' },
+                  { name: 'Tableau', desc: 'Data visualization platform' },
+                  { name: 'MySQL', desc: 'Relational database management system' },
+                  { name: 'SQLite', desc: 'Lightweight embedded database' }
+                ]
+              },
+              {
+                title: 'Game Dev & Graphics',
+                accent: '#FBBF24',
+                offset: 20,
+                skills: [
+                  { name: 'Godot', desc: 'Open-source game engine' },
+                  { name: 'GDScript', desc: 'Godot game engine scripting language' },
+                  { name: 'Pygame', desc: 'Python library for game development' },
+                  { name: 'ThreeJS', desc: '3D graphics library for the web' },
+                  { name: 'OpenGL', desc: 'Cross-platform graphics rendering API' },
+                  { name: 'GLSL', desc: 'OpenGL shading language for graphics' }
+                ]
+              },
+              {
+                title: 'Tools & Systems',
+                accent: '#E2E8F0',
+                offset: 26,
+                skills: [
+                  { name: 'Git', desc: 'Version control system' },
+                  { name: 'Linux', desc: 'Open-source operating system' },
+                  { name: 'Docker', desc: 'Containerization and deployment platform' },
+                  { name: 'PyCharm', desc: 'Python IDE by JetBrains' }
+                ]
+              }
+            ].map((cat, catIndex) => (
+              <div
+                key={cat.title}
+                className="skill-group"
+                style={{ animation: `fadeInUp 0.6s ease-out ${catIndex * 0.08}s both` }}
+              >
+                <div className="skill-group-header" style={{ color: cat.accent }}>
+                  <span className="skill-group-bullet" style={{ background: cat.accent }} />
+                  {cat.title}
+                  <span className="skill-group-bullet" style={{ background: cat.accent }} />
+                </div>
+                <div className="skills-grid">
+                  {cat.skills.map((skill, i) => (
               <span
                 key={skill.name}
                 className="skill-item"
-                data-index={index}
+                data-index={cat.offset + i}
                 style={{
-                  fontSize: '18px',
-                  fontWeight: '400',
                   cursor: 'pointer',
-                  position: 'relative',
-                  display: 'inline-block',
                   color: '#ffffff',
                   opacity: 0.7,
-                  animation: `fadeInUp 0.6s ease-out ${index * 0.03}s both`
+                  animation: `fadeInUp 0.6s ease-out ${(cat.offset + i) * 0.03}s both`
                 }}
               >
                 <span style={{
@@ -5086,6 +5074,9 @@ export default function Portfolio() {
                   {skill.desc}
                 </span>
               </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
 
@@ -5094,11 +5085,9 @@ export default function Portfolio() {
       </section>
 
       {/* Section Separator */}
-      <div style={{
-        height: '2px',
-        background: 'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.3) 25%, rgba(139, 92, 246, 0.3) 75%, transparent 100%)',
-        maxWidth: '600px',
-        margin: '0 auto'
+      <div className="pixel-divider" style={{
+        '--divider-color': 'rgba(139, 92, 246, 0.6)',
+        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
       }} />
 
       {/* Contact Section */}
@@ -5136,7 +5125,7 @@ export default function Portfolio() {
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+            <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
           </a>
@@ -5159,7 +5148,7 @@ export default function Portfolio() {
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            <svg width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+            <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
           </a>
@@ -5182,15 +5171,15 @@ export default function Portfolio() {
               e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg width="40" height="40" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </a>
 
           {/* Divider */}
           <div style={{
-            width: windowWidth > 768 ? '1px' : '100%',
-            height: windowWidth > 768 ? '28px' : '1px',
+            width: windowWidth > 768 ? '2px' : '100%',
+            height: windowWidth > 768 ? '40px' : '2px',
             background: 'rgba(255, 255, 255, 0.2)',
             margin: windowWidth > 768 ? '0 8px' : '8px 0'
           }} />
@@ -5199,13 +5188,13 @@ export default function Portfolio() {
           <a href="/resume.pdf" download style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '10px 24px',
+            gap: '10px',
+            padding: '16px 32px',
             background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
             borderRadius: '8px',
             color: '#ffffff',
             textDecoration: 'none',
-            fontSize: '14px',
+            fontSize: '17px',
             fontWeight: '600',
             transition: 'transform 0.3s, box-shadow 0.3s',
             boxShadow: '0 2px 10px rgba(139, 92, 246, 0.3)'
@@ -5218,7 +5207,7 @@ export default function Portfolio() {
             e.currentTarget.style.transform = 'scale(1)';
             e.currentTarget.style.boxShadow = '0 2px 10px rgba(139, 92, 246, 0.3)';
           }}>
-            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
             Download Resume/CV
