@@ -51,7 +51,8 @@ export default function Portfolio() {
       setExpandedProject(prev => ({ ...prev, [key]: true }));
     }
   };
-  const canvasRef = useRef(null);
+  const canvasRef = useRef(null); // fixed, site-wide grid
+  const ecgRef = useRef(null); // scrolls with the hero, so the outline stays glued to the text
   const nameRef = useRef(null);
   const nameMeasureRef = useRef(null);
 
@@ -162,21 +163,49 @@ export default function Portfolio() {
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    // Render at device resolution so the pixel line stays crisp on retina screens. Drawing stays in CSS px.
-    let viewW = window.innerWidth;
-    let viewH = window.innerHeight;
+    const gridCanvas = canvasRef.current;
+    const ecg = ecgRef.current;
+    if (!gridCanvas || !ecg) return;
+
+    // Two canvases, both at device resolution so the pixel line stays crisp on retina screens.
+    // The fixed one carries the site-wide grid and is painted once. The ECG is drawn on a
+    // transparent canvas inside the hero that scrolls with the text, so nothing can lag behind it.
+    const gridCtx = gridCanvas.getContext('2d');
+    const ctx = ecg.getContext('2d');
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let viewW = 0;
+    let viewH = 0;
+    const drawGrid = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      gridCanvas.width = Math.round(w * dpr);
+      gridCanvas.height = Math.round(h * dpr);
+      gridCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      gridCtx.fillStyle = '#0a0118';
+      gridCtx.fillRect(0, 0, w, h);
+      gridCtx.strokeStyle = 'rgba(138, 43, 226, 0.2)';
+      gridCtx.lineWidth = 0.5;
+      for (let i = 0; i < w; i += 50) {
+        gridCtx.beginPath();
+        gridCtx.moveTo(i, 0);
+        gridCtx.lineTo(i, h);
+        gridCtx.stroke();
+      }
+      for (let i = 0; i < h; i += 50) {
+        gridCtx.beginPath();
+        gridCtx.moveTo(0, i);
+        gridCtx.lineTo(w, i);
+        gridCtx.stroke();
+      }
+    };
     const sizeCanvas = () => {
-      viewW = window.innerWidth;
-      viewH = window.innerHeight;
-      canvas.width = Math.round(viewW * dpr);
-      canvas.height = Math.round(viewH * dpr);
+      viewW = ecg.clientWidth;
+      viewH = ecg.clientHeight;
+      ecg.width = Math.round(viewW * dpr);
+      ecg.height = Math.round(viewH * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
+    drawGrid();
     sizeCanvas();
 
     let xPos = 0;
@@ -421,27 +450,11 @@ export default function Portfolio() {
       const deltaTime = (currentTime - lastFrameTime) / 1000; // Convert to seconds
       lastFrameTime = currentTime;
 
-      // Clear canvas
-      ctx.fillStyle = '#0a0118';
-      ctx.fillRect(0, 0, viewW, viewH);
-      
-      // Draw grid
-      ctx.strokeStyle = 'rgba(138, 43, 226, 0.2)';
-      ctx.lineWidth = 0.5;
-      
-      for (let i = 0; i < viewW; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, viewH);
-        ctx.stroke();
-      }
-      
-      for (let i = 0; i < viewH; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(viewW, i);
-        ctx.stroke();
-      }
+      // Keep the canvas matched to the hero and start from a clear frame
+      if (ecg.clientWidth !== viewW || ecg.clientHeight !== viewH) sizeCanvas();
+      ctx.clearRect(0, 0, viewW, viewH);
+      // Everything measured from the DOM is in viewport coords; the canvas may be scrolled
+      const off = ecg.getBoundingClientRect();
       
       // Where the name sits on screen. The canvas is fixed, so viewport coords are canvas coords.
       let geom = null;
@@ -454,16 +467,16 @@ export default function Portfolio() {
         measureRange.selectNodeContents(nameEl);
         const content = measureRange.getBoundingClientRect();
         if (box.width > 0 && fullWidth > 0 && content.height > 0) {
-          const centerX = (box.left + box.right) / 2;
+          const centerX = (box.left + box.right) / 2 - off.left;
           const style = window.getComputedStyle(nameEl);
           const fontPx = parseFloat(style.fontSize);
           const letterSpacing = parseFloat(style.letterSpacing) || 0;
           const totalWidth = fullWidth + letterSpacing * fullText.length;
           geom = {
-            contentLeft: content.left,
-            contentRight: content.right,
-            contentTop: content.top,
-            contentBottom: content.bottom,
+            contentLeft: content.left - off.left,
+            contentRight: content.right - off.left,
+            contentTop: content.top - off.top,
+            contentBottom: content.bottom - off.top,
             typedLen: nameEl.textContent.replace(/\|/g, '').length,
             fontPx,
             advance: fontPx + letterSpacing,
@@ -686,6 +699,7 @@ export default function Portfolio() {
     let rafId = requestAnimationFrame(animate);
 
     const handleResize = () => {
+      drawGrid();
       sizeCanvas();
     };
 
@@ -1548,7 +1562,7 @@ export default function Portfolio() {
         }} />
       </div>
 
-      {/* ECG Background Canvas */}
+      {/* Site-wide grid background */}
       <canvas
         ref={canvasRef}
         style={{
@@ -1928,12 +1942,28 @@ export default function Portfolio() {
         position: 'relative',
         zIndex: 10
       }}>
+        {/* ECG canvas: scrolls with the hero so the letter outline stays glued to the name */}
+        <canvas
+          ref={ecgRef}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 0,
+            pointerEvents: 'none',
+            filter: `blur(${scrollProgress * 15}px)`,
+            opacity: 1 - (scrollProgress * 0.7),
+            transition: 'filter 0.3s ease-out, opacity 0.3s ease-out'
+          }}
+        />
         <div style={{
           textAlign: 'center',
           animation: 'fadeInUp 1s ease-out',
           maxWidth: '800px',
           padding: '0 24px',
-          position: 'relative'
+          position: 'relative',
+          zIndex: 1
         }}>
           {/* Profile Image with Wireframe Effect */}
           <div className="profile-image" style={{
