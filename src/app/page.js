@@ -52,6 +52,8 @@ export default function Portfolio() {
     }
   };
   const canvasRef = useRef(null);
+  const nameRef = useRef(null);
+  const nameMeasureRef = useRef(null);
 
   const fullText = "Thomas Kantecki";
 
@@ -70,78 +72,7 @@ export default function Portfolio() {
     // Mouse position tracker with proximity effects
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
-      
-      // Skip skill-item proximity work when the cursor is outside the skills section
-      const skillsSection = document.getElementById('skills');
-      if (skillsSection) {
-        const rect = skillsSection.getBoundingClientRect();
-        const inSkillsSection = e.clientY >= rect.top && e.clientY <= rect.bottom;
-        if (!inSkillsSection) {
-          return;
-        }
-      }
-      
-      // Update skill items based on proximity
-      const skillItems = document.querySelectorAll('.skill-item');
-      
-      if (skillItems.length === 0) {
-        return;
-      }
-      
-      skillItems.forEach((item, index) => {
-        const rect = item.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const distance = Math.sqrt(
-          Math.pow(e.clientX - centerX, 2) + 
-          Math.pow(e.clientY - centerY, 2)
-        );
-        
-        const threshold = 100;
-        const gradientSweep = item.querySelector('.gradient-sweep');
-        
-        // Magnifying glass effect with larger radius
-        const magnifyRadius = 200;
-        
-        if (distance < magnifyRadius) {
-          // Calculate magnification based on distance
-          const strength = 1 - (distance / magnifyRadius);
-          // Use exponential curve for more dramatic effect at center
-          const magnification = Math.pow(strength, 2);
-          const scale = 1 + (magnification * 0.3); // Max 1.3x at center
-          
-          item.style.setProperty('transform', `scale(${scale})`, 'important');
-          item.style.setProperty('opacity', String(0.7 + (magnification * 0.3)), 'important');
-          item.style.setProperty('z-index', String(Math.floor(magnification * 10)), 'important');
-          item.style.setProperty('transition', 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease-out', 'important');
-          
-          // Gradient effect for items within gradient radius
-          if (distance < 100 && gradientSweep) {
-            item.classList.add('hovering');
-            // Gradient position based on distance for smoother effect
-            const gradientProgress = 1 - (distance / 100);
-            const position = -150 + (250 * gradientProgress);
-            gradientSweep.style.backgroundPosition = `${position}% 0`;
-          }
-          
-          if (distance >= 60) {
-            item.classList.remove('hovering');
-            if (gradientSweep) {
-              gradientSweep.style.backgroundPosition = '-150% 0';
-            }
-          }
-        } else {
-          item.style.setProperty('transform', 'scale(1)', 'important');
-          item.style.setProperty('opacity', '0.7', 'important');
-          item.style.setProperty('z-index', '0', 'important');
-          item.classList.remove('hovering');
-          
-          if (gradientSweep) {
-            gradientSweep.style.backgroundPosition = '-150% 0';
-          }
-        }
-      });
+
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -172,7 +103,7 @@ export default function Portfolio() {
       }
 
       // Track current section for navigation indicator
-      const sections = ['experience', 'projects', 'skills', 'contact'];
+      const sections = ['experience', 'projects', 'contact'];
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       for (const sectionId of sections) {
@@ -235,8 +166,18 @@ export default function Portfolio() {
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Render at device resolution so the pixel line stays crisp on retina screens. Drawing stays in CSS px.
+    let viewW = window.innerWidth;
+    let viewH = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const sizeCanvas = () => {
+      viewW = window.innerWidth;
+      viewH = window.innerHeight;
+      canvas.width = Math.round(viewW * dpr);
+      canvas.height = Math.round(viewH * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    sizeCanvas();
 
     let xPos = 0;
     let trailStart = 0; // Start position of the visible line
@@ -266,7 +207,7 @@ export default function Portfolio() {
         this.velocity += 6 * deltaTime; // Gravity scaled by deltaTime
         this.opacity -= 0.6 * deltaTime; // Fade rate scaled by deltaTime
         this.rotation += this.rotationSpeed * deltaTime * 60;
-        return this.opacity > 0 && this.y < canvas.height;
+        return this.opacity > 0 && this.y < viewH;
       }
       
       draw(ctx) {
@@ -285,6 +226,193 @@ export default function Portfolio() {
       }
     }
     
+    // ECG geometry. One identical 8-bit spike per beat, defined per 8px column,
+    // and a beat period that divides evenly into the pixel grid so every spike matches.
+    const pixelSize = 8;
+    const snap = (v) => Math.floor(v / pixelSize) * pixelSize;
+    const spikeShape = [-80, -160, -240, -160, -80, 0, 40, 0, 0, 0];
+    const spikeWidth = spikeShape.length * pixelSize;
+    const beatPeriod = 480;
+    const beatGap = 96; // space between the name and the nearest spike
+    const wrapPadX = 24; // box wrap: clearance beside the letters
+    const wrapPadY = 16; // box wrap: clearance above the letters
+    const measureRange = document.createRange(); // measures the text itself, unaffected by box width rules
+
+    // Letter outline. The name is rendered once offscreen in the same pixel font and read back on
+    // its own pixel grid. The outline is the ring of background cells touching the letters, one
+    // pixel-font pixel thick, so every letter is enclosed on its own; holes inside letters are left
+    // alone. It is position-independent, so it is built once per font size and placed each frame.
+    const glyphCanvas = document.createElement('canvas');
+    const glyphCtx = glyphCanvas.getContext('2d', { willReadFrequently: true });
+    const outlineCanvas = document.createElement('canvas');
+    const outlineCtx = outlineCanvas.getContext('2d');
+    const MID_ROW = 4; // the pixel row the ECG line runs through (rows count up from the baseline)
+    // document.fonts.check() answers true before the stylesheet has even registered the face, so look for it
+    const pixelFontLoaded = () => {
+      let loaded = false;
+      document.fonts.forEach((face) => { if (face.family.replace(/["']/g, '') === 'Press Start 2P' && face.status === 'loaded') loaded = true; });
+      return loaded;
+    };
+    let outline = null;
+    let firstFrameTime = 0;
+
+    const buildOutline = (fontPx, advance) => {
+      if (outline && outline.fontPx === fontPx && outline.advance === advance) return outline;
+      const glyph = Math.max(2, Math.round(fontPx / 8));
+      const n = fullText.length;
+      const W = n * fontPx;
+      const H = fontPx * 2;
+      glyphCanvas.width = W;
+      glyphCanvas.height = H;
+      glyphCtx.font = `400 ${fontPx}px 'Press Start 2P', monospace`; // the font's real weight; 600 is synthesised
+      glyphCtx.textBaseline = 'alphabetic';
+      glyphCtx.fillStyle = '#fff';
+      const metrics = glyphCtx.measureText(fullText);
+      if (Math.abs(metrics.width - n * fontPx) > 1) return null; // not the pixel font yet
+      const ascent = metrics.fontBoundingBoxAscent || fontPx;
+      const baseline = Math.ceil(ascent) + glyph;
+      glyphCtx.clearRect(0, 0, W, H);
+      glyphCtx.fillText(fullText, 0, baseline);
+      const px = glyphCtx.getImageData(0, 0, W, H).data;
+
+      // Grid: 8 columns per letter, rows counted up from the baseline row, one margin cell around
+      const cMin = -1, cMax = n * 8, kMin = -1, kMax = 9;
+      const cols = cMax - cMin + 1;
+      const rows = kMax - kMin + 1;
+      const at = (k, c) => (k - kMin) * cols + (c - cMin);
+      const ink = new Uint8Array(rows * cols);
+      for (let k = 0; k <= 8; k++) {
+        const y = baseline - k * glyph - (glyph >> 1);
+        if (y < 0 || y >= H) continue;
+        for (let c = 0; c < n * 8; c++) {
+          if (px[(y * W + c * glyph + (glyph >> 1)) * 4 + 3] > 128) ink[at(k, c)] = 1;
+        }
+      }
+      // Background that connects to the outside of the name (so counters inside letters stay clear)
+      const outside = new Uint8Array(rows * cols);
+      const stack = [];
+      for (let k = kMin; k <= kMax; k++) {
+        for (let c = cMin; c <= cMax; c++) {
+          if ((k === kMin || k === kMax || c === cMin || c === cMax) && !ink[at(k, c)]) {
+            outside[at(k, c)] = 1;
+            stack.push(k, c);
+          }
+        }
+      }
+      while (stack.length) {
+        const c = stack.pop();
+        const k = stack.pop();
+        for (const [dk, dc] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nk = k + dk, nc = c + dc;
+          if (nk < kMin || nk > kMax || nc < cMin || nc > cMax) continue;
+          const j = at(nk, nc);
+          if (!ink[j] && !outside[j]) { outside[j] = 1; stack.push(nk, nc); }
+        }
+      }
+      // The ring: outside cells touching a letter (8 neighbours, so corners stay solid)
+      const ring = new Uint8Array(rows * cols);
+      const colTopK = new Int8Array(cols).fill(-100);
+      const colBotK = new Int8Array(cols).fill(100);
+      const colEmpty = new Uint8Array(cols).fill(1);
+      for (let k = kMin; k <= kMax; k++) {
+        for (let c = cMin; c <= cMax; c++) {
+          const j = at(k, c);
+          if (ink[j]) { colEmpty[c - cMin] = 0; continue; }
+          if (!outside[j]) continue;
+          let touches = false;
+          for (let dk = -1; dk <= 1 && !touches; dk++) {
+            for (let dc = -1; dc <= 1; dc++) {
+              const nk = k + dk, nc = c + dc;
+              if ((dk || dc) && nk >= kMin && nk <= kMax && nc >= cMin && nc <= cMax && ink[at(nk, nc)]) { touches = true; break; }
+            }
+          }
+          if (touches) {
+            ring[j] = 1;
+            colEmpty[c - cMin] = 0;
+            colTopK[c - cMin] = Math.max(colTopK[c - cMin], k);
+            colBotK[c - cMin] = Math.min(colBotK[c - cMin], k);
+          }
+        }
+      }
+      // The line itself runs along the middle row through every empty column (the ends and the
+      // space between the words) and reaches in until it meets the nearest outline
+      const mid = new Uint8Array(cols);
+      const open = (c) => c >= cMin && c <= cMax && outside[at(MID_ROW, c)] && !ring[at(MID_ROW, c)] && !ink[at(MID_ROW, c)];
+      for (let c = cMin; c <= cMax; c++) {
+        if (!colEmpty[c - cMin]) continue;
+        mid[c - cMin] = 1;
+        for (let cc = c - 1; open(cc) && !colEmpty[cc - cMin]; cc--) mid[cc - cMin] = 1;
+        for (let cc = c + 1; open(cc) && !colEmpty[cc - cMin]; cc++) mid[cc - cMin] = 1;
+      }
+      const midRuns = [];
+      for (let i = 0; i < cols; i++) {
+        if (!mid[i]) continue;
+        let j = i;
+        while (j + 1 < cols && mid[j + 1]) j++;
+        midRuns.push([i + cMin, j + cMin]);
+        i = j;
+      }
+      // On screen, letters sit one advance apart (font size plus letter-spacing) while cells within a
+      // letter are one glyph pixel apart; the last cell of each letter absorbs the letter-spacing.
+      const colX = (c) => (c < 0 ? c * glyph : Math.floor(c / 8) * advance + (c % 8) * glyph);
+      const colW = (c) => (c >= 0 && c % 8 === 7 ? advance - 7 * glyph : glyph);
+      const gridW = colX(cMax) + glyph * 2;
+      // Paint the ring once, at device resolution
+      outlineCanvas.width = Math.round(gridW * dpr);
+      outlineCanvas.height = Math.round(rows * glyph * dpr);
+      outlineCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      outlineCtx.clearRect(0, 0, gridW, rows * glyph);
+      outlineCtx.fillStyle = '#8B5CF6';
+      for (let k = kMin; k <= kMax; k++) {
+        for (let c = cMin; c <= cMax; c++) {
+          if (ring[at(k, c)]) outlineCtx.fillRect(colX(c) + glyph, (kMax - k) * glyph, colW(c), glyph);
+        }
+      }
+      outline = { fontPx, advance, glyph, ascent, gridW, rows, cMin, cMax, kMax, colTopK, colBotK, midRuns, colX, colW };
+      return outline;
+    };
+
+    // Plain box around the name for when the letters can't be traced (two lines on mobile)
+    const buildBoxTrace = (geom, baseY) => {
+      if (geom.typedLen <= 0) return null;
+      const left = snap(geom.contentLeft - wrapPadX);
+      const right = snap(geom.contentRight + wrapPadX) + pixelSize;
+      const top = Math.round(geom.contentTop - wrapPadY);
+      const bot = Math.round(geom.contentBottom + wrapPadY);
+      if (left < 0 || right <= left) return null;
+      return {
+        left, right,
+        top: [[left, baseY], [left, top], [right, top], [right, baseY]],
+        bottom: [[left, baseY], [left, bot], [right, bot], [right, baseY]]
+      };
+    };
+
+    // The part of a polyline between two x positions (segments are all horizontal or vertical)
+    const clipPolyline = (pts, fromX, toX) => {
+      const out = [];
+      for (let i = 0; i < pts.length - 1; i++) {
+        const [x1, y1] = pts[i];
+        const [x2, y2] = pts[i + 1];
+        if (x2 < fromX || x1 > toX) continue;
+        if (x1 === x2) {
+          if (!out.length) out.push([x1, y1]);
+          out.push([x2, y2]);
+        } else {
+          const a = Math.max(x1, fromX);
+          const b = Math.min(x2, toX);
+          if (!out.length || out[out.length - 1][0] !== a || out[out.length - 1][1] !== y1) out.push([a, y1]);
+          out.push([b, y2]);
+        }
+      }
+      return out;
+    };
+
+    const polylineYAt = (pts, x) => {
+      let y = pts[0][1];
+      for (const p of pts) { if (p[0] <= x) y = p[1]; else break; }
+      return y;
+    };
+
     const animate = (currentTime) => {
       // Calculate delta time in seconds
       if (!lastFrameTime) {
@@ -295,27 +423,118 @@ export default function Portfolio() {
 
       // Clear canvas
       ctx.fillStyle = '#0a0118';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, viewW, viewH);
       
       // Draw grid
       ctx.strokeStyle = 'rgba(138, 43, 226, 0.2)';
       ctx.lineWidth = 0.5;
       
-      for (let i = 0; i < canvas.width; i += 50) {
+      for (let i = 0; i < viewW; i += 50) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
+        ctx.lineTo(i, viewH);
         ctx.stroke();
       }
       
-      for (let i = 0; i < canvas.height; i += 50) {
+      for (let i = 0; i < viewH; i += 50) {
         ctx.beginPath();
         ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
+        ctx.lineTo(viewW, i);
         ctx.stroke();
       }
       
-      const centerY = canvas.height / 2 + 30; // Moved down by 30 pixels total
+      // Where the name sits on screen. The canvas is fixed, so viewport coords are canvas coords.
+      let geom = null;
+      const nameEl = nameRef.current;
+      const measureEl = nameMeasureRef.current;
+      if (nameEl && measureEl) {
+        const box = nameEl.getBoundingClientRect();
+        measureRange.selectNodeContents(measureEl);
+        const fullWidth = measureRange.getBoundingClientRect().width;
+        measureRange.selectNodeContents(nameEl);
+        const content = measureRange.getBoundingClientRect();
+        if (box.width > 0 && fullWidth > 0 && content.height > 0) {
+          const centerX = (box.left + box.right) / 2;
+          const style = window.getComputedStyle(nameEl);
+          const fontPx = parseFloat(style.fontSize);
+          const letterSpacing = parseFloat(style.letterSpacing) || 0;
+          const totalWidth = fullWidth + letterSpacing * fullText.length;
+          geom = {
+            contentLeft: content.left,
+            contentRight: content.right,
+            contentTop: content.top,
+            contentBottom: content.bottom,
+            typedLen: nameEl.textContent.replace(/\|/g, '').length,
+            fontPx,
+            advance: fontPx + letterSpacing,
+            singleLine: totalWidth <= box.width,
+            // Where the finished name sits, so the spikes never move
+            finalLeft: snap(centerX - totalWidth / 2 - wrapPadX),
+            finalRight: snap(centerX + totalWidth / 2 + wrapPadX) + pixelSize
+          };
+        }
+      }
+      const fontReady = geom !== null && pixelFontLoaded();
+      const typingDone = geom !== null && geom.typedLen >= fullText.length;
+
+      // The line runs through the letters' middle row. Outline the letters when the name is on one
+      // line and the pixel font is in; otherwise box it.
+      let name = null;
+      if (geom && geom.singleLine && fontReady) {
+        const o = buildOutline(geom.fontPx, geom.advance);
+        if (o) {
+        const domBaseline = Math.round(geom.contentTop + o.ascent);
+        const originX = Math.round(geom.contentLeft);
+        name = {
+          kind: 'outline',
+          o,
+          originX,
+          domBaseline,
+          baseY: domBaseline - MID_ROW * o.glyph - (o.glyph >> 1),
+          left: originX - o.glyph,
+          right: originX + o.colX(o.cMax) + o.glyph
+        };
+        }
+      }
+      if (!name && geom && geom.typedLen > 0) {
+        const mid = Math.round((geom.contentTop + geom.contentBottom) / 2);
+        const box = buildBoxTrace(geom, mid);
+        if (box) name = { kind: 'box', ...box, baseY: mid };
+      }
+      const baseY = name ? name.baseY : snap(viewH / 2 + 30);
+      const zone = geom ? { left: geom.finalLeft, right: geom.finalRight } : null;
+      const inName = (x) => name !== null && x > name.left && x < name.right;
+
+      // Nothing sweeps until the name has typed out and the pixel font is in, so the line never
+      // meets letters that are still moving. Give up waiting after a few seconds regardless.
+      if (!firstFrameTime) firstFrameTime = currentTime;
+      const ready = (typingDone && fontReady) || currentTime - firstFrameTime > 4000;
+      const holdSweep = !isRetracting && xPos < 1 && !ready;
+
+      // Spike offset for a column. Spikes sit at matching distances on both sides of the name.
+      const spikeOffset = (x) => {
+        let m = -1;
+        if (zone) {
+          const fromLeftZone = (zone.left - beatGap) - x;
+          const intoRightZone = x - (zone.right + beatGap);
+          if (fromLeftZone > 0) {
+            const r = fromLeftZone % beatPeriod;
+            if (r > 0 && r <= spikeWidth) m = spikeWidth - r;
+          } else if (intoRightZone >= 0) {
+            const r = intoRightZone % beatPeriod;
+            if (r < spikeWidth) m = r;
+          }
+        } else if (x >= beatGap) {
+          const r = (x - beatGap) % beatPeriod;
+          if (r < spikeWidth) m = r;
+        }
+        return m < 0 ? 0 : spikeShape[Math.floor(m / pixelSize)];
+      };
+
+      const sampleY = (x) => {
+        if (!inName(x)) return baseY + spikeOffset(x);
+        return name.kind === 'box' ? polylineYAt(name.top, x) : baseY;
+      };
 
       // Draw the ECG line - 8-bit pixelated style
       ctx.strokeStyle = '#8B5CF6';
@@ -323,97 +542,109 @@ export default function Portfolio() {
       ctx.shadowBlur = 0; // No glow for 8-bit
       ctx.shadowColor = 'transparent';
       ctx.imageSmoothingEnabled = false; // Pixelated rendering
-      ctx.beginPath();
+
+      // Height of the drawn line at any x, interpolated between its 8px samples, so both ends of the
+      // visible line (the head and the retracting tail) slide smoothly instead of hopping a column
+      const yOnLine = (x) => {
+        const x0 = snap(x);
+        if (x0 === x) return sampleY(x0);
+        const y0 = sampleY(x0);
+        return y0 + (sampleY(x0 + pixelSize) - y0) * ((x - x0) / pixelSize);
+      };
+
+      const strokeSampled = (fromX, toX) => {
+        if (fromX >= toX) return;
+        ctx.beginPath();
+        ctx.moveTo(fromX, yOnLine(fromX));
+        for (let x = snap(fromX) + pixelSize; x < toX; x += pixelSize) ctx.lineTo(x, sampleY(x));
+        ctx.lineTo(toX, yOnLine(toX));
+        ctx.stroke();
+      };
+
+      const strokePolyline = (pts) => {
+        if (pts.length < 2) return;
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+        ctx.stroke();
+      };
+
+      // The letter outline plus the line through its middle row, revealed between two x positions
+      const drawOutline = (nm, fromX, toX) => {
+        const { o, originX, domBaseline } = nm;
+        const g = o.glyph;
+        const x0 = Math.max(fromX, nm.left);
+        const x1 = Math.min(toX, nm.right);
+        if (x1 <= x0) return;
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(x0, 0, x1 - x0, viewH);
+        ctx.clip();
+        ctx.drawImage(outlineCanvas, originX - g, domBaseline - (o.kMax + 1) * g, o.gridW, o.rows * g);
+        ctx.fillStyle = '#8B5CF6';
+        for (const [ca, cb] of o.midRuns) {
+          const xa = originX + o.colX(ca);
+          const xb = originX + o.colX(cb) + o.colW(cb);
+          ctx.fillRect(xa, nm.baseY - (g >> 1), xb - xa, g);
+        }
+        ctx.restore();
+      };
 
       // Only draw the visible portion of the line
       const startX = Math.max(0, Math.floor(trailStart));
       const endX = Math.floor(xPos);
 
-      // Pixel grid size for 8-bit effect
-      const pixelSize = 8;
-
-      if (startX < endX - 1) { // Add small gap to prevent flicker
-        // Snap to pixel grid
-        const snappedStartX = Math.floor(startX / pixelSize) * pixelSize;
-        ctx.moveTo(snappedStartX, centerY);
-
-        // Draw the line from start to current position with pixel steps
-        for (let x = snappedStartX; x <= endX; x += pixelSize) {
-          let y = centerY;
-
-          // Check for heartbeat positions (every 500 pixels)
-          // Shift pattern back by 25 pixels (half grid square) for perfect alignment
-          const beatPosition = (x + 25) % 500;
-
-          // Start spikes at position 100 instead of 0
-          if (beatPosition > 100 && beatPosition < 180) {
-            const progress = (beatPosition - 100) / 80;
-
-            // Simple heartbeat pattern - 8-bit stepped
-            if (progress < 0.25) {
-              // Quick up - stepped
-              y = centerY - Math.floor((progress / 0.25) * 6) * 40;
-            } else if (progress < 0.5) {
-              // Quick down past baseline - stepped
-              y = centerY - 240 + Math.floor(((progress - 0.25) / 0.25) * 7) * 40;
-            } else if (progress < 0.65) {
-              // Small return - stepped
-              y = centerY + 40 - Math.floor(((progress - 0.5) / 0.15) * 1) * 40;
-            } else {
-              // Flat
-              y = centerY;
-            }
-          }
-
-          // Snap Y to pixel grid
-          y = Math.floor(y / pixelSize) * pixelSize;
-
-          ctx.lineTo(x, y);
-        }
-
-        ctx.stroke();
-      }
-      
-      // Draw pixelated square at current position (only when drawing forward)
-      if (!isRetracting && startX < endX) {
-        let currentY = centerY;
-
-        // Use exact same calculation as line drawing
-        const beatPosition = (xPos + 25) % 500;
-
-        if (beatPosition > 100 && beatPosition < 180) {
-          const progress = (beatPosition - 100) / 80;
-
-          // Exact same heartbeat pattern as the line - 8-bit stepped
-          if (progress < 0.25) {
-            currentY = centerY - Math.floor((progress / 0.25) * 6) * 40;
-          } else if (progress < 0.5) {
-            currentY = centerY - 240 + Math.floor(((progress - 0.25) / 0.25) * 7) * 40;
-          } else if (progress < 0.65) {
-            currentY = centerY + 40 - Math.floor(((progress - 0.5) / 0.15) * 1) * 40;
+      if (!holdSweep && startX < endX - 1) { // Add small gap to prevent flicker
+        if (name) {
+          // Baseline up to the name, the outline, then the baseline after it
+          strokeSampled(startX, Math.min(endX, name.left));
+          if (name.kind === 'outline') {
+            drawOutline(name, startX, endX);
           } else {
-            currentY = centerY;
+            strokePolyline(clipPolyline(name.top, startX, endX));
+            strokePolyline(clipPolyline(name.bottom, startX, endX));
           }
+          strokeSampled(Math.max(startX, name.right), endX);
+        } else {
+          strokeSampled(startX, endX);
         }
+      }
 
-        // Snap to pixel grid
-        currentY = Math.floor(currentY / pixelSize) * pixelSize;
-        const snappedX = Math.floor(xPos / pixelSize) * pixelSize;
-
-        // Draw pixelated square instead of circle
+      // Draw pixelated square at current position (only when drawing forward)
+      if (!holdSweep && !isRetracting && startX < endX) {
         ctx.fillStyle = '#06B6D4';
         ctx.shadowBlur = 0;
-        ctx.fillRect(snappedX - 6, currentY - 6, 12, 12);
+        if (name && xPos > name.left && xPos < name.right) {
+          if (name.kind === 'outline') {
+            // Two heads riding the top and bottom of the outline; they meet on the line in the gaps
+            const { o, originX, domBaseline } = name;
+            const rel = endX - originX;
+            const ci = Math.floor(rel / o.advance);
+            const within = Math.min(7, Math.max(0, Math.floor((rel - ci * o.advance) / o.glyph)));
+            const i = (rel < 0 ? -1 : ci * 8 + within) - o.cMin;
+            if (i >= 0 && i < o.cols && o.colTopK[i] > -100) {
+              for (const k of [o.colTopK[i], o.colBotK[i]]) {
+                ctx.fillRect(endX - 6, domBaseline - k * o.glyph - (o.glyph >> 1) - 6, 12, 12);
+              }
+            } else {
+              ctx.fillRect(endX - 6, baseY - 6, 12, 12);
+            }
+          } else {
+            for (const pts of [name.top, name.bottom]) ctx.fillRect(endX - 6, polylineYAt(pts, endX) - 6, 12, 12);
+          }
+        } else {
+          ctx.fillRect(endX - 6, Math.round(yOnLine(endX)) - 6, 12, 12);
+        }
       }
       
       // Update position based on current phase and delta time
       // Using fixed pixels per second for consistent visual speed
       if (!isRetracting) {
         // Moving forward
-        xPos += pixelsPerSecond * deltaTime;
+        if (!holdSweep) xPos += pixelsPerSecond * deltaTime;
 
         // When we reach the end, start retracting
-        if (xPos > canvas.width) {
+        if (xPos > viewW) {
           isRetracting = true;
         }
       } else {
@@ -423,19 +654,7 @@ export default function Portfolio() {
 
         // Create binary particles at the retracting edge
         if (Math.random() < 0.3) { // 30% chance each frame
-          // Get the Y position at the current trail start
-          let particleY = centerY;
-          const beatPos = (trailStart + 25) % 500;
-          if (beatPos > 100 && beatPos < 180) {
-            const progress = (beatPos - 100) / 80;
-            if (progress < 0.3) {
-              particleY = centerY - (progress / 0.3) * 250;
-            } else if (progress < 0.5) {
-              particleY = centerY - 250 + ((progress - 0.3) / 0.2) * 280;
-            } else if (progress < 0.6) {
-              particleY = centerY + 30 - ((progress - 0.5) / 0.1) * 30;
-            }
-          }
+          const particleY = sampleY(snap(trailStart));
 
           // Add some randomness to particle spawn position
           binaryParticles.push(new BinaryParticle(
@@ -445,7 +664,7 @@ export default function Portfolio() {
         }
 
         // When fully retracted, reset for next cycle with smooth transition
-        if (trailStart >= xPos - 10) { // Start reset slightly before to avoid jump
+        if (trailStart >= xPos - 2) { // The tail has caught the head
           xPos = 0;
           trailStart = 0;
           isRetracting = false;
@@ -467,8 +686,7 @@ export default function Portfolio() {
     let rafId = requestAnimationFrame(animate);
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      sizeCanvas();
     };
 
     window.addEventListener('resize', handleResize);
@@ -503,8 +721,7 @@ export default function Portfolio() {
 
   const navItems = [
     { name: 'Experience', href: '#experience', isExternal: false },
-    { name: 'Projects', href: '#projects', isExternal: false },
-    { name: 'Skills', href: '#skills', isExternal: false }
+    { name: 'Projects', href: '#projects', isExternal: false }
   ];
 
   // Component for reactive skill items
@@ -1184,105 +1401,6 @@ export default function Portfolio() {
           animation: pulse 1s ease-in-out infinite;
         }
 
-        .skill-item {
-          position: relative;
-          overflow: visible;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          box-sizing: border-box;
-          padding: 12px 16px;
-          white-space: nowrap;
-          border: 3px solid #8B5CF6 !important;
-          box-shadow: 4px 4px 0px rgba(139, 92, 246, 0.3);
-          font-family: 'Press Start 2P', cursive !important;
-          font-size: 12px !important;
-        }
-
-        .skill-item {
-          transition: transform 0.1s step-end, opacity 0.1s step-end, z-index 0s;
-          position: relative;
-          z-index: 0;
-          transform-origin: center;
-          will-change: transform;
-        }
-
-        .skill-item:hover {
-          transform: translate(-2px, -2px) !important;
-          box-shadow: 6px 6px 0px rgba(139, 92, 246, 0.5) !important;
-          border-color: #06B6D4 !important;
-        }
-
-        .skill-tooltip {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        .skill-item:hover .skill-tooltip {
-          opacity: 1;
-          visibility: visible;
-        }
-
-        .skill-item .gradient-sweep {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(90deg,
-            transparent 0%, 
-            #8B5CF6 25%, 
-            #06B6D4 50%, 
-            #10B981 75%, 
-            transparent 100%
-          );
-          background-size: 300% 100%;
-          background-position: -150% 0;
-          transition: background-position 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
-          opacity: 0;
-        }
-        
-        .skill-item.hovering .gradient-sweep {
-          opacity: 1;
-        }
-        
-        .skill-item:hover .gradient-sweep {
-          background-position: 100% 0 !important;
-          opacity: 1 !important;
-        }
-
-        .skills-groups {
-          display: flex;
-          flex-direction: column;
-          gap: 44px;
-        }
-
-        .skill-group-header {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 14px;
-          margin-bottom: 18px;
-          font-family: 'Press Start 2P', cursive;
-          font-size: 13px;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-
-        .skill-group-bullet {
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
-          flex-shrink: 0;
-        }
-
-        .skills-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-          gap: 14px 16px;
-        }
-
         .pixel-divider {
           height: 11px;
           width: 100%;
@@ -1304,46 +1422,6 @@ export default function Portfolio() {
         @media (prefers-reduced-motion: reduce) {
           .pixel-divider {
             animation: none;
-          }
-        }
-
-        @media (max-width: 1023px) {
-          .skills-groups {
-            gap: 36px;
-          }
-
-          .skill-group-header {
-            font-size: 11px;
-          }
-
-          .skills-grid {
-            gap: 12px 14px;
-          }
-
-          .skill-item {
-            font-size: 11px !important;
-            padding: 10px 14px;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .skills-groups {
-            gap: 30px;
-          }
-
-          .skill-group-header {
-            font-size: 10px;
-            gap: 10px;
-          }
-
-          .skills-grid {
-            gap: 10px 12px;
-          }
-
-          .skill-item {
-            font-size: 10px !important;
-            padding: 9px 12px;
-            box-shadow: 3px 3px 0px rgba(139, 92, 246, 0.3);
           }
         }
 
@@ -2013,7 +2091,7 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <h1 style={{
+          <h1 ref={nameRef} style={{
             fontSize: windowWidth > 768 ? '48px' : '32px',
             fontWeight: '600',
             marginBottom: '16px',
@@ -2031,6 +2109,15 @@ export default function Portfolio() {
               }}>|</span>
             )}
           </h1>
+          {/* Hidden copy of the full name so the ECG line can measure where the letters will sit */}
+          <span ref={nameMeasureRef} aria-hidden="true" style={{
+            position: 'absolute',
+            visibility: 'hidden',
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+            fontSize: windowWidth > 768 ? '48px' : '32px',
+            fontWeight: '600'
+          }}>{fullText}</span>
           
           <p className="hero-description" style={{
             fontSize: windowWidth > 768 ? '18px' : '14px',
@@ -2056,7 +2143,7 @@ export default function Portfolio() {
                 });
               }}
               style={{
-                fontSize: '24px',
+                fontSize: windowWidth > 768 ? '40px' : '32px',
                 color: '#8B5CF6',
                 animation: 'float 2s ease-in-out infinite',
                 background: 'transparent',
@@ -2149,11 +2236,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     right: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#1BA8E1',
                     color: '#000',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #005C95'
                   }}>
@@ -2373,11 +2461,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     left: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#C9954A',
                     color: '#000',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #8A6230'
                   }}>
@@ -2602,11 +2691,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     right: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#FFD700',
                     color: '#000',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #B8860B'
                   }}>
@@ -2861,11 +2951,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     left: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#EF4444',
                     color: '#fff',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #991B1B'
                   }}>
@@ -3126,11 +3217,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     right: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#8B5CF6',
                     color: '#fff',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #4C1D95'
                   }}>
@@ -3331,11 +3423,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     left: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#10B981',
                     color: '#fff',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #065F46'
                   }}>
@@ -3530,11 +3623,12 @@ export default function Portfolio() {
                   <div style={{
                     position: 'absolute',
                     right: '52%',
-                    top: '20px',
+                    top: '34px',
+                    transform: 'translateY(-50%)',
                     background: '#F59E0B',
                     color: '#fff',
-                    padding: '8px 16px',
-                    fontSize: '10px',
+                    padding: '10px 20px',
+                    fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
                     boxShadow: '4px 4px 0px #92400E'
                   }}>
@@ -3751,7 +3845,7 @@ export default function Portfolio() {
               Education
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'grid', gridAutoRows: '1fr', gap: '20px' }}>
               <div
                 className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-1') ? 'visible' : ''}`}
                 data-animate-id="edu-card-1"
@@ -3762,6 +3856,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.1s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -3787,7 +3884,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Bachelor's Degree in Health Informatics
@@ -3805,7 +3902,11 @@ export default function Portfolio() {
                       backgroundColor: 'rgba(16, 185, 129, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
-                      fontWeight: '600'
+                      fontWeight: '600',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Jan 2024 - Present
                     </span>
@@ -3823,6 +3924,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.2s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -3848,7 +3952,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Associate's Degree in General Studies
@@ -3862,7 +3966,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Aug 2021 - Aug 2023
                     </span>
@@ -3880,6 +3988,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.3s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -3905,7 +4016,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         High School Diploma
@@ -3919,7 +4030,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Aug 2017 - May 2021
                     </span>
@@ -3942,7 +4057,7 @@ export default function Portfolio() {
               Licenses & Certifications
             </h3>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ display: 'grid', gridAutoRows: '1fr', gap: '20px' }}>
               <div
                 className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-1') ? 'visible' : ''}`}
                 data-animate-id="cert-card-1"
@@ -3953,6 +4068,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.1s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -3978,7 +4096,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Certified Associate in Healthcare Information and Management Systems (CAHIMS)
@@ -3992,7 +4110,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Jun 2026
                     </span>
@@ -4010,6 +4132,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.2s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -4035,7 +4160,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Introduction to Clinical Data
@@ -4052,7 +4177,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Sep 2025
                     </span>
@@ -4070,6 +4199,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.3s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -4095,7 +4227,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Introduction to Healthcare
@@ -4112,7 +4244,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Jul 2025
                     </span>
@@ -4130,6 +4266,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.4s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -4155,7 +4294,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Fundamentals of Machine Learning for Healthcare
@@ -4172,7 +4311,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Jan 2026
                     </span>
@@ -4190,6 +4333,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.5s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -4215,7 +4361,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         The Social and Technical Context of Health Informatics
@@ -4232,7 +4378,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Oct 2025
                     </span>
@@ -4250,6 +4400,9 @@ export default function Portfolio() {
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(139, 92, 246, 0.1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
                   '--stagger-delay': '0.6s'
                 }}>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
@@ -4275,7 +4428,7 @@ export default function Portfolio() {
                       }}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Evaluations of AI Applications in Healthcare
@@ -4292,7 +4445,11 @@ export default function Portfolio() {
                       color: '#94a3b8',
                       backgroundColor: 'rgba(139, 92, 246, 0.1)',
                       padding: '4px 12px',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                      minWidth: '19ch',
+                      textAlign: 'center',
                     }}>
                       Issued Mar 2026
                     </span>
@@ -5132,8 +5289,8 @@ export default function Portfolio() {
         '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
       }} />
 
-      {/* Skills Section */}
-      <section id="skills" className="section-padding" style={{
+      {/* GitHub Activity Section */}
+      <section id="github" className="section-padding" style={{
         padding: windowWidth > 768 ? '140px 48px 120px' : '80px 24px 60px',
         background: 'linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.05) 10%, rgba(16, 185, 129, 0.05) 90%, transparent 100%)',
         position: 'relative',
@@ -5142,168 +5299,6 @@ export default function Portfolio() {
         marginBottom: '60px'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2
-            className={`section-header ${visibleElements.has('skills-header') ? 'visible' : ''}`}
-            data-animate-id="skills-header"
-            style={{
-              fontSize: windowWidth > 768 ? '36px' : '28px',
-              fontWeight: '600',
-              marginBottom: windowWidth > 768 ? '60px' : '40px',
-              textAlign: 'center'
-            }}>
-            Skills
-          </h2>
-
-          <div className="skills-groups" style={{
-            maxWidth: '1000px',
-            margin: '0 auto',
-            padding: '40px',
-            position: 'relative',
-            transformStyle: 'preserve-3d',
-            perspective: '1000px'
-          }}>
-            {[
-              {
-                title: 'Health Informatics',
-                accent: '#34D399',
-                offset: 0,
-                skills: [
-                  { name: 'ICD-10', desc: 'International Classification of Diseases' },
-                  { name: 'CPT', desc: 'Current Procedural Terminology codes' },
-                  { name: 'HCPCS', desc: 'Healthcare Common Procedure Coding System' },
-                  { name: 'SNOMED', desc: 'Systematized medical terminology' },
-                  { name: 'HL7', desc: 'Health Level Seven messaging standard' },
-                  { name: 'FHIR', desc: 'Fast Healthcare Interoperability Resources' }
-                ]
-              },
-              {
-                title: 'Web & Full-Stack',
-                accent: '#22D3EE',
-                offset: 6,
-                skills: [
-                  { name: 'JavaScript', desc: 'Web programming language' },
-                  { name: 'React', desc: 'JavaScript library for building UIs' },
-                  { name: 'Next.js', desc: 'React framework for production apps' },
-                  { name: 'Tailwind CSS', desc: 'Utility-first CSS framework' },
-                  { name: 'Vercel', desc: 'Cloud platform for frontend deployment' },
-                  { name: 'Render', desc: 'Cloud application hosting platform' }
-                ]
-              },
-              {
-                title: 'Data & ML',
-                accent: '#A78BFA',
-                offset: 12,
-                skills: [
-                  { name: 'Python', desc: 'General-purpose programming language' },
-                  { name: 'pandas', desc: 'Python data analysis library' },
-                  { name: 'OpenCV', desc: 'Computer vision library' },
-                  { name: 'MediaPipe', desc: 'ML framework for media processing' },
-                  { name: 'Streamlit', desc: 'Python framework for data apps' },
-                  { name: 'Tableau', desc: 'Data visualization platform' },
-                  { name: 'MySQL', desc: 'Relational database management system' },
-                  { name: 'SQLite', desc: 'Lightweight embedded database' }
-                ]
-              },
-              {
-                title: 'Game Dev & Graphics',
-                accent: '#FBBF24',
-                offset: 20,
-                skills: [
-                  { name: 'Godot', desc: 'Open-source game engine' },
-                  { name: 'GDScript', desc: 'Godot game engine scripting language' },
-                  { name: 'Pygame', desc: 'Python library for game development' },
-                  { name: 'ThreeJS', desc: '3D graphics library for the web' },
-                  { name: 'OpenGL', desc: 'Cross-platform graphics rendering API' },
-                  { name: 'GLSL', desc: 'OpenGL shading language for graphics' }
-                ]
-              },
-              {
-                title: 'Tools & Systems',
-                accent: '#E2E8F0',
-                offset: 26,
-                skills: [
-                  { name: 'Git', desc: 'Version control system' },
-                  { name: 'Linux', desc: 'Open-source operating system' },
-                  { name: 'Docker', desc: 'Containerization and deployment platform' },
-                  { name: 'PyCharm', desc: 'Python IDE by JetBrains' }
-                ]
-              }
-            ].map((cat, catIndex) => (
-              <div
-                key={cat.title}
-                className="skill-group"
-                style={{ animation: `fadeInUp 0.6s ease-out ${catIndex * 0.08}s both` }}
-              >
-                <div className="skill-group-header" style={{ color: cat.accent }}>
-                  <span className="skill-group-bullet" style={{ background: cat.accent }} />
-                  {cat.title}
-                  <span className="skill-group-bullet" style={{ background: cat.accent }} />
-                </div>
-                <div className="skills-grid">
-                  {cat.skills.map((skill, i) => (
-              <span
-                key={skill.name}
-                className="skill-item"
-                data-index={cat.offset + i}
-                style={{
-                  cursor: 'pointer',
-                  color: '#ffffff',
-                  opacity: 0.7,
-                  animation: `fadeInUp 0.6s ease-out ${(cat.offset + i) * 0.03}s both`
-                }}
-              >
-                <span style={{
-                  position: 'relative',
-                  zIndex: 2,
-                  display: 'inline-block'
-                }}>
-                  {skill.name}
-                </span>
-                <span
-                  className="gradient-sweep"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    pointerEvents: 'none',
-                    zIndex: 3
-                  }}
-                  data-text={skill.name}
-                >
-                  {skill.name}
-                </span>
-                {/* Tooltip */}
-                <span className="skill-tooltip" style={{
-                  position: 'absolute',
-                  bottom: '100%',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  marginBottom: '8px',
-                  padding: '8px 12px',
-                  background: 'rgba(15, 23, 42, 0.95)',
-                  border: '1px solid rgba(139, 92, 246, 0.3)',
-                  borderRadius: '8px',
-                  fontSize: '12px',
-                  color: '#94a3b8',
-                  whiteSpace: 'nowrap',
-                  transition: 'opacity 0.2s, visibility 0.2s',
-                  zIndex: 100,
-                  pointerEvents: 'none'
-                }}>
-                  {skill.desc}
-                </span>
-              </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
           <GitHubContributionGraph username="CodingWithKantecki" />
         </div>
       </section>
@@ -5452,7 +5447,11 @@ export default function Portfolio() {
           color: '#94a3b8',
           opacity: 0.8
         }}>
-          Made with <span style={{ color: '#A855F7' }}>♥</span> by Thomas
+          Made with{' '}
+          <svg role="img" aria-label="love" width="14" height="12" viewBox="0 0 7 6" shapeRendering="crispEdges" style={{ display: 'inline-block', verticalAlign: 'baseline' }}>
+            <path fill="#A855F7" d="M1 0h2v1H1zM4 0h2v1H4zM0 1h7v2H0zM1 3h5v1H1zM2 4h3v1H2zM3 5h1v1H3z" />
+          </svg>
+          {' '}by Thomas
         </p>
       </footer>
     </>
