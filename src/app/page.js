@@ -2424,7 +2424,7 @@ export default function Portfolio() {
                           gap: '8px',
                           marginBottom: '20px'
                         }}>
-                          {['Snowflake', 'SQL', 'Healthcare Data'].map(skill => (
+                          {['Snowflake', 'Microsoft Fabric', 'Power BI', 'SQL', 'Healthcare Data'].map(skill => (
                             <span key={skill} style={{
                               fontSize: '11px',
                               padding: '5px 12px',
