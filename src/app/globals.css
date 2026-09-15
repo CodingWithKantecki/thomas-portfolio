@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0118;
+  --background: #020617;
   --foreground: #ffffff;
 }
 
@@ -24,7 +24,7 @@ html {
 }
 
 body {
-  background: #0a0118;
+  background: #020617;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
@@ -52,16 +52,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0118;
+  background: #020617;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #8B5CF6;
+  background: #3B82F6;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7C3AED;
+  background: #2563EB;
 }
 
 /* Smooth transitions for theme changes */

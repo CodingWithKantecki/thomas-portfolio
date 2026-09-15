@@ -181,9 +181,9 @@ export default function Portfolio() {
       gridCanvas.width = Math.round(w * dpr);
       gridCanvas.height = Math.round(h * dpr);
       gridCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      gridCtx.fillStyle = '#0a0118';
+      gridCtx.fillStyle = '#020617';
       gridCtx.fillRect(0, 0, w, h);
-      gridCtx.strokeStyle = 'rgba(138, 43, 226, 0.2)';
+      gridCtx.strokeStyle = 'rgba(59, 130, 246, 0.14)';
       gridCtx.lineWidth = 0.5;
       for (let i = 0; i < w; i += 50) {
         gridCtx.beginPath();
@@ -245,11 +245,11 @@ export default function Portfolio() {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         ctx.font = `${this.size}px monospace`;
-        ctx.fillStyle = '#8B5CF6';
+        ctx.fillStyle = '#3B82F6';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.shadowBlur = 10;
-        ctx.shadowColor = '#8B5CF6';
+        ctx.shadowColor = '#3B82F6';
         ctx.fillText(this.value, 0, 0);
         ctx.restore();
       }
@@ -391,7 +391,7 @@ export default function Portfolio() {
       outlineCanvas.height = Math.round(rows * glyph * dpr);
       outlineCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
       outlineCtx.clearRect(0, 0, gridW, rows * glyph);
-      outlineCtx.fillStyle = '#8B5CF6';
+      outlineCtx.fillStyle = '#3B82F6';
       for (let k = kMin; k <= kMax; k++) {
         for (let c = cMin; c <= cMax; c++) {
           if (ring[at(k, c)]) outlineCtx.fillRect(colX(c) + glyph, (kMax - k) * glyph, colW(c), glyph);
@@ -550,7 +550,7 @@ export default function Portfolio() {
       };
 
       // Draw the ECG line - 8-bit pixelated style
-      ctx.strokeStyle = '#8B5CF6';
+      ctx.strokeStyle = '#3B82F6';
       ctx.lineWidth = 6; // Chunky pixel line
       ctx.shadowBlur = 0; // No glow for 8-bit
       ctx.shadowColor = 'transparent';
@@ -594,7 +594,7 @@ export default function Portfolio() {
         ctx.rect(x0, 0, x1 - x0, viewH);
         ctx.clip();
         ctx.drawImage(outlineCanvas, originX - g, domBaseline - (o.kMax + 1) * g, o.gridW, o.rows * g);
-        ctx.fillStyle = '#8B5CF6';
+        ctx.fillStyle = '#3B82F6';
         for (const [ca, cb] of o.midRuns) {
           const xa = originX + o.colX(ca);
           const xb = originX + o.colX(cb) + o.colW(cb);
@@ -625,7 +625,7 @@ export default function Portfolio() {
 
       // Draw pixelated square at current position (only when drawing forward)
       if (!holdSweep && !isRetracting && startX < endX) {
-        ctx.fillStyle = '#06B6D4';
+        ctx.fillStyle = '#22D3EE';
         ctx.shadowBlur = 0;
         if (name && xPos > name.left && xPos < name.right) {
           if (name.kind === 'outline') {
@@ -798,7 +798,7 @@ export default function Portfolio() {
 
     // Apply gradient or white color
     if (isNear) {
-      style.background = 'linear-gradient(90deg, #8B5CF6 0%, #06B6D4 50%, #10B981 100%)';
+      style.background = 'linear-gradient(90deg, #3B82F6 0%, #22D3EE 50%, #10B981 100%)';
       style.WebkitBackgroundClip = 'text';
       style.backgroundClip = 'text';
       style.WebkitTextFillColor = 'transparent';
@@ -830,7 +830,7 @@ export default function Portfolio() {
 
         html, body {
           font-family: 'VT323', monospace;
-          background: #0a0118;
+          background: #020617;
           color: #ffffff;
           overflow-x: hidden;
           max-width: 100vw;
@@ -840,46 +840,46 @@ export default function Portfolio() {
         /* 8-bit Scrollbar */
         ::-webkit-scrollbar {
           width: 16px;
-          background: #1e1e3f;
+          background: #172554;
         }
 
         ::-webkit-scrollbar-track {
-          background: #1e1e3f;
-          border-left: 4px solid #0a0118;
-          border-right: 4px solid #0a0118;
+          background: #172554;
+          border-left: 4px solid #020617;
+          border-right: 4px solid #020617;
         }
 
         ::-webkit-scrollbar-thumb {
-          background: #8B5CF6;
-          border: 4px solid #1e1e3f;
+          background: #3B82F6;
+          border: 4px solid #172554;
           box-shadow:
-            inset -2px -2px 0px #4C1D95,
-            inset 2px 2px 0px #A78BFA;
+            inset -2px -2px 0px #1E3A8A,
+            inset 2px 2px 0px #93C5FD;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-          background: #A78BFA;
+          background: #93C5FD;
         }
 
         ::-webkit-scrollbar-button:single-button {
-          background: #8B5CF6;
+          background: #3B82F6;
           height: 16px;
           display: block;
         }
 
         ::-webkit-scrollbar-button:single-button:vertical:decrement {
-          background: #8B5CF6;
-          border-left: 4px solid #1e1e3f;
-          border-right: 4px solid #1e1e3f;
+          background: #3B82F6;
+          border-left: 4px solid #172554;
+          border-right: 4px solid #172554;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23ffffff' d='M4 2L1 5h6z'/%3E%3C/svg%3E");
           background-repeat: no-repeat;
           background-position: center;
         }
 
         ::-webkit-scrollbar-button:single-button:vertical:increment {
-          background: #8B5CF6;
-          border-left: 4px solid #1e1e3f;
-          border-right: 4px solid #1e1e3f;
+          background: #3B82F6;
+          border-left: 4px solid #172554;
+          border-right: 4px solid #172554;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23ffffff' d='M4 6L1 3h6z'/%3E%3C/svg%3E");
           background-repeat: no-repeat;
           background-position: center;
@@ -888,7 +888,7 @@ export default function Portfolio() {
         /* Firefox scrollbar */
         * {
           scrollbar-width: auto;
-          scrollbar-color: #8B5CF6 #1e1e3f;
+          scrollbar-color: #3B82F6 #172554;
         }
 
         /* 8-bit headings */
@@ -927,7 +927,7 @@ export default function Portfolio() {
         /* Pixel border style */
         .pixel-border {
           border: 4px solid;
-          border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect x='0' y='0' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='4' y='0' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='0' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='0' y='4' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='4' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='0' y='8' width='4' height='4' fill='%238B5CF6'/%3E%3Crect x='4' y='8' width='4' height='4' fill='%2306B6D4'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%238B5CF6'/%3E%3C/svg%3E") 4 stretch;
+          border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Crect x='0' y='0' width='4' height='4' fill='%233B82F6'/%3E%3Crect x='4' y='0' width='4' height='4' fill='%2322D3EE'/%3E%3Crect x='8' y='0' width='4' height='4' fill='%233B82F6'/%3E%3Crect x='0' y='4' width='4' height='4' fill='%2322D3EE'/%3E%3Crect x='8' y='4' width='4' height='4' fill='%2322D3EE'/%3E%3Crect x='0' y='8' width='4' height='4' fill='%233B82F6'/%3E%3Crect x='4' y='8' width='4' height='4' fill='%2322D3EE'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%233B82F6'/%3E%3C/svg%3E") 4 stretch;
         }
 
         /* 8-bit button style */
@@ -935,11 +935,11 @@ export default function Portfolio() {
           font-family: 'Press Start 2P', cursive;
           font-size: 12px;
           padding: 12px 24px;
-          background: #8B5CF6;
+          background: #3B82F6;
           color: #fff;
           border: none;
           box-shadow:
-            4px 4px 0px #4C1D95,
+            4px 4px 0px #1E3A8A,
             inset -2px -2px 0px rgba(0,0,0,0.3),
             inset 2px 2px 0px rgba(255,255,255,0.2);
           cursor: pointer;
@@ -950,7 +950,7 @@ export default function Portfolio() {
         .pixel-btn:hover {
           transform: translate(2px, 2px);
           box-shadow:
-            2px 2px 0px #4C1D95,
+            2px 2px 0px #1E3A8A,
             inset -2px -2px 0px rgba(0,0,0,0.3),
             inset 2px 2px 0px rgba(255,255,255,0.2);
         }
@@ -958,7 +958,7 @@ export default function Portfolio() {
         .pixel-btn:active {
           transform: translate(4px, 4px);
           box-shadow:
-            0px 0px 0px #4C1D95,
+            0px 0px 0px #1E3A8A,
             inset -2px -2px 0px rgba(0,0,0,0.3),
             inset 2px 2px 0px rgba(255,255,255,0.2);
         }
@@ -966,10 +966,10 @@ export default function Portfolio() {
         /* Pixel card style */
         .pixel-card {
           background: rgba(30, 41, 59, 0.95);
-          border: 4px solid #8B5CF6;
+          border: 4px solid #3B82F6;
           box-shadow:
-            8px 8px 0px rgba(139, 92, 246, 0.3),
-            inset 0 0 20px rgba(139, 92, 246, 0.1);
+            8px 8px 0px rgba(59, 130, 246, 0.3),
+            inset 0 0 20px rgba(59, 130, 246, 0.1);
         }
 
         /* Blinking cursor for retro feel */
@@ -1101,12 +1101,12 @@ export default function Portfolio() {
           50% {
             opacity: 1;
             filter: blur(20px);
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
           }
           100% {
             opacity: 0;
             filter: blur(15px);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0);
           }
         }
 
@@ -1198,7 +1198,7 @@ export default function Portfolio() {
           display: block;
           width: 25px;
           height: 2px;
-          background: #8B5CF6;
+          background: #3B82F6;
           margin: 5px auto;
           transition: all 0.3s;
         }
@@ -1236,7 +1236,7 @@ export default function Portfolio() {
             right: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(10, 1, 24, 0.98);
+            background: rgba(2, 6, 23, 0.98);
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -1458,15 +1458,15 @@ export default function Portfolio() {
                       box-shadow 0.1s step-end !important;
           will-change: transform;
           backface-visibility: hidden;
-          border: 6px solid #8B5CF6 !important;
+          border: 6px solid #3B82F6 !important;
           border-radius: 0 !important;
-          box-shadow: 8px 8px 0px #4C1D95;
+          box-shadow: 8px 8px 0px #1E3A8A;
         }
 
         .hover-card:hover {
           transform: translate(-4px, -4px) !important;
-          box-shadow: 12px 12px 0px #4C1D95;
-          border-color: #06B6D4 !important;
+          box-shadow: 12px 12px 0px #1E3A8A;
+          border-color: #22D3EE !important;
         }
 
         /* Remove all border radius for 8-bit look */
@@ -1502,7 +1502,7 @@ export default function Portfolio() {
           background: `
             linear-gradient(
               -45deg, 
-              rgba(139, 92, 246, ${scrollProgress * 0.1}),
+              rgba(59, 130, 246, ${scrollProgress * 0.1}),
               rgba(6, 182, 212, ${scrollProgress * 0.1}),
               rgba(249, 115, 22, ${scrollProgress * 0.1}),
               rgba(236, 72, 153, ${scrollProgress * 0.1})
@@ -1535,7 +1535,7 @@ export default function Portfolio() {
           left: '10%',
           width: '300px',
           height: '300px',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
           filter: 'blur(40px)',
           animation: 'float 8s ease-in-out infinite'
         }} />
@@ -1592,7 +1592,7 @@ export default function Portfolio() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        background: 'linear-gradient(to bottom, rgba(10, 1, 24, 0.9) 0%, transparent 100%)',
+        background: 'linear-gradient(to bottom, rgba(2, 6, 23, 0.9) 0%, transparent 100%)',
         opacity: mounted ? 1 : 0,
         transition: 'opacity 0.15s ease-in'
       }}>
@@ -1600,7 +1600,7 @@ export default function Portfolio() {
           fontSize: windowWidth > 768 ? '16px' : '12px',
           fontWeight: '600',
           fontFamily: "'Press Start 2P', cursive",
-          color: '#8B5CF6',
+          color: '#3B82F6',
           textShadow: '2px 2px 0px #000',
           transform: `translateX(-${logoSlideProgress * 150}%)`,
           opacity: 1 - (logoSlideProgress * 0.5),
@@ -1671,10 +1671,10 @@ export default function Portfolio() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'rgba(10, 1, 24, 0.95)',
-            borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
-            borderTop: '2px solid rgba(139, 92, 246, 0.3)',
-            borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
+            background: 'rgba(2, 6, 23, 0.95)',
+            borderLeft: '2px solid rgba(59, 130, 246, 0.3)',
+            borderTop: '2px solid rgba(59, 130, 246, 0.3)',
+            borderBottom: '2px solid rgba(59, 130, 246, 0.3)',
             borderTopLeftRadius: '12px',
             borderBottomLeftRadius: '12px',
             transition: 'opacity 0.3s ease, border-color 0.3s ease',
@@ -1691,7 +1691,7 @@ export default function Portfolio() {
               width="24"
               height="24"
               fill="none"
-              stroke="#8B5CF6"
+              stroke="#3B82F6"
               strokeWidth="2"
               viewBox="0 0 24 24"
               style={{
@@ -1714,7 +1714,7 @@ export default function Portfolio() {
               height: '45px',
               borderTopLeftRadius: '12px',
               borderBottomLeftRadius: '12px',
-              background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.6), transparent)',
+              background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.6), transparent)',
               filter: 'blur(15px)',
               opacity: 0,
               pointerEvents: 'none',
@@ -1730,16 +1730,16 @@ export default function Portfolio() {
               top: '32px',
               right: '-220px',
               width: '220px',
-              background: 'linear-gradient(135deg, rgba(10, 1, 24, 0.98) 0%, rgba(30, 20, 50, 0.98) 100%)',
+              background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              borderLeft: '2px solid rgba(139, 92, 246, 0.3)',
-              borderTop: '2px solid rgba(139, 92, 246, 0.3)',
-              borderBottom: '2px solid rgba(139, 92, 246, 0.3)',
+              borderLeft: '2px solid rgba(59, 130, 246, 0.3)',
+              borderTop: '2px solid rgba(59, 130, 246, 0.3)',
+              borderBottom: '2px solid rgba(59, 130, 246, 0.3)',
               borderTopLeftRadius: '16px',
               borderBottomLeftRadius: '16px',
               padding: '20px 20px 20px 30px',
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '-10px 0 40px rgba(139, 92, 246, 0.2)',
+              boxShadow: '-10px 0 40px rgba(59, 130, 246, 0.2)',
               zIndex: 998
             }}
           >
@@ -1751,7 +1751,7 @@ export default function Portfolio() {
               gap: '12px',
               marginBottom: '16px',
               paddingBottom: '16px',
-              borderBottom: '1px solid rgba(139, 92, 246, 0.1)'
+              borderBottom: '1px solid rgba(59, 130, 246, 0.1)'
             }}>
               {navItems.map(item => {
                 const isActive = currentSection === item.href.slice(1);
@@ -1772,12 +1772,12 @@ export default function Portfolio() {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '10px',
-                      background: isActive ? 'rgba(139, 92, 246, 0.1)' : 'transparent'
+                      background: isActive ? 'rgba(59, 130, 246, 0.1)' : 'transparent'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.opacity = '1';
                       if (!isActive) {
-                        e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
+                        e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -1792,7 +1792,7 @@ export default function Portfolio() {
                       width: '6px',
                       height: '6px',
                       borderRadius: '50%',
-                      background: isActive ? '#8B5CF6' : 'transparent',
+                      background: isActive ? '#3B82F6' : 'transparent',
                       transition: 'all 0.3s'
                     }} />
                     {item.name}
@@ -1899,7 +1899,7 @@ export default function Portfolio() {
                     width: '6px',
                     height: '6px',
                     borderRadius: '50%',
-                    background: isActive ? '#8B5CF6' : 'transparent',
+                    background: isActive ? '#3B82F6' : 'transparent',
                     transition: 'all 0.3s'
                   }} />
                   {item.name}
@@ -2024,7 +2024,7 @@ export default function Portfolio() {
                   y1={45 + i * 30}
                   x2="210"
                   y2={45 + i * 30}
-                  stroke="#8B5CF6"
+                  stroke="#3B82F6"
                   strokeWidth="0.5"
                   opacity="0"
                   style={{
@@ -2037,7 +2037,7 @@ export default function Portfolio() {
               {/* Corner brackets */}
               <path
                 d="M 30 30 L 30 50 M 30 30 L 50 30"
-                stroke="#3B82F6"
+                stroke="#22D3EE"
                 strokeWidth="2"
                 strokeDasharray="40"
                 strokeDashoffset="40"
@@ -2048,7 +2048,7 @@ export default function Portfolio() {
               />
               <path
                 d="M 190 30 L 190 50 M 190 30 L 170 30"
-                stroke="#3B82F6"
+                stroke="#22D3EE"
                 strokeWidth="2"
                 strokeDasharray="40"
                 strokeDashoffset="40"
@@ -2059,7 +2059,7 @@ export default function Portfolio() {
               />
               <path
                 d="M 30 190 L 30 170 M 30 190 L 50 190"
-                stroke="#3B82F6"
+                stroke="#22D3EE"
                 strokeWidth="2"
                 strokeDasharray="40"
                 strokeDashoffset="40"
@@ -2070,7 +2070,7 @@ export default function Portfolio() {
               />
               <path
                 d="M 190 190 L 190 170 M 190 190 L 170 190"
-                stroke="#3B82F6"
+                stroke="#22D3EE"
                 strokeWidth="2"
                 strokeDasharray="40"
                 strokeDashoffset="40"
@@ -2082,8 +2082,8 @@ export default function Portfolio() {
 
               <defs>
                 <linearGradient id="wireframeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#8B5CF6', stopOpacity: 1}} />
-                  <stop offset="100%" style={{stopColor: '#3B82F6', stopOpacity: 1}} />
+                  <stop offset="0%" style={{stopColor: '#3B82F6', stopOpacity: 1}} />
+                  <stop offset="100%" style={{stopColor: '#22D3EE', stopOpacity: 1}} />
                 </linearGradient>
               </defs>
             </svg>
@@ -2092,7 +2092,7 @@ export default function Portfolio() {
               width: '100%',
               height: '100%',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
+              background: 'linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%)',
               padding: '3px',
               opacity: 0,
               animation: 'fadeIn 0.5s ease-out forwards',
@@ -2102,7 +2102,7 @@ export default function Portfolio() {
                 width: '100%',
                 height: '100%',
                 borderRadius: '50%',
-                background: '#0a0118',
+                background: '#020617',
                 overflow: 'hidden',
                 position: 'relative'
               }}>
@@ -2134,7 +2134,7 @@ export default function Portfolio() {
               <span style={{
                 opacity: showCursor ? 1 : 0,
                 transition: 'opacity 0.1s',
-                color: '#8B5CF6',
+                color: '#3B82F6',
                 fontWeight: '300'
               }}>|</span>
             )}
@@ -2174,7 +2174,7 @@ export default function Portfolio() {
               }}
               style={{
                 fontSize: windowWidth > 768 ? '40px' : '32px',
-                color: '#8B5CF6',
+                color: '#3B82F6',
                 animation: 'float 2s ease-in-out infinite',
                 background: 'transparent',
                 border: 'none',
@@ -2225,7 +2225,7 @@ export default function Portfolio() {
               fontSize: windowWidth > 768 ? '24px' : '16px',
               fontWeight: '700',
               marginBottom: '48px',
-              color: '#8B5CF6',
+              color: '#3B82F6',
               textAlign: 'center'
             }}>
               Career Journey
@@ -2245,8 +2245,8 @@ export default function Portfolio() {
                 top: '0',
                 bottom: '0',
                 width: windowWidth > 768 ? '6px' : '4px',
-                background: '#8B5CF6',
-                boxShadow: '4px 4px 0px #4C1D95'
+                background: '#3B82F6',
+                boxShadow: '4px 4px 0px #1E3A8A'
               }} />
 
               {/* AdventHealth - RIGHT SIDE */}
@@ -3249,12 +3249,12 @@ export default function Portfolio() {
                     right: '52%',
                     top: '34px',
                     transform: 'translateY(-50%)',
-                    background: '#8B5CF6',
+                    background: '#3B82F6',
                     color: '#fff',
                     padding: '10px 20px',
                     fontSize: '12px',
                     fontFamily: "'Press Start 2P', cursive",
-                    boxShadow: '4px 4px 0px #4C1D95'
+                    boxShadow: '4px 4px 0px #1E3A8A'
                   }}>
                     Nov 2024 - Jul 2025
                   </div>
@@ -3267,9 +3267,9 @@ export default function Portfolio() {
                   top: '24px',
                   width: '20px',
                   height: '20px',
-                  background: '#8B5CF6',
+                  background: '#3B82F6',
                   border: '4px solid #0f172a',
-                  boxShadow: '3px 3px 0px #4C1D95',
+                  boxShadow: '3px 3px 0px #1E3A8A',
                   zIndex: 10
                 }} />
 
@@ -3279,7 +3279,7 @@ export default function Portfolio() {
                   style={{
                     background: 'rgba(30, 41, 59, 0.95)',
                     overflow: 'hidden',
-                    border: '4px solid #8B5CF6',
+                    border: '4px solid #3B82F6',
                     width: windowWidth > 768 ? '45%' : '100%',
                     marginLeft: windowWidth > 768 ? '55%' : '0'
                   }}>
@@ -3287,7 +3287,7 @@ export default function Portfolio() {
                   <div style={{
                     width: '100%',
                     height: windowWidth > 768 ? '280px' : '140px',
-                    background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(30, 41, 59, 1) 100%)',
+                    background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(30, 41, 59, 1) 100%)',
                     position: 'relative',
                     display: 'flex',
                     alignItems: 'center',
@@ -3330,7 +3330,7 @@ export default function Portfolio() {
                       marginBottom: '16px'
                     }}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <svg width="14" height="14" fill="none" stroke="#8B5CF6" viewBox="0 0 24 24">
+                        <svg width="14" height="14" fill="none" stroke="#3B82F6" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                         AJR Publishing LLC
@@ -3366,10 +3366,10 @@ export default function Portfolio() {
                       style={{
                         width: '100%',
                         padding: '12px',
-                        background: 'rgba(139, 92, 246, 0.1)',
-                        border: '1px solid rgba(139, 92, 246, 0.2)',
+                        background: 'rgba(59, 130, 246, 0.1)',
+                        border: '1px solid rgba(59, 130, 246, 0.2)',
                         borderRadius: '8px',
-                        color: '#A78BFA',
+                        color: '#93C5FD',
                         fontSize: '14px',
                         cursor: 'pointer',
                         display: 'flex',
@@ -3394,10 +3394,10 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.ajr && (
-                      <div className={closingExp.ajr ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(139, 92, 246, 0.2)' }}>
+                      <div className={closingExp.ajr ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(59, 130, 246, 0.2)' }}>
                         {/* Skills */}
-                        <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
+                        <h5 style={{ color: '#3B82F6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#3B82F6', borderRadius: '2px' }} />
                           Key Skills
                         </h5>
                         <div style={{
@@ -3410,18 +3410,18 @@ export default function Portfolio() {
                             <span key={skill} style={{
                               fontSize: '11px',
                               padding: '5px 12px',
-                              background: 'rgba(139, 92, 246, 0.15)',
+                              background: 'rgba(59, 130, 246, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(139, 92, 246, 0.3)',
-                              color: '#A78BFA'
+                              border: '1px solid rgba(59, 130, 246, 0.3)',
+                              color: '#93C5FD'
                             }}>
                               {skill}
                             </span>
                           ))}
                         </div>
 
-                        <h5 style={{ color: '#8B5CF6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span style={{ width: '3px', height: '16px', background: '#8B5CF6', borderRadius: '2px' }} />
+                        <h5 style={{ color: '#3B82F6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span style={{ width: '3px', height: '16px', background: '#3B82F6', borderRadius: '2px' }} />
                           Key Responsibilities
                         </h5>
                         <ul style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '0' }}>
@@ -3868,8 +3868,8 @@ export default function Portfolio() {
               fontSize: '24px',
               fontWeight: '600',
               marginBottom: '32px',
-              color: '#8B5CF6',
-              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
+              color: '#3B82F6',
+              borderBottom: '2px solid rgba(59, 130, 246, 0.2)',
               paddingBottom: '12px'
             }}>
               Education
@@ -3885,7 +3885,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -3953,7 +3953,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -3994,7 +3994,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4017,7 +4017,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4058,7 +4058,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4080,8 +4080,8 @@ export default function Portfolio() {
               fontSize: '24px',
               fontWeight: '600',
               marginBottom: '32px',
-              color: '#8B5CF6',
-              borderBottom: '2px solid rgba(139, 92, 246, 0.2)',
+              color: '#3B82F6',
+              borderBottom: '2px solid rgba(59, 130, 246, 0.2)',
               paddingBottom: '12px'
             }}>
               Licenses & Certifications
@@ -4097,7 +4097,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4138,7 +4138,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4161,7 +4161,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4205,7 +4205,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4228,7 +4228,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4272,7 +4272,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4295,7 +4295,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4339,7 +4339,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4362,7 +4362,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4406,7 +4406,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4429,7 +4429,7 @@ export default function Portfolio() {
                   WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
-                  border: '1px solid rgba(139, 92, 246, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -4473,7 +4473,7 @@ export default function Portfolio() {
                     <span style={{
                       fontSize: '14px',
                       color: '#94a3b8',
-                      backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4493,14 +4493,14 @@ export default function Portfolio() {
 
       {/* Section Separator */}
       <div className="pixel-divider" style={{
-        '--divider-color': 'rgba(139, 92, 246, 0.6)',
-        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
+        '--divider-color': 'rgba(59, 130, 246, 0.6)',
+        '--divider-shadow': 'rgba(59, 130, 246, 0.25)'
       }} />
 
       {/* Projects Section */}
       <section id="projects" style={{
         padding: windowWidth > 768 ? '140px 48px 120px' : '60px 12px 40px',
-        background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 10%, rgba(139, 92, 246, 0.05) 90%, transparent 100%)',
+        background: 'linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.05) 10%, rgba(59, 130, 246, 0.05) 90%, transparent 100%)',
         position: 'relative',
         zIndex: 10,
         marginTop: windowWidth > 768 ? '60px' : '30px',
@@ -4542,7 +4542,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.025s',
                 display: 'flex',
@@ -4584,7 +4584,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   Statura
@@ -4649,7 +4649,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4668,7 +4668,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.05s',
                 display: 'flex',
@@ -4679,7 +4679,7 @@ export default function Portfolio() {
                 position: 'relative',
                 width: '100%',
                 height: windowWidth > 768 ? '180px' : '140px',
-                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #2d1b5e 100%)',
+                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #1b2d5e 100%)',
                 overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',
@@ -4697,7 +4697,7 @@ export default function Portfolio() {
                     objectFit: 'contain',
                     imageRendering: 'pixelated',
                     display: 'block',
-                    filter: 'drop-shadow(0 0 14px rgba(139, 92, 246, 0.7))',
+                    filter: 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.7))',
                     transform: 'scale(1.55)',
                     transformOrigin: 'center'
                   }}
@@ -4714,7 +4714,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   Strike Chess
@@ -4779,7 +4779,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4798,7 +4798,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.075s',
                 display: 'flex',
@@ -4856,7 +4856,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   CapySynth
@@ -4920,7 +4920,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4939,7 +4939,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.1s',
                 display: 'flex',
@@ -4987,7 +4987,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   NeuroView
@@ -5052,7 +5052,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5071,7 +5071,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.1s',
                 display: 'flex',
@@ -5119,7 +5119,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   KINEXIS
@@ -5184,7 +5184,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5203,7 +5203,7 @@ export default function Portfolio() {
               style={{
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
-                border: '1px solid rgba(139, 92, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.3s',
                 display: 'flex',
@@ -5232,7 +5232,7 @@ export default function Portfolio() {
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #8B5CF6',
+                  border: '3px solid #3B82F6',
                   marginBottom: '14px'
                 }}>
                   Sentinel PHI
@@ -5297,7 +5297,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '12px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5315,8 +5315,8 @@ export default function Portfolio() {
 
       {/* Section Separator */}
       <div className="pixel-divider" style={{
-        '--divider-color': 'rgba(139, 92, 246, 0.6)',
-        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
+        '--divider-color': 'rgba(59, 130, 246, 0.6)',
+        '--divider-shadow': 'rgba(59, 130, 246, 0.25)'
       }} />
 
       {/* GitHub Activity Section */}
@@ -5335,8 +5335,8 @@ export default function Portfolio() {
 
       {/* Section Separator */}
       <div className="pixel-divider" style={{
-        '--divider-color': 'rgba(139, 92, 246, 0.6)',
-        '--divider-shadow': 'rgba(139, 92, 246, 0.25)'
+        '--divider-color': 'rgba(59, 130, 246, 0.6)',
+        '--divider-shadow': 'rgba(59, 130, 246, 0.25)'
       }} />
 
       {/* Contact Section */}
@@ -5439,22 +5439,22 @@ export default function Portfolio() {
             alignItems: 'center',
             gap: '10px',
             padding: '16px 32px',
-            background: 'linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%)',
+            background: 'linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%)',
             borderRadius: '8px',
             color: '#ffffff',
             textDecoration: 'none',
             fontSize: '17px',
             fontWeight: '600',
             transition: 'transform 0.3s, box-shadow 0.3s',
-            boxShadow: '0 2px 10px rgba(139, 92, 246, 0.3)'
+            boxShadow: '0 2px 10px rgba(59, 130, 246, 0.3)'
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(139, 92, 246, 0.5)';
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.5)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 2px 10px rgba(139, 92, 246, 0.3)';
+            e.currentTarget.style.boxShadow = '0 2px 10px rgba(59, 130, 246, 0.3)';
           }}>
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -5468,7 +5468,7 @@ export default function Portfolio() {
       <footer style={{
         padding: '32px 48px',
         textAlign: 'center',
-        borderTop: '1px solid rgba(139, 92, 246, 0.1)',
+        borderTop: '1px solid rgba(59, 130, 246, 0.1)',
         position: 'relative',
         zIndex: 10
       }}>
@@ -5479,7 +5479,7 @@ export default function Portfolio() {
         }}>
           Made with{' '}
           <svg role="img" aria-label="love" width="14" height="12" viewBox="0 0 7 6" shapeRendering="crispEdges" style={{ display: 'inline-block', verticalAlign: 'baseline' }}>
-            <path fill="#A855F7" d="M1 0h2v1H1zM4 0h2v1H4zM0 1h7v2H0zM1 3h5v1H1zM2 4h3v1H2zM3 5h1v1H3z" />
+            <path fill="#3B82F6" d="M1 0h2v1H1zM4 0h2v1H4zM0 1h7v2H0zM1 3h5v1H1zM2 4h3v1H2zM3 5h1v1H3z" />
           </svg>
           {' '}by Thomas
         </p>
