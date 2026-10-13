@@ -4535,6 +4535,132 @@ export default function Portfolio() {
             boxSizing: 'border-box',
             alignItems: 'stretch'
           }}>
+            {/* CardioView - newest project, featured across the full row */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-cardioview') ? 'visible' : ''}`}
+              data-animate-id="project-card-cardioview"
+              style={{
+                gridColumn: windowWidth > 768 ? '1 / -1' : 'auto',
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.025s',
+                display: 'flex',
+                flexDirection: windowWidth > 1024 ? 'row' : 'column'
+              }}>
+              {/* Cover art - the Devpost cover, cropped to fill the left side */}
+              <div style={{
+                position: 'relative',
+                flex: windowWidth > 1024 ? '0 0 46%' : '0 0 auto',
+                width: windowWidth > 1024 ? '46%' : '100%',
+                height: windowWidth > 1024 ? 'auto' : windowWidth > 768 ? '300px' : '200px',
+                minHeight: windowWidth > 1024 ? '300px' : undefined,
+                background: '#061218',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/cardioview-cover.jpg"
+                  alt="CardioView"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center',
+                    display: 'block'
+                  }}
+                />
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '20px 24px' : '14px', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '8px 14px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #3B82F6',
+                  marginBottom: '10px'
+                }}>
+                  CardioView
+                </div>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F472B6',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '10px'
+                }}>
+                  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                  Knight Hacks IX
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: windowWidth > 1024 ? '14px' : '12px',
+                  lineHeight: windowWidth > 1024 ? '1.6' : '1.5',
+                  marginBottom: '12px'
+                }}>
+                  A 3D heart that beats with your real time ECG. A Polar H10 streams your heartbeat into the browser, every beat moves the heart, and Gemini turns any patient you describe into a rhythm.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '6px',
+                  marginBottom: '12px'
+                }}>
+                  {['Python', 'FastAPI', 'Three.js', 'Web Bluetooth', 'Gemini'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '10px',
+                      padding: '3px 8px',
+                      background: 'rgba(55, 224, 126, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(55, 224, 126, 0.3)',
+                      color: '#37E07E'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://devpost.com/software/cardioview-0qx9uc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '10px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  View on Devpost
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
             {/* Statura - legislative intelligence platform */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-statura') ? 'visible' : ''}`}
@@ -4544,7 +4670,7 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.025s',
+                '--stagger-delay': '0.05s',
                 display: 'flex',
                 flexDirection: 'column'
               }}>
@@ -4552,7 +4678,7 @@ export default function Portfolio() {
               <div style={{
                 position: 'relative',
                 width: '100%',
-                height: windowWidth > 768 ? '180px' : '140px',
+                height: windowWidth > 768 ? '140px' : '120px',
                 background: '#14233E',
                 overflow: 'hidden',
                 display: 'flex',
@@ -4574,18 +4700,18 @@ export default function Portfolio() {
                 />
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
+                  padding: '8px 14px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
                   border: '3px solid #3B82F6',
-                  marginBottom: '14px'
+                  marginBottom: '10px'
                 }}>
                   Statura
                 </div>
@@ -4597,7 +4723,7 @@ export default function Portfolio() {
                   color: '#F472B6',
                   fontSize: '10px',
                   fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
+                  marginBottom: '10px'
                 }}>
                   <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -4607,9 +4733,9 @@ export default function Portfolio() {
                 {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
                 }}>
                   Legislative intelligence platform showing Florida businesses how every bill, ordinance, and appropriation affects them. I build the frontend: dashboards, county/state/federal surfaces, and AI-powered news.
                 </p>
@@ -4617,13 +4743,13 @@ export default function Portfolio() {
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
+                  gap: '6px',
+                  marginBottom: '12px'
                 }}>
                   {['Next.js', 'TypeScript', 'React', 'Supabase', 'PostgreSQL'].map(tech => (
                     <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
+                      fontSize: '10px',
+                      padding: '3px 8px',
                       background: 'rgba(201, 149, 74, 0.1)',
                       borderRadius: '12px',
                       border: '1px solid rgba(201, 149, 74, 0.3)',
@@ -4647,143 +4773,13 @@ export default function Portfolio() {
                     textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
-                    paddingTop: '12px',
+                    paddingTop: '10px',
                     paddingBottom: '0',
                     borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
                   Visit statura.app
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Strike Chess - flagship project */}
-            <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
-              data-animate-id="project-card-strike"
-              style={{
-                background: 'rgba(30, 41, 59, 0.9)',
-                borderRadius: '12px',
-                border: '1px solid rgba(59, 130, 246, 0.2)',
-                overflow: 'hidden',
-                '--stagger-delay': '0.05s',
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-              {/* Logo hero - same dimensions as other project cards */}
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                height: windowWidth > 768 ? '180px' : '140px',
-                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #1b2d5e 100%)',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '2px'
-              }}>
-                <img
-                  src="/strike-chess-logo.png"
-                  alt="Strike Chess"
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    objectFit: 'contain',
-                    imageRendering: 'pixelated',
-                    display: 'block',
-                    filter: 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.7))',
-                    transform: 'scale(1.55)',
-                    transformOrigin: 'center'
-                  }}
-                />
-              </div>
-              {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Project title box */}
-                <div style={{
-                  alignSelf: 'flex-start',
-                  background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
-                  fontSize: windowWidth > 768 ? '14px' : '12px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  color: '#fff',
-                  boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #3B82F6',
-                  marginBottom: '14px'
-                }}>
-                  Strike Chess
-                </div>
-                {/* Event badge */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: '#F472B6',
-                  fontSize: '10px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
-                }}>
-                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                  </svg>
-                  Indie Game / Steam
-                </div>
-                {/* Description */}
-                <p style={{
-                  color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
-                }}>
-                  Simultaneous-turn chess with tactical strike cards, a 9-chapter campaign, and Steam P2P multiplayer. Built in Godot 4.5 with a custom C AI engine.
-                </p>
-                {/* Tech pills */}
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
-                }}>
-                  {['Godot 4.5', 'GDScript', 'C', 'Steamworks', 'Pixel Art'].map(tech => (
-                    <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
-                      background: 'rgba(34, 211, 238, 0.1)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
-                      color: '#22D3EE'
-                    }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <a
-                  href="https://store.steampowered.com/app/4026780/Strike_Chess/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    color: '#10B981',
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    paddingTop: '12px',
-                    paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
-                    marginTop: 'auto'
-                  }}
-                >
-                  View on Steam
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -4808,7 +4804,7 @@ export default function Portfolio() {
               <div style={{
                 position: 'relative',
                 width: '100%',
-                height: windowWidth > 768 ? '180px' : '140px',
+                height: windowWidth > 768 ? '140px' : '120px',
                 background: '#FA7241',
                 overflow: 'hidden',
                 display: 'flex',
@@ -4846,18 +4842,18 @@ export default function Portfolio() {
                 </svg>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
+                  padding: '8px 14px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
                   border: '3px solid #3B82F6',
-                  marginBottom: '14px'
+                  marginBottom: '10px'
                 }}>
                   CapySynth
                 </div>
@@ -4868,7 +4864,7 @@ export default function Portfolio() {
                   color: '#F472B6',
                   fontSize: '10px',
                   fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
+                  marginBottom: '10px'
                 }}>
                   <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M9 18V5l12-2v13" />
@@ -4879,22 +4875,22 @@ export default function Portfolio() {
                 </div>
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
                 }}>
                   Pixel-art capybara-themed synthesizer plugin for lofi, house, and synthwave producers. 1000+ factory presets, 14 knobs, custom DSP. Built in JUCE 8 + C++17.
                 </p>
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
+                  gap: '6px',
+                  marginBottom: '12px'
                 }}>
                   {['JUCE 8', 'C++17', 'VST3', 'AU', 'DSP'].map(tech => (
                     <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
+                      fontSize: '10px',
+                      padding: '3px 8px',
                       background: 'rgba(244, 114, 182, 0.1)',
                       borderRadius: '12px',
                       border: '1px solid rgba(244, 114, 182, 0.3)',
@@ -4918,7 +4914,7 @@ export default function Portfolio() {
                     textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
-                    paddingTop: '12px',
+                    paddingTop: '10px',
                     paddingBottom: '0',
                     borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
@@ -4946,7 +4942,7 @@ export default function Portfolio() {
                 flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', overflow: 'hidden' }}>
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '140px' : '120px', overflow: 'hidden' }}>
                 <img
                   src="/neuroview.png"
                   alt="NeuroView 3D Brain Visualization"
@@ -4977,18 +4973,18 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
+                  padding: '8px 14px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
                   border: '3px solid #3B82F6',
-                  marginBottom: '14px'
+                  marginBottom: '10px'
                 }}>
                   NeuroView
                 </div>
@@ -5000,7 +4996,7 @@ export default function Portfolio() {
                   color: '#F59E0B',
                   fontSize: '10px',
                   fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
+                  marginBottom: '10px'
                 }}>
                   <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
@@ -5010,9 +5006,9 @@ export default function Portfolio() {
                 {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
                 }}>
                   Making neuroanatomy accessible through interactive 3D brain visualization with real-time collaboration.
                 </p>
@@ -5020,13 +5016,13 @@ export default function Portfolio() {
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
+                  gap: '6px',
+                  marginBottom: '12px'
                 }}>
                   {['Three.js', 'WebGL', 'NIfTI', 'React'].map(tech => (
                     <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
+                      fontSize: '10px',
+                      padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
                       border: '1px solid rgba(34, 211, 238, 0.3)',
@@ -5050,13 +5046,143 @@ export default function Portfolio() {
                     textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
-                    paddingTop: '12px',
+                    paddingTop: '10px',
                     paddingBottom: '0',
                     borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
                   }}
                 >
                   View on Devpost
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Strike Chess - flagship project */}
+            <div
+              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
+              data-animate-id="project-card-strike"
+              style={{
+                background: 'rgba(30, 41, 59, 0.9)',
+                borderRadius: '12px',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
+                overflow: 'hidden',
+                '--stagger-delay': '0.125s',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+              {/* Logo hero - same dimensions as other project cards */}
+              <div style={{
+                position: 'relative',
+                width: '100%',
+                height: windowWidth > 768 ? '140px' : '120px',
+                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #1b2d5e 100%)',
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '2px'
+              }}>
+                <img
+                  src="/strike-chess-logo.png"
+                  alt="Strike Chess"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    imageRendering: 'pixelated',
+                    display: 'block',
+                    filter: 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.7))',
+                    transform: 'scale(1.55)',
+                    transformOrigin: 'center'
+                  }}
+                />
+              </div>
+              {/* Card content */}
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* Project title box */}
+                <div style={{
+                  alignSelf: 'flex-start',
+                  background: 'rgba(15, 23, 42, 0.95)',
+                  padding: '8px 14px',
+                  fontSize: windowWidth > 768 ? '14px' : '12px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  color: '#fff',
+                  boxShadow: '4px 4px 0px #000',
+                  border: '3px solid #3B82F6',
+                  marginBottom: '10px'
+                }}>
+                  Strike Chess
+                </div>
+                {/* Event badge */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  color: '#F472B6',
+                  fontSize: '10px',
+                  fontFamily: "'Press Start 2P', cursive",
+                  marginBottom: '10px'
+                }}>
+                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  Indie Game / Steam
+                </div>
+                {/* Description */}
+                <p style={{
+                  color: '#cbd5e1',
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
+                }}>
+                  Simultaneous-turn chess with tactical strike cards, a 9-chapter campaign, and Steam P2P multiplayer. Built in Godot 4.5 with a custom C AI engine.
+                </p>
+                {/* Tech pills */}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '6px',
+                  marginBottom: '12px'
+                }}>
+                  {['Godot 4.5', 'GDScript', 'C', 'Steamworks', 'Pixel Art'].map(tech => (
+                    <span key={tech} style={{
+                      fontSize: '10px',
+                      padding: '3px 8px',
+                      background: 'rgba(34, 211, 238, 0.1)',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      color: '#22D3EE'
+                    }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href="https://store.steampowered.com/app/4026780/Strike_Chess/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    color: '#10B981',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    paddingTop: '10px',
+                    paddingBottom: '0',
+                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    marginTop: 'auto'
+                  }}
+                >
+                  View on Steam
                   <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -5073,12 +5199,12 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.1s',
+                '--stagger-delay': '0.15s',
                 display: 'flex',
                 flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', overflow: 'hidden' }}>
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '140px' : '120px', overflow: 'hidden' }}>
                 <img
                   src="/kinexis-demo.gif"
                   alt="KINEXIS demo"
@@ -5109,18 +5235,18 @@ export default function Portfolio() {
                 </div>
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
+                  padding: '8px 14px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
                   border: '3px solid #3B82F6',
-                  marginBottom: '14px'
+                  marginBottom: '10px'
                 }}>
                   KINEXIS
                 </div>
@@ -5132,7 +5258,7 @@ export default function Portfolio() {
                   color: '#F59E0B',
                   fontSize: '10px',
                   fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
+                  marginBottom: '10px'
                 }}>
                   <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
@@ -5142,9 +5268,9 @@ export default function Portfolio() {
                 {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
                 }}>
                   Award-winning physical therapy tracking platform using computer vision for objective PT measurements.
                 </p>
@@ -5152,13 +5278,13 @@ export default function Portfolio() {
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
+                  gap: '6px',
+                  marginBottom: '12px'
                 }}>
                   {['JavaScript', 'OpenCV', 'Computer Vision'].map(tech => (
                     <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
+                      fontSize: '10px',
+                      padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
                       border: '1px solid rgba(34, 211, 238, 0.3)',
@@ -5182,7 +5308,7 @@ export default function Portfolio() {
                     textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
-                    paddingTop: '12px',
+                    paddingTop: '10px',
                     paddingBottom: '0',
                     borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
@@ -5205,12 +5331,12 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.3s',
+                '--stagger-delay': '0.175s',
                 display: 'flex',
                 flexDirection: 'column'
               }}>
               {/* Image with overlay title */}
-              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '180px' : '140px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', overflow: 'hidden' }}>
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '140px' : '120px', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', overflow: 'hidden' }}>
                 <img
                   src="/sentinel.png"
                   alt="Sentinel PHI Scanner Dashboard"
@@ -5222,18 +5348,18 @@ export default function Portfolio() {
                 />
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px' : '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
                   background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '10px 16px',
+                  padding: '8px 14px',
                   fontSize: windowWidth > 768 ? '14px' : '12px',
                   fontFamily: "'Press Start 2P', cursive",
                   color: '#fff',
                   boxShadow: '4px 4px 0px #000',
                   border: '3px solid #3B82F6',
-                  marginBottom: '14px'
+                  marginBottom: '10px'
                 }}>
                   Sentinel PHI
                 </div>
@@ -5245,7 +5371,7 @@ export default function Portfolio() {
                   color: '#10B981',
                   fontSize: '10px',
                   fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '12px'
+                  marginBottom: '10px'
                 }}>
                   <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -5255,9 +5381,9 @@ export default function Portfolio() {
                 {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  marginBottom: '16px'
+                  fontSize: '12px',
+                  lineHeight: '1.5',
+                  marginBottom: '12px'
                 }}>
                   Python tool to identify Protected Health Information (PHI) in documents using pattern matching.
                 </p>
@@ -5265,13 +5391,13 @@ export default function Portfolio() {
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '8px',
-                  marginBottom: '16px'
+                  gap: '6px',
+                  marginBottom: '12px'
                 }}>
                   {['Python', 'Streamlit', 'HIPAA'].map(tech => (
                     <span key={tech} style={{
-                      fontSize: '11px',
-                      padding: '4px 10px',
+                      fontSize: '10px',
+                      padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
                       border: '1px solid rgba(34, 211, 238, 0.3)',
@@ -5295,7 +5421,7 @@ export default function Portfolio() {
                     textDecoration: 'none',
                     fontSize: '14px',
                     fontWeight: '500',
-                    paddingTop: '12px',
+                    paddingTop: '10px',
                     paddingBottom: '0',
                     borderTop: '1px solid rgba(59, 130, 246, 0.1)',
                     marginTop: 'auto'
@@ -5308,7 +5434,6 @@ export default function Portfolio() {
                 </a>
               </div>
             </div>
-
           </div>
         </div>
       </section>
