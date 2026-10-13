@@ -4737,7 +4737,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Legislative intelligence platform showing Florida businesses how every bill, ordinance, and appropriation affects them. I build the frontend: dashboards, county/state/federal surfaces, and AI-powered news.
+                  Tells Florida businesses which new bills and local rules affect them. I build the frontend.
                 </p>
                 {/* Tech pills */}
                 <div style={{
@@ -4879,7 +4879,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Pixel-art capybara-themed synthesizer plugin for lofi, house, and synthwave producers. 1000+ factory presets, 14 knobs, custom DSP. Built in JUCE 8 + C++17.
+                  A pixel-art capybara synth plugin for lofi, house, and synthwave producers. Ships with over 1000 presets.
                 </p>
                 <div style={{
                   display: 'flex',
@@ -5010,7 +5010,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Making neuroanatomy accessible through interactive 3D brain visualization with real-time collaboration.
+                  An interactive 3D brain you can explore and study with others in real time.
                 </p>
                 {/* Tech pills */}
                 <div style={{
@@ -5140,7 +5140,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Simultaneous-turn chess with tactical strike cards, a 9-chapter campaign, and Steam P2P multiplayer. Built in Godot 4.5 with a custom C AI engine.
+                  Chess where both players move at once, with strike cards, a story campaign, and online multiplayer on Steam.
                 </p>
                 {/* Tech pills */}
                 <div style={{
@@ -5272,7 +5272,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Award-winning physical therapy tracking platform using computer vision for objective PT measurements.
+                  Uses a webcam to measure a patient's range of motion during physical therapy.
                 </p>
                 {/* Tech pills */}
                 <div style={{
@@ -5385,7 +5385,7 @@ export default function Portfolio() {
                   lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
-                  Python tool to identify Protected Health Information (PHI) in documents using pattern matching.
+                  Scans documents and flags any protected health information inside them.
                 </p>
                 {/* Tech pills */}
                 <div style={{
