@@ -1914,18 +1914,18 @@ export default function Portfolio() {
         <div style={{
           textAlign: 'center',
           animation: 'fadeInUp 1s ease-out',
-          maxWidth: '800px',
+          maxWidth: '960px',
           padding: '0 24px',
           position: 'relative',
           zIndex: 1
         }}>
           <h1 ref={nameRef} style={{
-            fontSize: windowWidth > 768 ? '48px' : '32px',
+            fontSize: windowWidth > 1024 ? '56px' : windowWidth > 768 ? '48px' : '32px',
             fontWeight: '600',
             marginBottom: '16px',
             lineHeight: '1.2',
             color: '#ffffff',
-            minHeight: windowWidth > 768 ? '58px' : '40px' // Prevent layout shift
+            minHeight: windowWidth > 1024 ? '68px' : windowWidth > 768 ? '58px' : '40px' // Prevent layout shift
           }}>
             {typedText}
             {typedText.length < fullText.length && (
@@ -1943,14 +1943,14 @@ export default function Portfolio() {
             visibility: 'hidden',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
-            fontSize: windowWidth > 768 ? '48px' : '32px',
+            fontSize: windowWidth > 1024 ? '56px' : windowWidth > 768 ? '48px' : '32px',
             fontWeight: '600'
           }}>{fullText}</span>
           
           <p className="hero-description" style={{
-            fontSize: windowWidth > 768 ? '18px' : '14px',
+            fontSize: windowWidth > 1024 ? '20px' : windowWidth > 768 ? '18px' : '14px',
             color: '#94a3b8',
-            marginBottom: '8px',
+            marginBottom: '0',
             opacity: showSubtitle ? 1 : 0,
             transition: 'opacity 1s ease-out 0.3s'
           }}>
@@ -1958,10 +1958,15 @@ export default function Portfolio() {
           </p>
           
 
+          {/* Hangs below the text, so the name and subtitle alone sit in the middle of the screen */}
           <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '28px'
+            marginTop: '36px'
           }}>
             <button
               onClick={() => {
@@ -1972,7 +1977,7 @@ export default function Portfolio() {
               }}
               style={{
                 fontSize: windowWidth > 768 ? '40px' : '32px',
-                // Tight line box so the arrow has no invisible space under it to throw off the centering
+                // Tight line box, so the wrapper's margin alone sets the gap above the arrow
                 lineHeight: 1,
                 color: '#3B82F6',
                 animation: 'float 2s ease-in-out infinite',
@@ -1994,7 +1999,7 @@ export default function Portfolio() {
 
       {/* Experience Section */}
       <section id="experience" className="section-padding" style={{
-        padding: windowWidth > 768 ? '140px 48px 120px' : '80px 24px 60px',
+        padding: windowWidth > 768 ? '40px 48px 120px' : '80px 24px 60px',
         maxWidth: '1200px',
         margin: '0 auto 80px',
         position: 'relative',
