@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import GitHubContributionGraph from '@/components/GitHubContributionGraph';
+import DuolingoStats from '@/components/DuolingoStats';
 
 export default function Portfolio() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -5455,6 +5456,7 @@ export default function Portfolio() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <GitHubContributionGraph username="CodingWithKantecki" />
+          <DuolingoStats windowWidth={windowWidth} />
         </div>
       </section>
 

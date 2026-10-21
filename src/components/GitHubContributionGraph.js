@@ -151,12 +151,12 @@ export default function GitHubContributionGraph({ username = 'CodingWithKantecki
 
   return (
     <div
+      className="hover-card"
       style={{
         marginTop: '56px',
         marginLeft: 'auto',
         marginRight: 'auto',
         maxWidth: '1120px',
-        border: '1px solid rgba(110, 118, 129, 0.35)',
         borderRadius: '14px',
         background: 'linear-gradient(180deg, rgba(13, 17, 23, 0.96) 0%, rgba(1, 4, 9, 0.94) 100%)',
         padding: '32px',
