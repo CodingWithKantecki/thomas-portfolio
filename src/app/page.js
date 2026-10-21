@@ -1123,49 +1123,6 @@ export default function Portfolio() {
           }
         }
 
-        @keyframes drawCircle {
-          from {
-            strokeDashoffset: 660;
-          }
-          to {
-            strokeDashoffset: 0;
-          }
-        }
-
-        @keyframes drawLine {
-          from {
-            strokeDashoffset: 40;
-          }
-          to {
-            strokeDashoffset: 0;
-          }
-        }
-
-        @keyframes scanLine {
-          from {
-            opacity: 0;
-            transform: scaleX(0);
-            transformOrigin: center;
-          }
-          50% {
-            opacity: 0.8;
-          }
-          to {
-            opacity: 0;
-            transform: scaleX(1);
-            transformOrigin: center;
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
         @keyframes slideIn {
           from {
             transform: translateX(100%);
@@ -1292,11 +1249,6 @@ export default function Portfolio() {
 
           .grid-responsive {
             grid-template-columns: 1fr !important;
-          }
-
-          .profile-image {
-            width: 150px !important;
-            height: 150px !important;
           }
 
           /* Fix project cards overflow */
@@ -1966,162 +1918,6 @@ export default function Portfolio() {
           position: 'relative',
           zIndex: 1
         }}>
-          {/* Profile Image with Wireframe Effect */}
-          <div className="profile-image" style={{
-            width: windowWidth > 768 ? '200px' : '150px',
-            height: windowWidth > 768 ? '200px' : '150px',
-            margin: '0 auto 32px',
-            position: 'relative'
-          }}>
-            {/* Animated Wireframe SVG */}
-            <svg
-              style={{
-                position: 'absolute',
-                top: '-10px',
-                left: '-10px',
-                width: 'calc(100% + 20px)',
-                height: 'calc(100% + 20px)',
-                zIndex: 2,
-                pointerEvents: 'none'
-              }}
-              viewBox="0 0 220 220"
-            >
-              {/* Outer wireframe circles */}
-              <circle
-                cx="110"
-                cy="110"
-                r="105"
-                fill="none"
-                stroke="url(#wireframeGradient)"
-                strokeWidth="2"
-                strokeDasharray="660"
-                strokeDashoffset="660"
-                style={{
-                  animation: 'drawCircle 1.5s ease-out forwards',
-                  animationDelay: '0.3s'
-                }}
-              />
-              <circle
-                cx="110"
-                cy="110"
-                r="100"
-                fill="none"
-                stroke="url(#wireframeGradient)"
-                strokeWidth="1"
-                strokeDasharray="628"
-                strokeDashoffset="628"
-                opacity="0.6"
-                style={{
-                  animation: 'drawCircle 1.5s ease-out forwards',
-                  animationDelay: '0.5s'
-                }}
-              />
-
-              {/* Scan lines */}
-              {[0, 1, 2, 3, 4].map((i) => (
-                <line
-                  key={i}
-                  x1="10"
-                  y1={45 + i * 30}
-                  x2="210"
-                  y2={45 + i * 30}
-                  stroke="#3B82F6"
-                  strokeWidth="0.5"
-                  opacity="0"
-                  style={{
-                    animation: 'scanLine 0.3s ease-out forwards',
-                    animationDelay: `${0.2 + i * 0.1}s`
-                  }}
-                />
-              ))}
-
-              {/* Corner brackets */}
-              <path
-                d="M 30 30 L 30 50 M 30 30 L 50 30"
-                stroke="#22D3EE"
-                strokeWidth="2"
-                strokeDasharray="40"
-                strokeDashoffset="40"
-                style={{
-                  animation: 'drawLine 0.6s ease-out forwards',
-                  animationDelay: '0.1s'
-                }}
-              />
-              <path
-                d="M 190 30 L 190 50 M 190 30 L 170 30"
-                stroke="#22D3EE"
-                strokeWidth="2"
-                strokeDasharray="40"
-                strokeDashoffset="40"
-                style={{
-                  animation: 'drawLine 0.6s ease-out forwards',
-                  animationDelay: '0.2s'
-                }}
-              />
-              <path
-                d="M 30 190 L 30 170 M 30 190 L 50 190"
-                stroke="#22D3EE"
-                strokeWidth="2"
-                strokeDasharray="40"
-                strokeDashoffset="40"
-                style={{
-                  animation: 'drawLine 0.6s ease-out forwards',
-                  animationDelay: '0.15s'
-                }}
-              />
-              <path
-                d="M 190 190 L 190 170 M 190 190 L 170 190"
-                stroke="#22D3EE"
-                strokeWidth="2"
-                strokeDasharray="40"
-                strokeDashoffset="40"
-                style={{
-                  animation: 'drawLine 0.6s ease-out forwards',
-                  animationDelay: '0.25s'
-                }}
-              />
-
-              <defs>
-                <linearGradient id="wireframeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor: '#3B82F6', stopOpacity: 1}} />
-                  <stop offset="100%" style={{stopColor: '#22D3EE', stopOpacity: 1}} />
-                </linearGradient>
-              </defs>
-            </svg>
-
-            <div style={{
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%)',
-              padding: '3px',
-              opacity: 0,
-              animation: 'fadeIn 0.5s ease-out forwards',
-              animationDelay: '0.8s'
-            }}>
-              <div style={{
-                width: '100%',
-                height: '100%',
-                borderRadius: '50%',
-                background: '#020617',
-                overflow: 'hidden',
-                position: 'relative'
-              }}>
-                <Image
-                  src="/me.jpeg"
-                  alt="Thomas"
-                  fill
-                  style={{
-                    objectFit: 'cover',
-                    objectPosition: 'center 20%',
-                    transform: 'scale(1.2)'
-                  }}
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-
           <h1 ref={nameRef} style={{
             fontSize: windowWidth > 768 ? '48px' : '32px',
             fontWeight: '600',
@@ -2164,7 +1960,7 @@ export default function Portfolio() {
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            marginBottom: '60px'
+            marginTop: '28px'
           }}>
             <button
               onClick={() => {
@@ -2175,6 +1971,8 @@ export default function Portfolio() {
               }}
               style={{
                 fontSize: windowWidth > 768 ? '40px' : '32px',
+                // Tight line box so the arrow has no invisible space under it to throw off the centering
+                lineHeight: 1,
                 color: '#3B82F6',
                 animation: 'float 2s ease-in-out infinite',
                 background: 'transparent',
