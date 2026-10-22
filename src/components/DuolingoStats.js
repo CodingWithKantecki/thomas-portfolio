@@ -94,12 +94,7 @@ export default function DuolingoStats({ windowWidth = 1200 }) {
       heroColor="#FFC800"
       sprite={{ paths: OWL_PATHS, width: 20, height: 21, label: '8-bit Duolingo owl' }}
       title="Duolingo"
-      subtitle={course && { color: '#58CC02', icon: TRANSLATE_PATHS, text: `Learning ${course.name}` }}
       stats={stats}
-      link={{
-        href: `https://www.duolingo.com/profile/${encodeURIComponent(data.username)}`,
-        text: 'View profile on Duolingo'
-      }}
     />
   );
 }

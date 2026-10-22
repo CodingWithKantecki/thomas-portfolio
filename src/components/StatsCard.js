@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 // Shared by the Duolingo and Khan Academy cards: a colored panel with a pixel sprite next to the
-// project-card title box, a one-line subtitle, a row of stat boxes and a profile link.
+// project-card title box and a row of stat boxes.
 
 // One path per color, built from horizontal runs (same shape as the footer's pixel heart).
 export function spritePaths(rows, colors) {
@@ -86,15 +86,18 @@ export function useStats(url) {
   return data;
 }
 
-function Stat({ icon, value, label }) {
+// `tile` stacks icon, value and label with larger text, for boxes stretched to the card's height.
+function Stat({ icon, value, label, tile }) {
   return (
     <div style={{
       flex: '1 1 190px',
       display: 'flex',
+      flexDirection: tile ? 'column' : 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '12px',
+      gap: tile ? '10px' : '12px',
       padding: '12px 14px',
+      textAlign: tile ? 'center' : undefined,
       background: 'rgba(15, 23, 42, 0.95)',
       border: '3px solid #3B82F6',
       boxShadow: '4px 4px 0px #000'
@@ -103,10 +106,10 @@ function Stat({ icon, value, label }) {
         {icon}
       </div>
       <div>
-        <span style={{ display: 'block', color: '#fff', fontSize: '18px', lineHeight: 1.2 }}>
+        <span style={{ display: 'block', color: '#fff', fontSize: tile ? '24px' : '18px', lineHeight: 1.2 }}>
           {value}
         </span>
-        <span style={{ display: 'block', color: '#94a3b8', fontSize: '10px', lineHeight: 1.5, marginTop: '8px' }}>
+        <span style={{ display: 'block', color: '#94a3b8', fontSize: tile ? '12px' : '10px', lineHeight: 1.5, marginTop: '8px' }}>
           {label}
         </span>
       </div>
@@ -114,7 +117,7 @@ function Stat({ icon, value, label }) {
   );
 }
 
-export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, subtitle, stats, link }) {
+export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, stats }) {
   const wide = windowWidth > 1024;
 
   return (
@@ -158,54 +161,17 @@ export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title
           color: '#fff',
           boxShadow: '4px 4px 0px #000',
           border: '3px solid #3B82F6',
-          marginBottom: '10px'
+          marginBottom: '12px'
         }}>
           {title}
         </div>
-        {subtitle && (
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            color: subtitle.color,
-            fontSize: '10px',
-            fontFamily: "'Press Start 2P', cursive",
-            marginBottom: '14px'
-          }}>
-            <OutlineIcon paths={subtitle.icon} color="currentColor" size={14} />
-            {subtitle.text}
-          </div>
-        )}
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '16px' }}>
+        {/* Stat boxes: next to the sprite panel they grow to fill the rest of its height */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', flexGrow: 1 }}>
           {stats.map((stat) => (
-            <Stat key={stat.label} {...stat} />
+            <Stat key={stat.label} {...stat} tile={wide} />
           ))}
         </div>
-
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            color: '#10B981',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: '500',
-            paddingTop: '10px',
-            borderTop: '1px solid rgba(59, 130, 246, 0.1)',
-            marginTop: 'auto'
-          }}
-        >
-          {link.text}
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </a>
       </div>
     </div>
   );
