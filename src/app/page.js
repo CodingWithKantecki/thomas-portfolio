@@ -6,6 +6,7 @@ import Link from 'next/link';
 import GitHubContributionGraph from '@/components/GitHubContributionGraph';
 import DuolingoStats from '@/components/DuolingoStats';
 import KhanAcademyStats from '@/components/KhanAcademyStats';
+import Bookshelf from '@/components/Bookshelf';
 
 export default function Portfolio() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -5299,6 +5300,34 @@ export default function Portfolio() {
           <GitHubContributionGraph username="CodingWithKantecki" />
           <DuolingoStats windowWidth={windowWidth} />
           <KhanAcademyStats windowWidth={windowWidth} />
+        </div>
+      </section>
+
+      {/* Section Separator */}
+      <div className="pixel-divider" style={{
+        '--divider-color': 'rgba(59, 130, 246, 0.6)',
+        '--divider-shadow': 'rgba(59, 130, 246, 0.25)'
+      }} />
+
+      {/* Books Section */}
+      <section id="books" className="section-padding" style={{
+        padding: windowWidth > 768 ? '80px 48px 100px' : '60px 24px 60px',
+        position: 'relative',
+        zIndex: 10
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2
+            className={`section-header ${visibleElements.has('books-header') ? 'visible' : ''}`}
+            data-animate-id="books-header"
+            style={{
+              fontSize: windowWidth > 768 ? '36px' : '28px',
+              fontWeight: '600',
+              marginBottom: windowWidth > 768 ? '60px' : '56px',
+              textAlign: 'center'
+            }}>
+            Books I&nbsp;Like
+          </h2>
+          <Bookshelf windowWidth={windowWidth} />
         </div>
       </section>
 
