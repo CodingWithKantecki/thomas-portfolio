@@ -965,6 +965,38 @@ export default function Portfolio() {
             inset 2px 2px 0px rgba(255,255,255,0.2);
         }
 
+        /* Download resume button: the project cards' border, shadow and hover lift */
+        .resume-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px 28px;
+          background: rgba(15, 23, 42, 0.95);
+          border: 4px solid #3B82F6;
+          box-shadow: 6px 6px 0px #1E3A8A;
+          color: #ffffff;
+          font-size: 16px;
+          text-decoration: none;
+          transition: transform 0.1s step-end, box-shadow 0.1s step-end;
+        }
+
+        .resume-btn svg {
+          color: #22D3EE;
+          flex-shrink: 0;
+        }
+
+        .resume-btn:hover,
+        .resume-btn:focus-visible {
+          transform: translate(-3px, -3px);
+          box-shadow: 9px 9px 0px #1E3A8A;
+          border-color: #22D3EE;
+        }
+
+        .resume-btn:active {
+          transform: translate(3px, 3px);
+          box-shadow: 0px 0px 0px #1E3A8A;
+        }
+
         /* Pixel card style */
         .pixel-card {
           background: rgba(30, 41, 59, 0.95);
@@ -1242,6 +1274,11 @@ export default function Portfolio() {
 
           .hero-description {
             font-size: 14px !important;
+          }
+
+          .resume-btn {
+            font-size: 12px;
+            padding: 14px 20px;
           }
 
           .section-padding {
@@ -5366,28 +5403,7 @@ export default function Portfolio() {
           }} />
 
           {/* Download Resume Button */}
-          <a href="/resume.pdf" download style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '16px 32px',
-            background: 'linear-gradient(135deg, #3B82F6 0%, #22D3EE 100%)',
-            borderRadius: '8px',
-            color: '#ffffff',
-            textDecoration: 'none',
-            fontSize: '17px',
-            fontWeight: '600',
-            transition: 'transform 0.3s, box-shadow 0.3s',
-            boxShadow: '0 2px 10px rgba(59, 130, 246, 0.3)'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.5)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 2px 10px rgba(59, 130, 246, 0.3)';
-          }}>
+          <a href="/resume.pdf" download className="resume-btn">
             <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
