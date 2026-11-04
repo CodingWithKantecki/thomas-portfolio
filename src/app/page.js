@@ -1950,6 +1950,7 @@ export default function Portfolio() {
         <div style={{
           textAlign: 'center',
           animation: 'fadeInUp 1s ease-out',
+          width: '100%', // full column even with a short subtitle; the ECG's one-line check measures the h1
           maxWidth: '960px',
           padding: '0 24px',
           position: 'relative',
@@ -1990,7 +1991,7 @@ export default function Portfolio() {
             opacity: showSubtitle ? 1 : 0,
             transition: 'opacity 1s ease-out 0.3s'
           }}>
-            Health Informatics Student • Full-Stack Developer
+            Health Informatics Student
           </p>
           
 
