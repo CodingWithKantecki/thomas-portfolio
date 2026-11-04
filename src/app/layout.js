@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { preload } from "react-dom";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,6 +28,7 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  preload("/fonts/press-start-2p-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
