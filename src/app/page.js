@@ -61,6 +61,9 @@ export default function Portfolio() {
   const nameMeasureRef = useRef(null);
 
   const fullText = "Thomas Kantecki";
+  // The name's size, shared by the h1 and its hidden measuring copy. Multiples of 8px keep the pixel
+  // font's pixels whole; the bigger sizes start where the ECG spikes still fit beside the name.
+  const nameFontPx = windowWidth > 1500 ? 72 : windowWidth > 1380 ? 64 : windowWidth > 1024 ? 56 : windowWidth > 768 ? 48 : 32;
 
   useEffect(() => {
     // Set mounted state and initial width immediately
@@ -1952,18 +1955,18 @@ export default function Portfolio() {
           textAlign: 'center',
           animation: 'fadeInUp 1s ease-out',
           width: '100%', // full column even with a short subtitle; the ECG's one-line check measures the h1
-          maxWidth: '960px',
+          maxWidth: '1200px',
           padding: '0 24px',
           position: 'relative',
           zIndex: 1
         }}>
           <h1 ref={nameRef} style={{
-            fontSize: windowWidth > 1024 ? '56px' : windowWidth > 768 ? '48px' : '32px',
+            fontSize: `${nameFontPx}px`,
             fontWeight: '600',
             marginBottom: '16px',
             lineHeight: '1.2',
             color: '#ffffff',
-            minHeight: windowWidth > 1024 ? '68px' : windowWidth > 768 ? '58px' : '40px' // Prevent layout shift
+            minHeight: `${Math.ceil(nameFontPx * 1.2)}px` // Prevent layout shift
           }}>
             {typedText}
             {typedText.length < fullText.length && (
@@ -1981,12 +1984,12 @@ export default function Portfolio() {
             visibility: 'hidden',
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
-            fontSize: windowWidth > 1024 ? '56px' : windowWidth > 768 ? '48px' : '32px',
+            fontSize: `${nameFontPx}px`,
             fontWeight: '600'
           }}>{fullText}</span>
           
           <p className="hero-description" style={{
-            fontSize: windowWidth > 1024 ? '20px' : windowWidth > 768 ? '18px' : '14px',
+            fontSize: windowWidth > 1380 ? '24px' : windowWidth > 1024 ? '20px' : windowWidth > 768 ? '18px' : '14px',
             color: '#94a3b8',
             marginBottom: '0',
             opacity: showSubtitle ? 1 : 0,
@@ -2014,7 +2017,7 @@ export default function Portfolio() {
                 });
               }}
               style={{
-                fontSize: windowWidth > 768 ? '40px' : '32px',
+                fontSize: windowWidth > 1380 ? '48px' : windowWidth > 768 ? '40px' : '32px',
                 // Tight line box, so the wrapper's margin alone sets the gap above the arrow
                 lineHeight: 1,
                 color: '#3B82F6',
