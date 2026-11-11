@@ -6,6 +6,7 @@ import Link from 'next/link';
 import GitHubContributionGraph from '@/components/GitHubContributionGraph';
 import DuolingoStats from '@/components/DuolingoStats';
 import KhanAcademyStats from '@/components/KhanAcademyStats';
+import NeetCodeStats from '@/components/NeetCodeStats';
 import Bookshelf from '@/components/Bookshelf';
 
 export default function Portfolio() {
@@ -5299,6 +5300,7 @@ export default function Portfolio() {
           <GitHubContributionGraph username="CodingWithKantecki" />
           <DuolingoStats windowWidth={windowWidth} />
           <KhanAcademyStats windowWidth={windowWidth} />
+          <NeetCodeStats windowWidth={windowWidth} />
         </div>
       </section>
 

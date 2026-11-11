@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-// Shared by the Duolingo and Khan Academy cards: a colored panel with a pixel sprite next to the
-// project-card title box and a row of stat boxes.
+// Shared by the Duolingo, Khan Academy and NeetCode cards: a colored panel with a pixel sprite
+// next to the project-card title box and a row of stat boxes.
 
 // One path per color, built from horizontal runs (same shape as the footer's pixel heart).
 export function spritePaths(rows, colors) {
