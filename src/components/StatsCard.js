@@ -53,11 +53,16 @@ export function Sprite({ paths, width, height, scale, label }) {
 }
 
 // Loads one of the stats routes. Stays null while loading or if the route fails, so the card
-// can hide itself; the routes read unofficial endpoints that can break without notice.
+// can hide itself; the routes read unofficial endpoints that can break without notice. A null
+// `url` loads nothing.
 export function useStats(url) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    if (!url) {
+      return undefined;
+    }
+
     let active = true;
 
     async function loadStats() {
@@ -87,7 +92,8 @@ export function useStats(url) {
 }
 
 // `tile` stacks icon, value and label with larger text, for boxes stretched to the card's height.
-function Stat({ icon, value, label, tile }) {
+// A box without an icon (the countdown's) centers its value and label.
+export function Stat({ icon, value, label, tile }) {
   return (
     <div style={{
       flex: '1 1 190px',
@@ -97,14 +103,16 @@ function Stat({ icon, value, label, tile }) {
       justifyContent: 'center',
       gap: tile ? '10px' : '12px',
       padding: '12px 14px',
-      textAlign: tile ? 'center' : undefined,
+      textAlign: tile || !icon ? 'center' : undefined,
       background: 'rgba(15, 23, 42, 0.95)',
       border: '3px solid #3B82F6',
       boxShadow: '4px 4px 0px #000'
     }}>
-      <div style={{ width: '32px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
-        {icon}
-      </div>
+      {icon && (
+        <div style={{ width: '32px', display: 'flex', justifyContent: 'center', flexShrink: 0 }}>
+          {icon}
+        </div>
+      )}
       <div>
         <span style={{ display: 'block', color: '#fff', fontSize: tile ? '24px' : '18px', lineHeight: 1.2 }}>
           {value}
@@ -117,7 +125,28 @@ function Stat({ icon, value, label, tile }) {
   );
 }
 
-export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, stats }) {
+// The project-card title box.
+export function TitleBox({ windowWidth = 1200, style, children }) {
+  return (
+    <div style={{
+      alignSelf: 'flex-start',
+      background: 'rgba(15, 23, 42, 0.95)',
+      padding: '8px 14px',
+      fontSize: windowWidth > 768 ? '14px' : '12px',
+      fontFamily: "'Press Start 2P', cursive",
+      color: '#fff',
+      boxShadow: '4px 4px 0px #000',
+      border: '3px solid #3B82F6',
+      marginBottom: '12px',
+      ...style
+    }}>
+      {children}
+    </div>
+  );
+}
+
+// `columns` lines the stat boxes up on an even grid instead of letting them wrap.
+export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, stats, columns }) {
   const wide = windowWidth > 1024;
 
   return (
@@ -151,23 +180,16 @@ export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title
 
       {/* Card content */}
       <div style={{ padding: windowWidth > 768 ? '20px 24px' : '14px', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-        {/* Title box */}
-        <div style={{
-          alignSelf: 'flex-start',
-          background: 'rgba(15, 23, 42, 0.95)',
-          padding: '8px 14px',
-          fontSize: windowWidth > 768 ? '14px' : '12px',
-          fontFamily: "'Press Start 2P', cursive",
-          color: '#fff',
-          boxShadow: '4px 4px 0px #000',
-          border: '3px solid #3B82F6',
-          marginBottom: '12px'
-        }}>
-          {title}
-        </div>
+        <TitleBox windowWidth={windowWidth}>{title}</TitleBox>
 
         {/* Stat boxes: next to the sprite panel they grow to fill the rest of its height */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', flexGrow: 1 }}>
+        <div style={{
+          display: columns ? 'grid' : 'flex',
+          gridTemplateColumns: columns ? `repeat(${columns}, minmax(0, 1fr))` : undefined,
+          flexWrap: columns ? undefined : 'wrap',
+          gap: '12px',
+          flexGrow: 1
+        }}>
           {stats.map((stat) => (
             <Stat key={stat.label} {...stat} tile={wide} />
           ))}

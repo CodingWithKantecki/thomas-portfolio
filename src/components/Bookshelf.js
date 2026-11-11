@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Stat, TitleBox } from './StatsCard';
+import { UNLOCK_AT, countdownStats, useCountdown } from './Countdown';
 
 // Books read, in shelf order. Covers are Open Library scans saved in public/books; `color` is the
 // cover's binding-side color, used for the back cover's edge.
@@ -24,6 +26,7 @@ const PAGES = { top: '#F4ECD6', topLine: '#D9CBA6', side: '#DCCFAE', sideLine: '
 const LIFT = 8;
 
 export default function Bookshelf({ windowWidth = 1200 }) {
+  const left = useCountdown(UNLOCK_AT);
   const [active, setActive] = useState(null);
   const [tip, setTip] = useState(null);
   const [shelfWidth, setShelfWidth] = useState(null);
@@ -66,6 +69,50 @@ export default function Bookshelf({ windowWidth = 1200 }) {
       top: book.offsetTop + headroom - LIFT - depth - height - 8
     });
   }, [active, headroom, depth, coverWidth]);
+
+  // Until the countdown runs out the shelf stands empty, with the countdown on it instead of books.
+  if (left !== 0) {
+    return (
+      <div ref={shelfRef} style={{ position: 'relative', padding: small ? '0 8px' : '0 24px' }}>
+        <div style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: '640px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+          <TitleBox windowWidth={windowWidth} style={{ alignSelf: 'center' }}>Unlocks in</TitleBox>
+          <div style={{
+            alignSelf: 'stretch',
+            display: 'grid',
+            gridTemplateColumns: `repeat(${windowWidth > 600 ? 4 : 2}, minmax(0, 1fr))`,
+            gap: '12px'
+          }}>
+            {countdownStats(left).map((stat) => (
+              <Stat key={stat.label} {...stat} tile={!small} />
+            ))}
+          </div>
+        </div>
+
+        {/* The plank, with its top surface tucked under the boxes so their shadows land on it */}
+        <div aria-hidden="true" style={{
+          height: `${depth + plank + brackets}px`,
+          marginTop: `-${depth - 4}px`,
+          borderImage: `linear-gradient(${WOOD.top} 0 ${depth}px, ${WOOD.edge} ${depth}px ${depth + 2}px, ${WOOD.face} ${depth + 2}px ${depth + plank - 4}px, ${WOOD.under} ${depth + plank - 4}px ${depth + plank}px, transparent ${depth + plank}px) fill 0 / 0 / 0 100vw`,
+          // Brackets where the full shelf has them, measured from the shelf's outer edge.
+          backgroundImage: [
+            `linear-gradient(transparent ${depth + plank}px, ${WOOD.bracket} ${depth + plank}px)`,
+            `linear-gradient(transparent ${depth + plank}px, ${WOOD.bracket} ${depth + plank}px)`
+          ].join(', '),
+          backgroundSize: '16px 100%',
+          backgroundPosition: `left ${small ? 8 : 16}px top, right ${small ? 8 : 16}px top`,
+          backgroundRepeat: 'no-repeat'
+        }} />
+      </div>
+    );
+  }
 
   return (
     <div

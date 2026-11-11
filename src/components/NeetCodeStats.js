@@ -1,6 +1,7 @@
 'use client';
 
 import StatsCard, { OutlineIcon, spritePaths, useStats } from './StatsCard';
+import { UNLOCK_AT, countdownStats, useCountdown } from './Countdown';
 
 // 8-bit NeetCode rocket, one character per pixel (colors in ROCKET_COLORS, '.' is transparent).
 const ROCKET = [
@@ -55,8 +56,26 @@ const FIRE_PATHS = [
 ];
 const CODE_PATHS = ['M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'];
 
+const ROCKET_SPRITE = { paths: ROCKET_PATHS, width: 16, height: 24, label: '8-bit NeetCode rocket' };
+
 export default function NeetCodeStats({ windowWidth = 1200 }) {
-  const data = useStats('/api/neetcode');
+  const left = useCountdown(UNLOCK_AT);
+  const locked = left !== 0;
+  // The stats aren't loaded until they unlock.
+  const data = useStats(locked ? null : '/api/neetcode');
+
+  if (locked) {
+    return (
+      <StatsCard
+        windowWidth={windowWidth}
+        heroColor="#DBE4FF"
+        sprite={ROCKET_SPRITE}
+        title={'NeetCode unlocks in'}
+        stats={countdownStats(left)}
+        columns={windowWidth > 600 ? 4 : 2}
+      />
+    );
+  }
 
   if (!data) {
     return null;
@@ -66,7 +85,7 @@ export default function NeetCodeStats({ windowWidth = 1200 }) {
     <StatsCard
       windowWidth={windowWidth}
       heroColor="#DBE4FF"
-      sprite={{ paths: ROCKET_PATHS, width: 16, height: 24, label: '8-bit NeetCode rocket' }}
+      sprite={ROCKET_SPRITE}
       title="NeetCode"
       stats={[
         { icon: <OutlineIcon paths={CHECK_PATHS} color="#22C55E" />, value: data.solved.toLocaleString(), label: data.solved === 1 ? 'problem solved' : 'problems solved' },
