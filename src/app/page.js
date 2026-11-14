@@ -10,9 +10,6 @@ import NeetCodeStats from '@/components/NeetCodeStats';
 import Bookshelf from '@/components/Bookshelf';
 
 export default function Portfolio() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [logoSlideProgress, setLogoSlideProgress] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(false);
@@ -20,7 +17,6 @@ export default function Portfolio() {
   const [windowWidth, setWindowWidth] = useState(768); // Default to mobile breakpoint, will update on mount
   const [mounted, setMounted] = useState(false);
   const [currentSection, setCurrentSection] = useState('');
-  const [visibleElements, setVisibleElements] = useState(new Set());
   const [expandedExp, setExpandedExp] = useState({});
   const [expandedProject, setExpandedProject] = useState({});
   const [closingExp, setClosingExp] = useState({});
@@ -57,6 +53,12 @@ export default function Portfolio() {
   };
   const canvasRef = useRef(null); // fixed, site-wide grid
   const ecgRef = useRef(null); // scrolls with the hero, so the outline stays glued to the text
+  // Layers that follow the scroll. The scroll handler sets their opacity and transform directly, so
+  // scrolling never re-renders the page.
+  const vibeyRef = useRef(null);
+  const orbsRef = useRef(null);
+  const gridFillRef = useRef(null);
+  const logoRef = useRef(null);
   const nameRef = useRef(null);
   const nameMeasureRef = useRef(null);
 
@@ -97,61 +99,68 @@ export default function Portfolio() {
 
     window.addEventListener('resize', handleResize);
 
-    // Mouse position tracker with proximity effects
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-
+    // Scroll effects. They are written straight to the DOM once per frame instead of going through React
+    // state, so scrolling never re-renders the page.
+    const erf = (x) => {
+      // Abramowitz and Stegun 7.1.26
+      const t = 1 / (1 + 0.3275911 * x);
+      return 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
     };
+    // The grid and the ECG line used to blur by up to 15px as the hero scrolled away. A blur that changes
+    // every frame is the most expensive effect there is, so they now dim to the brightness a line of their
+    // width keeps under that blur instead.
+    const blurredLineLevel = (lineWidth, progress) =>
+      progress <= 0 ? 1 : erf(lineWidth / (2 * Math.SQRT2 * 15 * progress));
 
-    window.addEventListener('mousemove', handleMouseMove);
-
-    // Scroll listener for background effects and section tracking
-    const handleScroll = () => {
+    let scrollFrame = 0;
+    let lastSection = '';
+    const applyScroll = () => {
+      scrollFrame = 0;
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
       const progress = Math.min(scrollY / windowHeight, 1);
-      setScrollProgress(progress);
 
-      // Calculate logo slide progress (starts sliding immediately, gone by experience section)
+      // The logo slides out by the time the Experience section arrives
+      let slide = 0;
       const experienceSection = document.getElementById('experience');
-      if (experienceSection) {
-        const experienceTop = experienceSection.offsetTop;
-        const startSlide = 0; // Start sliding immediately
-        const endSlide = experienceTop - 100; // Fully gone before experience section
-
-        if (scrollY <= startSlide) {
-          setLogoSlideProgress(0);
-        } else if (scrollY >= endSlide) {
-          setLogoSlideProgress(1);
-        } else {
-          const slideRange = endSlide - startSlide;
-          const slideProgress = scrollY / slideRange;
-          setLogoSlideProgress(Math.min(Math.max(slideProgress, 0), 1));
-        }
+      if (experienceSection && scrollY > 0) {
+        const endSlide = experienceSection.offsetTop - 100;
+        slide = scrollY >= endSlide ? 1 : Math.min(Math.max(scrollY / endSlide, 0), 1);
       }
 
-      // Track current section for navigation indicator
-      const sections = ['experience', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-      for (const sectionId of sections) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const { offsetTop, offsetHeight } = section;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setCurrentSection(sectionId);
-            break;
-          }
+      // Current section for the navigation indicator
+      let section = lastSection;
+      const scrollPosition = scrollY + windowHeight / 3;
+      for (const sectionId of ['experience', 'projects', 'contact']) {
+        const el = document.getElementById(sectionId);
+        if (el && scrollPosition >= el.offsetTop && scrollPosition < el.offsetTop + el.offsetHeight) {
+          section = sectionId;
+          break;
         }
       }
+      if (scrollY < 100) section = '';
 
-      // Clear section when at top of page
-      if (window.scrollY < 100) {
-        setCurrentSection('');
+      const fade = 1 - progress * 0.7;
+      if (vibeyRef.current) vibeyRef.current.style.opacity = String(0.1 * progress * progress);
+      if (orbsRef.current) orbsRef.current.style.opacity = String(progress * 0.6);
+      if (gridFillRef.current) gridFillRef.current.style.opacity = String(fade);
+      if (canvasRef.current) canvasRef.current.style.opacity = String(fade * blurredLineLevel(0.5, progress));
+      if (ecgRef.current) ecgRef.current.style.opacity = String(fade * blurredLineLevel(6, progress));
+      if (logoRef.current) {
+        logoRef.current.style.transform = `translateX(-${slide * 150}%)`;
+        logoRef.current.style.opacity = String(1 - slide * 0.5);
+      }
+      if (section !== lastSection) {
+        lastSection = section;
+        setCurrentSection(section);
       }
     };
+    const handleScroll = () => {
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(applyScroll);
+    };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    applyScroll(); // the page can load already scrolled down
 
     // Typewriter effect
     let typewriterInterval = null;
@@ -183,8 +192,8 @@ export default function Portfolio() {
       clearTimeout(typewriterTimer);
       clearInterval(typewriterInterval);
       clearInterval(cursorInterval);
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(scrollFrame);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -208,8 +217,6 @@ export default function Portfolio() {
       gridCanvas.width = Math.round(w * dpr);
       gridCanvas.height = Math.round(h * dpr);
       gridCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      gridCtx.fillStyle = '#020617';
-      gridCtx.fillRect(0, 0, w, h);
       gridCtx.strokeStyle = 'rgba(59, 130, 246, 0.14)';
       gridCtx.lineWidth = 0.5;
       for (let i = 0; i < w; i += 50) {
@@ -725,6 +732,20 @@ export default function Portfolio() {
 
     let rafId = requestAnimationFrame(animate);
 
+    // Stop drawing while the hero is off screen, and pick up where it left off when it comes back.
+    let ecgRunning = true;
+    const ecgVisibility = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !ecgRunning) {
+        ecgRunning = true;
+        lastFrameTime = 0;
+        rafId = requestAnimationFrame(animate);
+      } else if (!entry.isIntersecting && ecgRunning) {
+        ecgRunning = false;
+        cancelAnimationFrame(rafId);
+      }
+    });
+    ecgVisibility.observe(ecg);
+
     const handleResize = () => {
       drawGrid();
       sizeCanvas();
@@ -733,31 +754,51 @@ export default function Portfolio() {
     window.addEventListener('resize', handleResize);
     return () => {
       cancelAnimationFrame(rafId);
+      ecgVisibility.disconnect();
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // Intersection Observer for scroll-triggered animations
+  // Scroll reveal. The observer adds the "visible" class to an element once and stops watching it, so a
+  // reveal never re-renders the page. Elements that mount later or remount (a breakpoint change can do
+  // that) are picked up by the MutationObserver and get the class back right away if already revealed.
   useEffect(() => {
+    if (!mounted) return;
+    const revealed = new Set();
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set(prev).add(entry.target.dataset.animateId));
-          }
-        });
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          revealed.add(entry.target.dataset.animateId);
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
       },
       {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
       }
     );
+    const watch = (el) => {
+      if (revealed.has(el.dataset.animateId)) el.classList.add('visible');
+      else observer.observe(el);
+    };
+    document.querySelectorAll('[data-animate-id]').forEach(watch);
+    const added = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType !== 1) continue;
+          if (node.matches('[data-animate-id]')) watch(node);
+          node.querySelectorAll('[data-animate-id]').forEach(watch);
+        }
+      }
+    });
+    added.observe(document.body, { childList: true, subtree: true });
 
-    // Observe all elements with data-animate-id
-    const elements = document.querySelectorAll('[data-animate-id]');
-    elements.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      added.disconnect();
+    };
   }, [mounted]);
 
   const navItems = [
@@ -1167,18 +1208,6 @@ export default function Portfolio() {
           }
         }
 
-        @keyframes gradientShift {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-
         @keyframes slideIn {
           from {
             transform: translateX(100%);
@@ -1421,11 +1450,6 @@ export default function Portfolio() {
           }
         }
 
-        .vibey-gradient {
-          background-size: 400% 400%;
-          animation: gradientShift 15s ease infinite;
-        }
-
         .heartbeat-glow {
           animation: pulse 1s ease-in-out infinite;
         }
@@ -1433,23 +1457,36 @@ export default function Portfolio() {
         .pixel-divider {
           height: 11px;
           width: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* The dashes slide by transform, which the GPU handles, instead of repainting every frame */
+        .pixel-divider::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -28px;
+          width: calc(100% + 28px);
+          height: 100%;
           background-image:
             repeating-linear-gradient(90deg, var(--divider-color) 0px, var(--divider-color) 16px, transparent 16px, transparent 28px),
             repeating-linear-gradient(90deg, var(--divider-shadow) 0px, var(--divider-shadow) 16px, transparent 16px, transparent 28px);
-          background-size: calc(100% + 28px) 8px, calc(100% + 28px) 8px;
-          background-position: -28px 0, -25px 3px;
+          background-size: 100% 8px, 100% 8px;
+          background-position: 0 0, 3px 3px;
           background-repeat: no-repeat;
+          will-change: transform;
           animation: pixel-divider-scroll 1.2s linear infinite;
         }
 
         @keyframes pixel-divider-scroll {
           to {
-            background-position: 0 0, 3px 3px;
+            transform: translateX(28px);
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .pixel-divider {
+          .pixel-divider::before {
             animation: none;
           }
         }
@@ -1505,40 +1542,36 @@ export default function Portfolio() {
       {/* CRT Scanline Overlay for 8-bit effect */}
       <div className="crt-overlay" />
 
-      {/* Color-shifting background that appears on scroll */}
-      <div 
-        className="vibey-gradient"
+      {/* Color wash that fades in on scroll. It is a still gradient: the old 400% sliding version never
+          moved (its inline background reset the size) but still repainted the whole screen every frame. */}
+      <div
+        ref={vibeyRef}
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          background: `
-            linear-gradient(
-              -45deg, 
-              rgba(59, 130, 246, ${scrollProgress * 0.1}),
-              rgba(6, 182, 212, ${scrollProgress * 0.1}),
-              rgba(249, 115, 22, ${scrollProgress * 0.1}),
-              rgba(236, 72, 153, ${scrollProgress * 0.1})
-            )
-          `,
-          opacity: scrollProgress,
+          background: 'linear-gradient(-45deg, rgb(59, 130, 246), rgb(6, 182, 212), rgb(249, 115, 22), rgb(236, 72, 153))',
+          opacity: 0,
+          willChange: 'opacity',
           transition: 'opacity 0.6s ease-out',
           pointerEvents: 'none',
           zIndex: 0
         }}
       />
       
-      {/* Soft gradient orbs for depth */}
-      <div 
+      {/* Soft gradient orbs for depth. They stay still, so their blur is painted once and never again. */}
+      <div
+        ref={orbsRef}
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          opacity: scrollProgress * 0.6,
+          opacity: 0,
+          willChange: 'opacity',
           transition: 'opacity 0.6s ease-out',
           pointerEvents: 'none',
           zIndex: 0
@@ -1551,8 +1584,7 @@ export default function Portfolio() {
           width: '300px',
           height: '300px',
           background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-          animation: 'float 8s ease-in-out infinite'
+          filter: 'blur(40px)'
         }} />
         <div style={{
           position: 'absolute',
@@ -1561,21 +1593,37 @@ export default function Portfolio() {
           width: '400px',
           height: '400px',
           background: 'radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-          animation: 'float 10s ease-in-out infinite reverse'
+          filter: 'blur(60px)'
         }} />
         <div style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
           width: '500px',
           height: '500px',
           background: 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          animation: 'float 12s ease-in-out infinite'
+          filter: 'blur(80px)'
         }} />
       </div>
+
+      {/* Dark backing under the grid lines. It fades with the grid but is never blurred, so it lives on
+          its own layer and the lines can dim on their own. */}
+      <div
+        ref={gridFillRef}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: '#020617',
+          zIndex: 1,
+          pointerEvents: 'none',
+          opacity: 1,
+          willChange: 'opacity',
+          transition: 'opacity 0.3s ease-out'
+        }}
+      />
 
       {/* Site-wide grid background */}
       <canvas
@@ -1589,9 +1637,8 @@ export default function Portfolio() {
           maxWidth: '100vw',
           zIndex: 1,
           pointerEvents: 'none',
-          filter: `blur(${scrollProgress * 15}px)`,
-          opacity: 1 - (scrollProgress * 0.7),
-          transition: 'filter 0.3s ease-out, opacity 0.3s ease-out'
+          opacity: 1,
+          transition: 'opacity 0.3s ease-out'
         }}
       />
       
@@ -1611,14 +1658,14 @@ export default function Portfolio() {
         opacity: mounted ? 1 : 0,
         transition: 'opacity 0.15s ease-in'
       }}>
-        <div style={{
+        <div ref={logoRef} style={{
           fontSize: windowWidth > 768 ? '16px' : '12px',
           fontWeight: '600',
           fontFamily: "'Press Start 2P', cursive",
           color: '#3B82F6',
           textShadow: '2px 2px 0px #000',
-          transform: `translateX(-${logoSlideProgress * 150}%)`,
-          opacity: 1 - (logoSlideProgress * 0.5),
+          transform: 'translateX(0%)',
+          opacity: 1,
           transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
           willChange: 'transform, opacity'
         }}>
@@ -1967,9 +2014,8 @@ export default function Portfolio() {
             height: '100%',
             zIndex: 0,
             pointerEvents: 'none',
-            filter: `blur(${scrollProgress * 15}px)`,
-            opacity: 1 - (scrollProgress * 0.7),
-            transition: 'filter 0.3s ease-out, opacity 0.3s ease-out'
+            opacity: 1,
+            transition: 'opacity 0.3s ease-out'
           }}
         />
         <div style={{
@@ -2068,7 +2114,7 @@ export default function Portfolio() {
         zIndex: 10
       }}>
         <h2
-          className={`section-header ${visibleElements.has('exp-header') ? 'visible' : ''}`}
+          className={`section-header`}
           data-animate-id="exp-header"
           style={{
             fontSize: windowWidth > 768 ? '36px' : '28px',
@@ -2118,7 +2164,7 @@ export default function Portfolio() {
 
               {/* AdventHealth - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-adventhealth') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-adventhealth"
                 style={{
                   display: 'flex',
@@ -2343,7 +2389,7 @@ export default function Portfolio() {
 
               {/* Statura - LEFT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-statura') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-statura"
                 style={{
                   display: 'flex',
@@ -2573,7 +2619,7 @@ export default function Portfolio() {
 
               {/* SwampHacks XI - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-sh') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-sh"
                 style={{
                   display: 'flex',
@@ -2833,7 +2879,7 @@ export default function Portfolio() {
 
               {/* Knight Hacks - LEFT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-kh') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-kh"
                 style={{
                   display: 'flex',
@@ -3099,7 +3145,7 @@ export default function Portfolio() {
 
               {/* AJR Publishing - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-0') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-0"
                 style={{
                   display: 'flex',
@@ -3305,7 +3351,7 @@ export default function Portfolio() {
 
               {/* Lacoste - LEFT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-1"
                 style={{
                   display: 'flex',
@@ -3505,7 +3551,7 @@ export default function Portfolio() {
 
               {/* Sharelife Vacation - RIGHT SIDE */}
               <div
-                className={`animate-on-scroll ${visibleElements.has('exp-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll`}
                 data-animate-id="exp-card-2"
                 style={{
                   display: 'flex',
@@ -3744,12 +3790,10 @@ export default function Portfolio() {
             
             <div style={{ display: 'grid', gridAutoRows: '1fr', gap: '20px' }}>
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="edu-card-1"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -3799,12 +3843,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="edu-card-2"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -3850,12 +3892,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('edu-card-3') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="edu-card-3"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -3917,12 +3957,10 @@ export default function Portfolio() {
 
             <div style={{ display: 'grid', gridAutoRows: '1fr', gap: '20px' }}>
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-1') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-1"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -3968,12 +4006,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-2') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-2"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -4022,12 +4058,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-3') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-3"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -4076,12 +4110,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-4') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-4"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -4130,12 +4162,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-5') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-5"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -4184,12 +4214,10 @@ export default function Portfolio() {
               </div>
 
               <div
-                className={`animate-on-scroll hover-card edu-cert-card ${visibleElements.has('cert-card-6') ? 'visible' : ''}`}
+                className={`animate-on-scroll hover-card edu-cert-card`}
                 data-animate-id="cert-card-6"
                 style={{
                   background: 'rgba(30, 41, 59, 0.5)',
-                  backdropFilter: 'blur(10px)',
-                  WebkitBackdropFilter: 'blur(10px)',
                   borderRadius: '12px',
                   padding: '20px',
                   border: '1px solid rgba(59, 130, 246, 0.1)',
@@ -4266,7 +4294,7 @@ export default function Portfolio() {
           boxSizing: 'border-box'
         }}>
           <h2
-            className={`section-header ${visibleElements.has('projects-header') ? 'visible' : ''}`}
+            className={`section-header`}
             data-animate-id="projects-header"
             style={{
               fontSize: windowWidth > 768 ? '36px' : '24px',
@@ -4287,7 +4315,7 @@ export default function Portfolio() {
           }}>
             {/* CardioView - newest project */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-cardioview') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-cardioview"
               style={{
                 flex: projectCardFlex,
@@ -4403,7 +4431,7 @@ export default function Portfolio() {
 
             {/* Statura - legislative intelligence platform */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-statura') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-statura"
               style={{
                 flex: projectCardFlex,
@@ -4530,7 +4558,7 @@ export default function Portfolio() {
 
             {/* CapySynth - VST plugin */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-capysynth') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-capysynth"
               style={{
                 flex: projectCardFlex,
@@ -4672,7 +4700,7 @@ export default function Portfolio() {
 
             {/* NeuroView Project */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-1"
               style={{
                 flex: projectCardFlex,
@@ -4805,7 +4833,7 @@ export default function Portfolio() {
 
             {/* KINEXIS Project */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-2"
               style={{
                 flex: projectCardFlex,
@@ -4819,9 +4847,15 @@ export default function Portfolio() {
               }}>
               {/* Image with overlay title */}
               <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '140px' : '120px', overflow: 'hidden' }}>
-                <img
-                  src="/kinexis-demo.gif"
-                  alt="KINEXIS demo"
+                {/* A looping video instead of the old 52 MB GIF: 2 MB, and the graphics chip decodes it */}
+                <video
+                  src="/kinexis-demo.mp4"
+                  poster="/kinexis-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-label="KINEXIS demo"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -4938,7 +4972,7 @@ export default function Portfolio() {
 
             {/* Sentinel PHI Scanner */}
             <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-4') ? 'visible' : ''}`}
+              className={`animate-on-scroll hover-card`}
               data-animate-id="project-card-4"
               style={{
                 flex: projectCardFlex,
@@ -5091,7 +5125,7 @@ export default function Portfolio() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2
-            className={`section-header ${visibleElements.has('books-header') ? 'visible' : ''}`}
+            className={`section-header`}
             data-animate-id="books-header"
             style={{
               fontSize: windowWidth > 768 ? '36px' : '28px',
