@@ -803,7 +803,8 @@ export default function Portfolio() {
 
   const navItems = [
     { name: 'Experience', href: '#experience', isExternal: false },
-    { name: 'Projects', href: '#projects', isExternal: false }
+    { name: 'Projects', href: '#projects', isExternal: false },
+    { name: 'Admin', href: '/admin', isExternal: false }
   ];
 
   // Component for reactive skill items
