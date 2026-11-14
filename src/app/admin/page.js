@@ -12,15 +12,28 @@ const card = {
   padding: "20px",
 };
 
+// Reminder cards are smaller than the login card so many fit on one screen
+const smallCard = {
+  background: "rgba(30, 41, 59, 0.9)",
+  border: "4px solid #3B82F6",
+  boxShadow: "6px 6px 0 #1E3A8A",
+  padding: "14px",
+};
+
 const titleBox = {
   alignSelf: "flex-start",
   background: "rgba(15, 23, 42, 0.95)",
   border: "3px solid #3B82F6",
   boxShadow: "4px 4px 0 #000",
-  padding: "8px 14px",
-  fontSize: "14px",
+  padding: "6px 10px",
+  fontSize: "11px",
+  lineHeight: 1.5,
   color: "#fff",
 };
+
+function dueAt(reminder) {
+  return new Date(reminder.lastDone).getTime() + reminder.intervalDays * DAY;
+}
 
 function plural(n, word) {
   return `${n} ${word}${n === 1 ? "" : "s"}`;
@@ -69,11 +82,11 @@ function ProgressBar({ reminder, now }) {
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${blocks}, 1fr)`,
-        gap: "3px",
-        padding: "4px",
+        gap: "2px",
+        padding: "3px",
         border: "3px solid #3B82F6",
         background: "#020617",
-        height: "34px",
+        height: "22px",
       }}
     >
       {Array.from({ length: blocks }, (_, i) => (
@@ -90,16 +103,16 @@ function ReminderCard({ reminder, now, onReset, busy }) {
     day: "numeric",
   });
   return (
-    <div style={{ ...card, display: "flex", flexDirection: "column", gap: "14px" }}>
+    <div style={{ ...smallCard, display: "flex", flexDirection: "column", gap: "10px" }}>
       <div style={titleBox}>{reminder.title}</div>
-      <div style={{ color: "#94a3b8", fontSize: "11px", lineHeight: 1.9 }}>
+      <div style={{ color: "#94a3b8", fontSize: "9px", lineHeight: 1.9 }}>
         <p>{intervalLabel(reminder.intervalDays)}</p>
         <p>Last done {lastDone}</p>
       </div>
       <ProgressBar reminder={reminder} now={now} />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
-        <span style={{ color, fontSize: "12px" }}>{text}</span>
-        <button type="button" className="admin-btn" onClick={() => onReset(reminder.id)} disabled={busy}>
+        <span style={{ color, fontSize: "10px", lineHeight: 1.6 }}>{text}</span>
+        <button type="button" className="admin-btn admin-btn-sm" onClick={() => onReset(reminder.id)} disabled={busy}>
           {busy ? "Saving" : "Reset"}
         </button>
       </div>
@@ -203,7 +216,7 @@ export default function AdminPage() {
 
   return (
     <main style={{ fontFamily: PIXEL, minHeight: "100vh", padding: "48px 16px 64px", background: "#020617" }}>
-      <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "28px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "28px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", flexWrap: "wrap" }}>
           <a href="/" className="admin-link">&lt; Back to site</a>
           {view === "ready" && (
@@ -233,7 +246,7 @@ export default function AdminPage() {
         )}
 
         {view === "login" && (
-          <form onSubmit={signIn} style={{ ...card, display: "flex", flexDirection: "column", gap: "16px" }}>
+          <form onSubmit={signIn} style={{ ...card, width: "100%", maxWidth: "480px", display: "flex", flexDirection: "column", gap: "16px" }}>
             <label htmlFor="admin-password" style={{ fontSize: "14px", color: "#fff" }}>
               Password
             </label>
@@ -262,15 +275,20 @@ export default function AdminPage() {
               Home Maintenance
             </h2>
             {message && <p aria-live="polite" style={{ color: "#EF4444", fontSize: "11px" }}>{message}</p>}
-            {reminders.map((reminder) => (
-              <ReminderCard
-                key={reminder.id}
-                reminder={reminder}
-                now={now}
-                onReset={reset}
-                busy={busyId === reminder.id}
-              />
-            ))}
+            {/* Soonest due first, several to a row */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "20px" }}>
+              {[...reminders]
+                .sort((a, b) => dueAt(a) - dueAt(b))
+                .map((reminder) => (
+                  <ReminderCard
+                    key={reminder.id}
+                    reminder={reminder}
+                    now={now}
+                    onReset={reset}
+                    busy={busyId === reminder.id}
+                  />
+                ))}
+            </div>
           </section>
         )}
       </div>
@@ -297,6 +315,12 @@ export default function AdminPage() {
         .admin-btn:active:not(:disabled) {
           transform: translate(3px, 3px);
           box-shadow: 3px 3px 0 #1e3a8a;
+        }
+        .admin-btn-sm {
+          font-size: 10px;
+          padding: 8px 12px;
+          border-width: 3px;
+          box-shadow: 4px 4px 0 #1e3a8a;
         }
         .admin-btn:disabled {
           opacity: 0.6;
