@@ -30,6 +30,8 @@ function intervalLabel(days) {
   if (days % 7 === 0) {
     return days === 7 ? "Every week" : `Every ${days / 7} weeks`;
   }
+  if (days === 365) return "Every year";
+  if (days % 30 === 0) return days === 30 ? "Every month" : `Every ${days / 30} months`;
   return days === 1 ? "Every day" : `Every ${days} days`;
 }
 

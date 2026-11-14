@@ -17,6 +17,13 @@ const GLOBAL_WINDOW_MINUTES = 60;
 const STARTING_REMINDERS = [
   { id: "fountain", title: "Check fountain", intervalDays: 14 },
   { id: "water-softener", title: "Refill water softener", intervalDays: 28 },
+  { id: "dishwasher-filter", title: "Clean dishwasher filter", intervalDays: 30 },
+  { id: "garbage-disposal", title: "Clean garbage disposal", intervalDays: 30 },
+  { id: "ac-filter", title: "Change AC filter", intervalDays: 60 },
+  { id: "ac-drain-line", title: "Flush AC drain line with vinegar", intervalDays: 90 },
+  { id: "fridge-coils", title: "Vacuum fridge coils", intervalDays: 180 },
+  { id: "dryer-vent", title: "Clean dryer vent duct", intervalDays: 365 },
+  { id: "water-heater", title: "Flush water heater", intervalDays: 365 },
 ];
 
 let sqlClient = null;
