@@ -30,6 +30,7 @@ const STARTING_REMINDERS = [
   { id: "three-stage-filter", title: "Replace 3-stage water filter cartridges", intervalDays: 180 },
   { id: "garage-door", title: "Lube garage door", intervalDays: 180 },
   { id: "roomba", title: "Deep clean Roomba", intervalDays: 30 },
+  { id: "mini-fridge", title: "Clean mini fridge coils and door seal", intervalDays: 180 },
 ];
 
 let sqlClient = null;
