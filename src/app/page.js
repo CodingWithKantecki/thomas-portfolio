@@ -68,6 +68,22 @@ export default function Portfolio() {
   // keeps rounding from pushing the last card of a full row down to the next line.
   const projectCols = windowWidth > 1024 ? 3 : windowWidth > 768 ? 2 : 1;
   const projectCardFlex = `1 1 calc((100% - ${(projectCols - 1) * 24}px) / ${projectCols} - 1px)`;
+  // Logo tiles on the Education and Certification cards: a white square with the project title boxes'
+  // pixel border, so dark logos like Johns Hopkins and UCF's lettering show up on the dark cards.
+  const logoTile = {
+    width: '96px',
+    height: '96px',
+    flexShrink: 0,
+    boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '10px',
+    background: '#fff',
+    border: '3px solid #3B82F6',
+    boxShadow: '4px 4px 0 #000'
+  };
+  const logoTileImg = { width: '100%', height: '100%', objectFit: 'contain', display: 'block' };
 
   useEffect(() => {
     // Set mounted state and initial width immediately
@@ -1367,16 +1383,17 @@ export default function Portfolio() {
             gap: 12px !important;
           }
 
-          /* Make logos smaller on mobile */
+          /* Smaller logo tiles on mobile */
           .edu-cert-card > div > div:first-child {
-            width: 50px !important;
-            height: 50px !important;
-            min-width: 50px !important;
+            width: 72px !important;
+            height: 72px !important;
+            min-width: 72px !important;
+            padding: 8px !important;
           }
 
           .edu-cert-card > div > div:first-child img {
-            width: 50px !important;
-            height: 50px !important;
+            width: 100% !important;
+            height: 100% !important;
           }
 
           /* Stack the content and date badge vertically */
@@ -1670,9 +1687,9 @@ export default function Portfolio() {
             alignItems: 'center',
             justifyContent: 'center',
             background: 'rgba(2, 6, 23, 0.95)',
-            borderLeft: '2px solid rgba(59, 130, 246, 0.3)',
-            borderTop: '2px solid rgba(59, 130, 246, 0.3)',
-            borderBottom: '2px solid rgba(59, 130, 246, 0.3)',
+            borderLeft: '3px solid #3B82F6',
+            borderTop: '3px solid #3B82F6',
+            borderBottom: '3px solid #3B82F6',
             borderTopLeftRadius: '12px',
             borderBottomLeftRadius: '12px',
             transition: 'opacity 0.3s ease, border-color 0.3s ease',
@@ -1730,9 +1747,9 @@ export default function Portfolio() {
               width: '220px',
               background: 'linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%)',
               backdropFilter: 'blur(20px)',
-              borderLeft: '2px solid rgba(59, 130, 246, 0.3)',
-              borderTop: '2px solid rgba(59, 130, 246, 0.3)',
-              borderBottom: '2px solid rgba(59, 130, 246, 0.3)',
+              borderLeft: '3px solid #3B82F6',
+              borderTop: '3px solid #3B82F6',
+              borderBottom: '3px solid #3B82F6',
               borderTopLeftRadius: '16px',
               borderBottomLeftRadius: '16px',
               padding: '20px 20px 20px 30px',
@@ -1749,7 +1766,7 @@ export default function Portfolio() {
               gap: '12px',
               marginBottom: '16px',
               paddingBottom: '16px',
-              borderBottom: '1px solid rgba(59, 130, 246, 0.1)'
+              borderBottom: '3px solid rgba(59, 130, 246, 0.25)'
             }}>
               {navItems.map(item => {
                 const isActive = currentSection === item.href.slice(1);
@@ -2235,7 +2252,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(27, 168, 225, 0.1)',
-                        border: '1px solid rgba(27, 168, 225, 0.2)',
+                        border: '3px solid rgb(27, 168, 225)',
                         borderRadius: '8px',
                         color: '#BAE6FD',
                         fontSize: '14px',
@@ -2262,7 +2279,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.adventhealth && (
-                      <div className={closingExp.adventhealth ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(27, 168, 225, 0.2)' }}>
+                      <div className={closingExp.adventhealth ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(27, 168, 225, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#1BA8E1', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#1BA8E1', borderRadius: '2px' }} />
@@ -2280,7 +2297,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(27, 168, 225, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(27, 168, 225, 0.3)',
+                              border: '2px solid rgb(27, 168, 225)',
                               color: '#BAE6FD'
                             }}>
                               {skill}
@@ -2462,7 +2479,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(201, 149, 74, 0.1)',
-                        border: '1px solid rgba(201, 149, 74, 0.2)',
+                        border: '3px solid rgb(201, 149, 74)',
                         borderRadius: '8px',
                         color: '#E8D49E',
                         fontSize: '14px',
@@ -2489,7 +2506,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.statura && (
-                      <div className={closingExp.statura ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(201, 149, 74, 0.2)' }}>
+                      <div className={closingExp.statura ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(201, 149, 74, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#C9954A', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#C9954A', borderRadius: '2px' }} />
@@ -2507,7 +2524,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(201, 149, 74, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(201, 149, 74, 0.3)',
+                              border: '2px solid rgb(201, 149, 74)',
                               color: '#E8D49E'
                             }}>
                               {skill}
@@ -2703,7 +2720,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(255, 215, 0, 0.1)',
-                        border: '1px solid rgba(255, 215, 0, 0.2)',
+                        border: '3px solid rgb(255, 215, 0)',
                         borderRadius: '8px',
                         color: '#FFD700',
                         fontSize: '14px',
@@ -2730,7 +2747,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.swamphacks && (
-                      <div className={closingExp.swamphacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(255, 215, 0, 0.2)' }}>
+                      <div className={closingExp.swamphacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(255, 215, 0, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#FFD700', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#FFD700', borderRadius: '2px' }} />
@@ -2748,7 +2765,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(255, 215, 0, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(255, 215, 0, 0.3)',
+                              border: '2px solid rgb(255, 215, 0)',
                               color: '#FFD700'
                             }}>
                               {skill}
@@ -2969,7 +2986,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(239, 68, 68, 0.1)',
-                        border: '1px solid rgba(239, 68, 68, 0.2)',
+                        border: '3px solid rgb(239, 68, 68)',
                         borderRadius: '8px',
                         color: '#F87171',
                         fontSize: '14px',
@@ -2996,7 +3013,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.knighthacks && (
-                      <div className={closingExp.knighthacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                      <div className={closingExp.knighthacks ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(239, 68, 68, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#EF4444', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#EF4444', borderRadius: '2px' }} />
@@ -3014,7 +3031,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(239, 68, 68, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(239, 68, 68, 0.3)',
+                              border: '2px solid rgb(239, 68, 68)',
                               color: '#F87171'
                             }}>
                               {skill}
@@ -3217,7 +3234,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(59, 130, 246, 0.1)',
-                        border: '1px solid rgba(59, 130, 246, 0.2)',
+                        border: '3px solid rgb(59, 130, 246)',
                         borderRadius: '8px',
                         color: '#93C5FD',
                         fontSize: '14px',
@@ -3244,7 +3261,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.ajr && (
-                      <div className={closingExp.ajr ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(59, 130, 246, 0.2)' }}>
+                      <div className={closingExp.ajr ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(59, 130, 246, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#3B82F6', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#3B82F6', borderRadius: '2px' }} />
@@ -3262,7 +3279,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(59, 130, 246, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(59, 130, 246, 0.3)',
+                              border: '2px solid rgb(59, 130, 246)',
                               color: '#93C5FD'
                             }}>
                               {skill}
@@ -3417,7 +3434,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(16, 185, 129, 0.1)',
-                        border: '1px solid rgba(16, 185, 129, 0.2)',
+                        border: '3px solid rgb(16, 185, 129)',
                         borderRadius: '8px',
                         color: '#34D399',
                         fontSize: '14px',
@@ -3444,7 +3461,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.lacoste && (
-                      <div className={closingExp.lacoste ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                      <div className={closingExp.lacoste ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(16, 185, 129, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#10B981', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#10B981', borderRadius: '2px' }} />
@@ -3462,7 +3479,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(16, 185, 129, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(16, 185, 129, 0.3)',
+                              border: '2px solid rgb(16, 185, 129)',
                               color: '#34D399'
                             }}>
                               {skill}
@@ -3621,7 +3638,7 @@ export default function Portfolio() {
                         width: '100%',
                         padding: '12px',
                         background: 'rgba(245, 158, 11, 0.1)',
-                        border: '1px solid rgba(245, 158, 11, 0.2)',
+                        border: '3px solid rgb(245, 158, 11)',
                         borderRadius: '8px',
                         color: '#FBBF24',
                         fontSize: '14px',
@@ -3648,7 +3665,7 @@ export default function Portfolio() {
 
                     {/* Expanded Content */}
                     {expandedExp.sharelife && (
-                      <div className={closingExp.sharelife ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid rgba(245, 158, 11, 0.2)' }}>
+                      <div className={closingExp.sharelife ? 'pixel-dropdown-closing' : 'pixel-dropdown'} style={{ marginTop: '20px', paddingTop: '20px', borderTop: '3px solid rgba(245, 158, 11, 0.3)' }}>
                         {/* Skills */}
                         <h5 style={{ color: '#F59E0B', fontSize: '16px', fontWeight: '600', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <span style={{ width: '3px', height: '16px', background: '#F59E0B', borderRadius: '2px' }} />
@@ -3666,7 +3683,7 @@ export default function Portfolio() {
                               padding: '5px 12px',
                               background: 'rgba(245, 158, 11, 0.15)',
                               borderRadius: '16px',
-                              border: '1px solid rgba(245, 158, 11, 0.3)',
+                              border: '2px solid rgb(245, 158, 11)',
                               color: '#FBBF24'
                             }}>
                               {skill}
@@ -3719,7 +3736,7 @@ export default function Portfolio() {
               fontWeight: '600',
               marginBottom: '32px',
               color: '#3B82F6',
-              borderBottom: '2px solid rgba(59, 130, 246, 0.2)',
+              borderBottom: '4px solid #1E3A8A',
               paddingBottom: '12px'
             }}>
               Education
@@ -3741,30 +3758,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.1s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* UCF Logo */}
-                  <div style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/ucf.png"
                       alt="UCF Logo"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Bachelor's Degree in Health Informatics
@@ -3780,6 +3783,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#10B981',
                       backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                      border: '3px solid #065F46',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       fontWeight: '600',
@@ -3809,30 +3813,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.2s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Valencia Logo */}
-                  <div style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/valencia.png"
                       alt="Valencia College Logo"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Associate's Degree in General Studies
@@ -3845,6 +3835,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -3873,30 +3864,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.3s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Windermere Logo */}
-                  <div style={{
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/windermere.png"
                       alt="Windermere High School Logo"
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         High School Diploma
@@ -3909,6 +3886,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -3931,7 +3909,7 @@ export default function Portfolio() {
               fontWeight: '600',
               marginBottom: '32px',
               color: '#3B82F6',
-              borderBottom: '2px solid rgba(59, 130, 246, 0.2)',
+              borderBottom: '4px solid #1E3A8A',
               paddingBottom: '12px'
             }}>
               Licenses & Certifications
@@ -3953,30 +3931,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.1s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* HIMSS Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
-                      src="/himss.svg"
+                      src="/himss-mark.svg"
                       alt="HIMSS Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Certified Associate in Healthcare Information and Management Systems (CAHIMS)
@@ -3989,6 +3953,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4017,30 +3982,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.2s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Stanford Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/stanford.png"
                       alt="Stanford University Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Introduction to Clinical Data
@@ -4056,6 +4007,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4084,30 +4036,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.3s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Stanford Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/stanford.png"
                       alt="Stanford University Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Introduction to Healthcare
@@ -4123,6 +4061,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4151,30 +4090,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.4s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Stanford Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/stanford.png"
                       alt="Stanford University Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Fundamentals of Machine Learning for Healthcare
@@ -4190,6 +4115,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4218,30 +4144,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.5s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Johns Hopkins Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/johnshopkins.png"
                       alt="Johns Hopkins University Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         The Social and Technical Context of Health Informatics
@@ -4257,6 +4169,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4285,30 +4198,16 @@ export default function Portfolio() {
                   justifyContent: 'center',
                   '--stagger-delay': '0.6s'
                 }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                   {/* Stanford Logo */}
-                  <div style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent'
-                  }}>
+                  <div style={logoTile}>
                     <img
                       src="/stanford.png"
                       alt="Stanford University Logo"
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        objectFit: 'contain'
-                      }}
+                      style={logoTileImg}
                     />
                   </div>
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px' }}>
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <div>
                       <h4 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '4px' }}>
                         Evaluations of AI Applications in Healthcare
@@ -4324,6 +4223,7 @@ export default function Portfolio() {
                       fontSize: '14px',
                       color: '#94a3b8',
                       backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      border: '3px solid #1E3A8A',
                       padding: '4px 12px',
                       borderRadius: '4px',
                       whiteSpace: 'nowrap',
@@ -4466,7 +4366,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(55, 224, 126, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(55, 224, 126, 0.3)',
+                      border: '2px solid rgb(55, 224, 126)',
                       color: '#37E07E'
                     }}>
                       {tech}
@@ -4489,7 +4389,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4593,7 +4493,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(201, 149, 74, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(201, 149, 74, 0.3)',
+                      border: '2px solid rgb(201, 149, 74)',
                       color: '#E8D49E'
                     }}>
                       {tech}
@@ -4616,7 +4516,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4735,7 +4635,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(244, 114, 182, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(244, 114, 182, 0.3)',
+                      border: '2px solid rgb(244, 114, 182)',
                       color: '#F472B6'
                     }}>
                       {tech}
@@ -4758,7 +4658,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -4868,7 +4768,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      border: '2px solid rgb(34, 211, 238)',
                       color: '#22D3EE'
                     }}>
                       {tech}
@@ -4891,7 +4791,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5001,7 +4901,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      border: '2px solid rgb(34, 211, 238)',
                       color: '#22D3EE'
                     }}>
                       {tech}
@@ -5024,7 +4924,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5116,7 +5016,7 @@ export default function Portfolio() {
                       padding: '3px 8px',
                       background: 'rgba(34, 211, 238, 0.1)',
                       borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
+                      border: '2px solid rgb(34, 211, 238)',
                       color: '#22D3EE'
                     }}>
                       {tech}
@@ -5139,7 +5039,7 @@ export default function Portfolio() {
                     fontWeight: '500',
                     paddingTop: '10px',
                     paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+                    borderTop: '3px solid rgba(59, 130, 246, 0.25)',
                     marginTop: 'auto'
                   }}
                 >
@@ -5319,7 +5219,7 @@ export default function Portfolio() {
       <footer style={{
         padding: '32px 48px',
         textAlign: 'center',
-        borderTop: '1px solid rgba(59, 130, 246, 0.1)',
+        borderTop: '4px solid #1E3A8A',
         position: 'relative',
         zIndex: 10
       }}>
