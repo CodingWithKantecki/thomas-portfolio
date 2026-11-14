@@ -64,6 +64,10 @@ export default function Portfolio() {
   // The name's size, shared by the h1 and its hidden measuring copy. Multiples of 8px keep the pixel
   // font's pixels whole; the bigger sizes start where the ECG spikes still fit beside the name.
   const nameFontPx = windowWidth > 1500 ? 72 : windowWidth > 1380 ? 64 : windowWidth > 1024 ? 56 : windowWidth > 768 ? 48 : 32;
+  // Project cards share each row evenly, and a short last row stretches to fill it. The 1px
+  // keeps rounding from pushing the last card of a full row down to the next line.
+  const projectCols = windowWidth > 1024 ? 3 : windowWidth > 768 ? 2 : 1;
+  const projectCardFlex = `1 1 calc((100% - ${(projectCols - 1) * 24}px) / ${projectCols} - 1px)`;
 
   useEffect(() => {
     // Set mounted state and initial width immediately
@@ -4374,8 +4378,8 @@ export default function Portfolio() {
           </h2>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: windowWidth > 1024 ? 'repeat(3, 1fr)' : windowWidth > 768 ? 'repeat(2, 1fr)' : '1fr',
+            display: 'flex',
+            flexWrap: 'wrap',
             gap: windowWidth > 768 ? '24px' : '16px',
             width: '100%',
             boxSizing: 'border-box',
@@ -4386,7 +4390,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-cardioview') ? 'visible' : ''}`}
               data-animate-id="project-card-cardioview"
               style={{
-                gridColumn: windowWidth > 768 ? '1 / -1' : 'auto',
+                flex: '1 1 100%',
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -4512,6 +4516,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-statura') ? 'visible' : ''}`}
               data-animate-id="project-card-statura"
               style={{
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -4638,6 +4643,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-capysynth') ? 'visible' : ''}`}
               data-animate-id="project-card-capysynth"
               style={{
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -4779,6 +4785,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-1') ? 'visible' : ''}`}
               data-animate-id="project-card-1"
               style={{
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -4911,6 +4918,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
               data-animate-id="project-card-2"
               style={{
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -5043,6 +5051,7 @@ export default function Portfolio() {
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-4') ? 'visible' : ''}`}
               data-animate-id="project-card-4"
               style={{
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
@@ -5059,7 +5068,8 @@ export default function Portfolio() {
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover'
+                    objectFit: 'cover',
+                    objectPosition: 'top'
                   }}
                 />
               </div>
