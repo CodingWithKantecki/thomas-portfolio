@@ -4385,46 +4385,36 @@ export default function Portfolio() {
             boxSizing: 'border-box',
             alignItems: 'stretch'
           }}>
-            {/* CardioView - newest project, featured across the full row */}
+            {/* CardioView - newest project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-cardioview') ? 'visible' : ''}`}
               data-animate-id="project-card-cardioview"
               style={{
-                flex: '1 1 100%',
+                flex: projectCardFlex,
                 background: 'rgba(30, 41, 59, 0.9)',
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
                 '--stagger-delay': '0.025s',
                 display: 'flex',
-                flexDirection: windowWidth > 1024 ? 'row' : 'column'
+                flexDirection: 'column'
               }}>
-              {/* Cover art - the Devpost cover, cropped to fill the left side */}
-              <div style={{
-                position: 'relative',
-                flex: windowWidth > 1024 ? '0 0 46%' : '0 0 auto',
-                width: windowWidth > 1024 ? '46%' : '100%',
-                height: windowWidth > 1024 ? 'auto' : windowWidth > 768 ? '300px' : '200px',
-                minHeight: windowWidth > 1024 ? '300px' : undefined,
-                background: '#061218',
-                overflow: 'hidden'
-              }}>
+              {/* Cover art - the Devpost cover */}
+              <div style={{ position: 'relative', width: '100%', height: windowWidth > 768 ? '140px' : '120px', background: '#061218', overflow: 'hidden' }}>
                 <img
                   src="/cardioview-cover.jpg"
                   alt="CardioView"
                   style={{
-                    position: 'absolute',
-                    inset: 0,
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    objectPosition: 'center',
+                    objectPosition: 'top',
                     display: 'block'
                   }}
                 />
               </div>
               {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '20px 24px' : '14px', flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 {/* Project title box */}
                 <div style={{
                   alignSelf: 'flex-start',
@@ -4457,8 +4447,8 @@ export default function Portfolio() {
                 {/* Description */}
                 <p style={{
                   color: '#cbd5e1',
-                  fontSize: windowWidth > 1024 ? '14px' : '12px',
-                  lineHeight: windowWidth > 1024 ? '1.6' : '1.5',
+                  fontSize: '12px',
+                  lineHeight: '1.5',
                   marginBottom: '12px'
                 }}>
                   A 3D heart that beats with your real time ECG. A Polar H10 streams your heartbeat into the browser, every beat moves the heart, and Gemini turns any patient you describe into a rhythm.
