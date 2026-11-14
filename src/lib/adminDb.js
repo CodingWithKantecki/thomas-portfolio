@@ -14,7 +14,10 @@ const GLOBAL_LIMIT = 30; // wrong guesses from everyone together in an hour
 const GLOBAL_WINDOW_MINUTES = 60;
 
 // The reminders the page starts with. New ones can be added here; existing rows are never overwritten.
-const STARTING_REMINDERS = [{ id: "fountain", title: "Check fountain", intervalDays: 14 }];
+const STARTING_REMINDERS = [
+  { id: "fountain", title: "Check fountain", intervalDays: 14 },
+  { id: "water-softener", title: "Refill water softener", intervalDays: 28 },
+];
 
 let sqlClient = null;
 let schemaReady = null;
