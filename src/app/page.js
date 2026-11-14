@@ -4906,136 +4906,6 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Strike Chess - flagship project */}
-            <div
-              className={`animate-on-scroll hover-card ${visibleElements.has('project-card-strike') ? 'visible' : ''}`}
-              data-animate-id="project-card-strike"
-              style={{
-                background: 'rgba(30, 41, 59, 0.9)',
-                borderRadius: '12px',
-                border: '1px solid rgba(59, 130, 246, 0.2)',
-                overflow: 'hidden',
-                '--stagger-delay': '0.125s',
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-              {/* Logo hero - same dimensions as other project cards */}
-              <div style={{
-                position: 'relative',
-                width: '100%',
-                height: windowWidth > 768 ? '140px' : '120px',
-                background: 'linear-gradient(135deg, #0a0f1c 0%, #1a1f3a 50%, #1b2d5e 100%)',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '2px'
-              }}>
-                <img
-                  src="/strike-chess-logo.png"
-                  alt="Strike Chess"
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    objectFit: 'contain',
-                    imageRendering: 'pixelated',
-                    display: 'block',
-                    filter: 'drop-shadow(0 0 14px rgba(59, 130, 246, 0.7))',
-                    transform: 'scale(1.55)',
-                    transformOrigin: 'center'
-                  }}
-                />
-              </div>
-              {/* Card content */}
-              <div style={{ padding: windowWidth > 768 ? '16px' : '14px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                {/* Project title box */}
-                <div style={{
-                  alignSelf: 'flex-start',
-                  background: 'rgba(15, 23, 42, 0.95)',
-                  padding: '8px 14px',
-                  fontSize: windowWidth > 768 ? '14px' : '12px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  color: '#fff',
-                  boxShadow: '4px 4px 0px #000',
-                  border: '3px solid #3B82F6',
-                  marginBottom: '10px'
-                }}>
-                  Strike Chess
-                </div>
-                {/* Event badge */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: '#F472B6',
-                  fontSize: '10px',
-                  fontFamily: "'Press Start 2P', cursive",
-                  marginBottom: '10px'
-                }}>
-                  <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                  </svg>
-                  Indie Game / Steam
-                </div>
-                {/* Description */}
-                <p style={{
-                  color: '#cbd5e1',
-                  fontSize: '12px',
-                  lineHeight: '1.5',
-                  marginBottom: '12px'
-                }}>
-                  Chess where both players move at once, with strike cards, a story campaign, and online multiplayer on Steam.
-                </p>
-                {/* Tech pills */}
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '6px',
-                  marginBottom: '12px'
-                }}>
-                  {['Godot 4.5', 'GDScript', 'C', 'Steamworks', 'Pixel Art'].map(tech => (
-                    <span key={tech} style={{
-                      fontSize: '10px',
-                      padding: '3px 8px',
-                      background: 'rgba(34, 211, 238, 0.1)',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(34, 211, 238, 0.3)',
-                      color: '#22D3EE'
-                    }}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <a
-                  href="https://store.steampowered.com/app/4026780/Strike_Chess/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    color: '#10B981',
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    paddingTop: '10px',
-                    paddingBottom: '0',
-                    borderTop: '1px solid rgba(59, 130, 246, 0.1)',
-                    marginTop: 'auto'
-                  }}
-                >
-                  View on Steam
-                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
             {/* KINEXIS Project */}
             <div
               className={`animate-on-scroll hover-card ${visibleElements.has('project-card-2') ? 'visible' : ''}`}
@@ -5045,7 +4915,7 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.15s',
+                '--stagger-delay': '0.125s',
                 display: 'flex',
                 flexDirection: 'column'
               }}>
@@ -5177,7 +5047,7 @@ export default function Portfolio() {
                 borderRadius: '12px',
                 border: '1px solid rgba(59, 130, 246, 0.2)',
                 overflow: 'hidden',
-                '--stagger-delay': '0.175s',
+                '--stagger-delay': '0.15s',
                 display: 'flex',
                 flexDirection: 'column'
               }}>
