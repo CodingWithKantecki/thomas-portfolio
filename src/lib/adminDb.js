@@ -24,6 +24,11 @@ const STARTING_REMINDERS = [
   { id: "fridge-coils", title: "Vacuum fridge coils", intervalDays: 180 },
   { id: "dryer-vent", title: "Clean dryer vent duct", intervalDays: 365 },
   { id: "water-heater", title: "Flush water heater", intervalDays: 365 },
+  { id: "washer-filter", title: "Clean washing machine filter", intervalDays: 30 },
+  { id: "window-ac-filters", title: "Clean window AC filters", intervalDays: 14 },
+  { id: "whole-home-filter", title: "Replace whole home water filter", intervalDays: 90 },
+  { id: "three-stage-filter", title: "Replace 3-stage water filter cartridges", intervalDays: 180 },
+  { id: "garage-door", title: "Lube garage door", intervalDays: 180 },
 ];
 
 let sqlClient = null;
