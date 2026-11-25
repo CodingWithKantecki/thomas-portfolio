@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-// Shared by the Duolingo, Khan Academy and NeetCode cards: a colored panel with a pixel sprite
-// next to the project-card title box and a row of stat boxes.
+// The Khan Academy card: a colored panel with a pixel sprite next to the project-card title box
+// and a row of stat boxes. The bookshelf's countdown reuses Stat and TitleBox.
 
 // One path per color, built from horizontal runs (same shape as the footer's pixel heart).
 export function spritePaths(rows, colors) {
@@ -145,8 +145,7 @@ export function TitleBox({ windowWidth = 1200, style, children }) {
   );
 }
 
-// `columns` lines the stat boxes up on an even grid instead of letting them wrap.
-export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, stats, columns }) {
+export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title, stats }) {
   const wide = windowWidth > 1024;
 
   return (
@@ -183,13 +182,7 @@ export default function StatsCard({ windowWidth = 1200, heroColor, sprite, title
         <TitleBox windowWidth={windowWidth}>{title}</TitleBox>
 
         {/* Stat boxes: next to the sprite panel they grow to fill the rest of its height */}
-        <div style={{
-          display: columns ? 'grid' : 'flex',
-          gridTemplateColumns: columns ? `repeat(${columns}, minmax(0, 1fr))` : undefined,
-          flexWrap: columns ? undefined : 'wrap',
-          gap: '12px',
-          flexGrow: 1
-        }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', flexGrow: 1 }}>
           {stats.map((stat) => (
             <Stat key={stat.label} {...stat} tile={wide} />
           ))}

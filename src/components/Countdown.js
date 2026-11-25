@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-// The NeetCode card and the bookshelf stay hidden behind a countdown until midnight Eastern on
-// February 11, 2027, three months after they were locked, and come back on their own after that.
+// The bookshelf stays hidden behind a countdown until midnight Eastern on February 11, 2027,
+// three months after it was locked, and comes back on its own after that.
 export const UNLOCK_AT = Date.parse('2027-02-11T00:00:00-05:00');
 
 // Milliseconds left until `until`, or 0 once it has passed. Null until the page mounts: the server
