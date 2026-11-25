@@ -291,6 +291,7 @@ export default function Portfolio() {
     const spikeWidth = spikeShape.length * pixelSize;
     const beatPeriod = 480;
     const beatGap = 96; // space between the name and the nearest spike
+    const lineWidth = 6; // the line keeps this thickness everywhere, including its runs through the name
     const wrapPadX = 24; // box wrap: clearance beside the letters
     const wrapPadY = 16; // box wrap: clearance above the letters
     const measureRange = document.createRange(); // measures the text itself, unaffected by box width rules
@@ -579,7 +580,7 @@ export default function Portfolio() {
 
       // Draw the ECG line - 8-bit pixelated style
       ctx.strokeStyle = '#3B82F6';
-      ctx.lineWidth = 6; // Chunky pixel line
+      ctx.lineWidth = lineWidth; // Chunky pixel line
       ctx.shadowBlur = 0; // No glow for 8-bit
       ctx.shadowColor = 'transparent';
       ctx.imageSmoothingEnabled = false; // Pixelated rendering
@@ -626,7 +627,7 @@ export default function Portfolio() {
         for (const [ca, cb] of o.midRuns) {
           const xa = originX + o.colX(ca);
           const xb = originX + o.colX(cb) + o.colW(cb);
-          ctx.fillRect(xa, nm.baseY - (g >> 1), xb - xa, g);
+          ctx.fillRect(xa, nm.baseY - lineWidth / 2, xb - xa, lineWidth);
         }
         ctx.restore();
       };
