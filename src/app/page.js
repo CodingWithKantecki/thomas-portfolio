@@ -54,7 +54,6 @@ export default function Portfolio() {
   // Layers that follow the scroll. The scroll handler sets their opacity and transform directly, so
   // scrolling never re-renders the page.
   const vibeyRef = useRef(null);
-  const orbsRef = useRef(null);
   const gridFillRef = useRef(null);
   const logoRef = useRef(null);
   const nameRef = useRef(null);
@@ -140,7 +139,6 @@ export default function Portfolio() {
 
       const fade = 1 - progress * 0.7;
       if (vibeyRef.current) vibeyRef.current.style.opacity = String(0.1 * progress * progress);
-      if (orbsRef.current) orbsRef.current.style.opacity = String(progress * 0.6);
       if (gridFillRef.current) gridFillRef.current.style.opacity = String(fade);
       if (canvasRef.current) canvasRef.current.style.opacity = String(fade * blurredLineLevel(0.5, progress));
       if (ecgRef.current) ecgRef.current.style.opacity = String(fade * blurredLineLevel(6, progress));
@@ -280,8 +278,6 @@ export default function Portfolio() {
         ctx.fillStyle = '#3B82F6';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#3B82F6';
         ctx.fillText(this.value, 0, 0);
         ctx.restore();
       }
@@ -1064,9 +1060,7 @@ export default function Portfolio() {
         .pixel-card {
           background: rgba(30, 41, 59, 0.95);
           border: 4px solid #3B82F6;
-          box-shadow:
-            8px 8px 0px rgba(59, 130, 246, 0.3),
-            inset 0 0 20px rgba(59, 130, 246, 0.1);
+          box-shadow: 8px 8px 0px rgba(59, 130, 246, 0.3);
         }
 
         /* Blinking cursor for retro feel */
@@ -1189,22 +1183,6 @@ export default function Portfolio() {
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
-        }
-        @keyframes glowPulse {
-          0% {
-            opacity: 0;
-            filter: blur(15px);
-          }
-          50% {
-            opacity: 1;
-            filter: blur(20px);
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
-          }
-          100% {
-            opacity: 0;
-            filter: blur(15px);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0);
-          }
         }
 
         @keyframes slideIn {
@@ -1560,51 +1538,6 @@ export default function Portfolio() {
         }}
       />
       
-      {/* Soft gradient orbs for depth. They stay still, so their blur is painted once and never again. */}
-      <div
-        ref={orbsRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          opacity: 0,
-          willChange: 'opacity',
-          transition: 'opacity 0.6s ease-out',
-          pointerEvents: 'none',
-          zIndex: 0
-        }}
-      >
-        <div style={{
-          position: 'absolute',
-          top: '20%',
-          left: '10%',
-          width: '300px',
-          height: '300px',
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
-          filter: 'blur(40px)'
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '20%',
-          right: '10%',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, transparent 70%)',
-          filter: 'blur(60px)'
-        }} />
-        <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, transparent 70%)',
-          filter: 'blur(80px)'
-        }} />
-      </div>
-
       {/* Dark backing under the grid lines. It fades with the grid but is never blurred, so it lives on
           its own layer and the lines can dim on their own. */}
       <div
@@ -1687,7 +1620,6 @@ export default function Portfolio() {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
-            const glowEffect = e.currentTarget.querySelector('.glow-effect');
 
             if (panel) {
               panel.style.right = '0';
@@ -1698,16 +1630,11 @@ export default function Portfolio() {
             if (menuIcon) {
               menuIcon.style.opacity = '0';
             }
-            if (glowEffect) {
-              glowEffect.style.opacity = '0';
-              glowEffect.style.animation = 'none';
-            }
           }}
           onMouseLeave={(e) => {
             const panel = e.currentTarget.querySelector('.side-panel');
             const arrow = e.currentTarget.querySelector('.arrow-icon');
             const menuIcon = e.currentTarget.querySelector('.menu-icon');
-            const glowEffect = e.currentTarget.querySelector('.glow-effect');
 
             if (panel) {
               panel.style.right = '-220px';
@@ -1717,11 +1644,6 @@ export default function Portfolio() {
             }
             if (menuIcon) {
               menuIcon.style.opacity = '1';
-            }
-            if (glowEffect) {
-              // Trigger glow animation when menu closes
-              glowEffect.style.opacity = '1';
-              glowEffect.style.animation = 'glowPulse 1.5s ease-out forwards';
             }
           }}
         >
@@ -1764,25 +1686,6 @@ export default function Portfolio() {
             </svg>
           </div>
 
-          {/* Glow Effect */}
-          <div
-            className="glow-effect"
-            style={{
-              position: 'fixed',
-              right: '0',
-              top: '32px',
-              width: '45px',
-              height: '45px',
-              borderTopLeftRadius: '12px',
-              borderBottomLeftRadius: '12px',
-              background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.6), transparent)',
-              filter: 'blur(15px)',
-              opacity: 0,
-              pointerEvents: 'none',
-              zIndex: 1000
-            }}
-          />
-
           {/* Side Panel */}
           <div
             className="side-panel"
@@ -1800,7 +1703,6 @@ export default function Portfolio() {
               borderBottomLeftRadius: '16px',
               padding: '20px 20px 20px 30px',
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: '-10px 0 40px rgba(59, 130, 246, 0.2)',
               zIndex: 998
             }}
           >
