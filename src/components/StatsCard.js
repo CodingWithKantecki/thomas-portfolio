@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-// The Khan Academy card: a colored panel with a pixel sprite next to the project-card title box
+// The Duolingo card: a colored panel with a pixel sprite next to the project-card title box
 // and a row of stat boxes. The bookshelf's countdown reuses Stat and TitleBox.
 
 // One path per color, built from horizontal runs (same shape as the footer's pixel heart).

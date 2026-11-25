@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import GitHubContributionGraph from '@/components/GitHubContributionGraph';
-import KhanAcademyStats from '@/components/KhanAcademyStats';
+import DuolingoStats from '@/components/DuolingoStats';
 import Bookshelf from '@/components/Bookshelf';
 
 export default function Portfolio() {
@@ -5104,7 +5104,7 @@ export default function Portfolio() {
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <GitHubContributionGraph username="CodingWithKantecki" />
-          <KhanAcademyStats windowWidth={windowWidth} />
+          <DuolingoStats windowWidth={windowWidth} />
         </div>
       </section>
 
